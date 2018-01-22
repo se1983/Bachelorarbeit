@@ -166,9 +166,25 @@
     
     
     \subsubsection{JSON?}
-    
+
+% BEGIN OL3
     \subsubsection{openLayers}
     
+    OpenLayers ist eine Programmbibliotek um interaktive Geoapplikationen zu entwickeln. Das Framework ist in Javascript entwickelt und nimmt alle benötigten Berechnungen auf Clientseite vor.
+    
+    Die Bibliothek erlaubt es Kartenmaterial aus verschiedensten Quellen zu Rendern. Dabei können Kachel- oder auch Vektorbasierte Materialien eingebunden werden.
+    
+    \begin{description}
+     \item [Kachel-Layer]  liefern Bilddaten direkt aus. Dabei werden die Kartenmatherialien in Kacheln aufgeteilt.Dadurch das die Bilder in Teilbereiche untergliedert sind, müssen nur die Bildbereiche ausgeliefert werden, die für die Darstellung des Kartenausschnittes vonnöten sind.
+     
+     \item [Vektor-Layer] sind Beschreibungen von Linien und Polygonen. Die Darstellung wird nicht anhand von Bildmaterial generiert, sondern anhand von geometrischen Beschreibungen gezeichnet. 
+    \end{description}
+    
+    Neben der reinen Darstellung erlaubt die Bibliothek auch die Definition von  "`\texttt{controls}"'. Dabei lassen sich Zoom-, Rotations- und Mouse-Positions-Effekte umsetzen. Siehe Quelle \cite{openlayersbeginnersguide} S. 296
+    
+    Zu zeichnende Daten lassen sich über GEOJson-Objekte modellieren. Die Bibliothek folgt einem objektorientierten Entwurfsmuster und erlaubt das transparente Hinzufügen und Ändern von Layern der Karte.
+
+% END     
     \subsubsection{D3}
     
     \subsection{...}
