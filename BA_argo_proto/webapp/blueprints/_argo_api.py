@@ -7,8 +7,11 @@ argo_api = Blueprint('argo_api', __name__)
 
 @argo_api.route("/last_seen")
 @argo_api.route("/last_seen/<force_reload>")
-def last_seen(force_reload=False):
-    argo_floats = gen_last_seen(force_reload=force_reload is not False)
+def last_seen(force_reload=""):
+
+    __token = '4e9fe9a5d862551cb67503ed630e1c80'
+
+    argo_floats = gen_last_seen(force_reload=force_reload == __token)
     return jsonify(argo_floats)
 
 
