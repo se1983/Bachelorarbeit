@@ -53,14 +53,24 @@
     
    Durch die Templateengine \textbf{Jinja} erlaubt Flask das generalisieren von HTML-Dokumenten. Durch diese ist es möglich erweiterbare Grundtemplates anzulegen, Variablen abzufragen, zu überprüfen und über Kollektionen zu iterieren.
    
-   \begin{lstlisting}[language=html]
+
    
-   <h1> </h1>
+  Durch sogenannte \textbf{Blueprints} ist es möglich, eine logische Trennung zwischen Teilbereichen der Applikation vorzunehmen. Diese Modularisierung erlaubt die Definierung von spezifischen Datenordnern sowie für HTML-Templates als auch spezifischer subrouten der Module innerhalb der Applikation.
+  
+  (...)
+  
+
+  In der Grundausstatung der Funktionsumfang von Flask sehr beschränkt. Der KISS-Ansatz bedingt, dass benötigte Funktionalitäten nachgerüstet werden müssen. Im Folgenden wird auf einige in dieser Applikation sinnvolle Erweiterungen eingegangen:
+  
+  \begin{description}
+   \item [flask\_sqlalchemy] erlaubt die transparente Anbindung des ORM in die Applikation. In der Grundausstatung besitzt Flask keine Funktionalität um Datenbanken aus der Webapplikation anzusprechen. Durch die Einbindung dieser Erweiterung erhält man ein Framework, das dem Entwurfmuster MVC entspricht.
    
-   \end{lstlisting}
+   Entspürechend den in Flask gängigen Entwurfsmustern entspricht, wird die Anbdindung an den ORM durch ein globales Objekt modelliert. Dieses ist eine Instanz der Klasse \texttt{flask\_sqlalchemy.SQLAlchemy} und stellt die Operationen von SQLAlchemy zur verfügung.
    
+   \item [flask\_script] rüstet den Funktionsumfang der Webapplikation um eine zentrale Steurungseinheit auf. Diese Erweiterung besitzt bereits vorgefertigte Steuerungsmodule. Darunter finden sich scripte  zum starten der Webapplikation oder zum starten eines Python-REPL mit den Umgebungsvariablen der Webapplikation. Unter Verwendung des Decorator Entwurfsmuster lässt sich das definierte Steuerungsmodul um beliebige Funktionalitäten erweitern.
    
-   
+  \end{description}
+
     
 % END
 

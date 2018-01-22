@@ -98,7 +98,10 @@ Die darstellende Schicht verfügt nur über eine einzige Webseite. Über das Roo
 
 Die API der Applikation soll zwei Funktionen erfüllen können. Für die Positionsbestimmung auf der Karte wird eine Geojson benötigt. Unter der Route \texttt{/last\_seen} finden sich die letzten Positionen der Mesststationen zusammen mit den Daten die beim Mouseover angezeigt werden sollen. Das hier zurückgegebene Geojson wird über einen Cache vorgehalten. Um diesen Cache neu zu generieren ist es möglich der Route die Variable \texttt{[force\_reload]} zu übergeben. Um versehendliche oder böswillige Verwendungen dieser Route zu verhindern, handelt es sich bei der Variable um ein Geheimnis. Nur wenn dieses richtig angegeben wird, werden die Daten neu erstellt.
 
-Über die Route \texttt{argo\_float/[identifier]} wird ein Datensatz der über \texttt{identifier} ausgewählten Messstation zurückgegeben. Um nur einen spezifischen Messdatensatz zu erhalten, kann dieser über die Variable \texttt{data} ausgewählt werden.
+Über die Route \texttt{argo\_float/[identifier]} wird ein Datensatz der über \texttt{identifier} ausgewählten Messstation zurückgegeben. Um nur einen spezifischen Messdatensatz zu erhalten, kann dieser über die Variable \texttt{data} ausgewählt werden. \\
+
+
+Um die beiden Teilbereiche logisch zu trennen und modular vorhalten zu können, werden diese über blueprints abgebildet.
 
 
 % END
