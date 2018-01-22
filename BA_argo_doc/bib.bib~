@@ -1,0 +1,165 @@
+
+
+@article{guinehut2004combining,
+	author = {S Guinehut and PY {Le Traon} and G Larnicol and S Philipps},
+	journal = {Journal of Marine Systems},
+	number = {1},
+	pages = {85--98},
+	publisher = {Elsevier},
+	title = {Combining Argo and remote-sensing data to estimate the ocean three-dimensional temperature fields---A first approach based on simulated observations},
+	volume = {46},
+	year = {2004}
+}
+
+@misc{ArgoUserManual,
+	author = {Carval, Thierry and Keeley, Robert and Takatsuki, Yasushi and Yoshida, Takashi and Schmid, Claudia and Goldsmith, Roger and Wong, Annie and Thresher, Ann and Tran, Anh and Loch, Stephen and Mccreadie, Rebecca},
+	title = {Argo User Manual},
+	volume = {3.2},
+	year = {2015}
+}
+
+@article{ArgoDataManualConsistencyChecks,
+	author = {Ignaszewski Mark},
+	title = {Description of the Argo GDAC File Checks: Data Format and Consistency Checks},
+	volume = {2.4},
+	year = {2016}
+}
+
+@misc{ArgoDataManual,
+    key = {Argo Data Manual},
+	title = {{Argo data and how to get it}},
+	year = {2017},
+	month = {Jun},
+	note = {[Online; accessed 12. Dec. 2017]},
+	howpublished ={\url{http://www.argo.ucsd.edu/Argo_data_and.html}}
+}
+
+@misc{ArgoDataSelection,
+    key = {Argo Data Selection},
+	title = {{Argo data selection - Argo Data Management}},
+	year = {2017},
+	month = {Dec},
+	note = {[Online; accessed 12. Dec. 2017]},
+	howpublished ={\url{http://www.argodatamgt.org/Access-to-data/Argo-data-selection}}
+}
+
+@article{OpenLayers,
+    key = {Openlayers API},
+	note = {[Online; accessed 2017-05-28]},
+	title = {Open Layers - API},
+	howpublished = {\url{https://openlayers.org/en/latest/apidoc/}}
+}
+
+@misc{ArgoDataViewers,
+    key = {Argo Dataviewers},
+	title = {{Global Change Analysis}},
+	year = {2017},
+	month = {Apr},
+	note = {[Online; accessed 12. Dec. 2017]},
+	howpublished ={\url{http://argo.ucsd.edu/Data_viewers.html}}
+}
+
+@misc{ArgoDataDocumentation,
+    key = {Argo Data Documentation},
+	title = {{Documentation - Argo Data Management}},
+	year = {2017},
+	month = {Dec},
+	note = {[Online; accessed 12. Dec. 2017]},
+	howpublished = {\url{http://www.argodatamgt.org/Documentation}}
+}
+
+@misc{ArgoDataBeginnersGuide,
+    author = {Megan Scanderbeg and John Gould},
+    title = {A beginners{\rq} guide to accessing Argo data},
+    year = {},
+    howpublished = {\url{http://www.argo.ucsd.edu/Argo_data_guide.pdf}},
+    urldate = {2018-01-17}
+}
+
+@misc{ArgoDataManagementHandbook,
+    key = {Argo Data Management Handbook},
+	title = {Data Management Handbook},
+	year = {2002}
+}
+
+@misc{Flask012Welcome:online,
+    key = {Flask Documentation},
+	howpublished = {\url{http://flask.pocoo.org/docs/0.12/}},
+	month = {},
+	note = {(Accessed on 09/08/2017)},
+	title = {Welcome to Flask --- Flask Documentation (0.12)},
+	year = {}
+}
+
+@book{ol3begGuide,
+  Author = {Thomas Gratier and Paul Spencer and Erik Hazzard},
+  Title = {OpenLayers 3 Beginner s Guide},
+  Publisher = {Packt Publishing - ebooks Account},
+  Year = {2015},
+  ISBN = {1782162364},
+  URL = {https://www.amazon.com/OpenLayers-3-Beginner-s-Guide/dp/1782162364?SubscriptionId=0JYN1NVW651KCA56C102&tag=techkie-20&linkCode=xm2&camp=2025&creative=165953&creativeASIN=1782162364}
+}
+
+@misc{Argofloa92:online,
+    key = {Argo Data Download},
+    title = {Argo float data and metadata from Global Data Assembly Centre (Argo GDAC)},
+    howpublished = {\url{http://www.seanoe.org/data/00311/42182/}},
+    month = {},
+    year = {},
+    note = {(Accessed on 10/09/2017)}
+}
+
+@book{phillips2010python,
+  title={Python 3 object oriented programming},
+  author={Phillips, Dusty},
+  year={2010},
+  publisher={Packt Publishing Ltd}
+}
+
+@book{murray2017interactive,
+  title={Interactive Data Visualization for the Web: An Introduction to Designing with},
+  author={Murray, Scott},
+  year={2017},
+  publisher={O'Reilly Media, Inc.}
+}
+
+
+@online{SageIasonGutenberg,
+    author = { Gustav Schwab},
+    title = {Die Argonautensage},
+    howpublished = {\url{http://gutenberg.spiegel.de/buch/sagen-des-klassischen-altertums-4962/12}},
+    urldate = {2017-12-12}
+}
+
+@online{netCDF4,
+    key = {netCDF4 API},
+    title = {Python CDF4},
+    howpublished = {\url{http://unidata.github.io/netcdf4-python/}},
+    urldate = {2017-12-12}
+}
+
+
+@online{FisherNetCDF,
+    author = {AuthorsRuss, Rew and Glenn, Davis and Steve, Emmerson and Harvey,  Davies and Ed, Hartnett and Dennis, Heimbigner and Ward Fisher},
+    title = {NetCDF: Introduction and Overview},
+    howpublished = {\url{https://www.unidata.ucar.edu/software/netcdf/docs/index.html}},
+    urldate = {2017-12-13}
+}
+
+@article{rew1990netcdf,
+  title={NetCDF: an interface for scientific data access},
+  author={Rew, Russ and Davis, Glenn},
+  journal={IEEE computer graphics and applications},
+  volume={10},
+  number={4},
+  pages={76--82},
+  year={1990},
+  publisher={IEEE}
+}
+
+@misc{Numpy_ma,
+    key = {numpy_ma},
+    title = {The numpy ma module - NumPy v1.13 Manual},
+    howpublished = {\url{https://docs.scipy.org/doc/numpy-1.13.0/reference/maskedarray.generic.html}},
+    urldate = {2017-12-26}
+}

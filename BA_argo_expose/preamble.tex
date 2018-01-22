@@ -1,0 +1,77 @@
+\documentclass[a4paper,12pt, ngerman,bibliography=totocnumbered]{scrartcl}
+\usepackage[a4paper]{geometry}
+\geometry{a4paper,tmargin=3cm, bmargin=3.5cm, lmargin=3cm, rmargin=2.2cm, headheight=3em, headsep=2em, footskip=1cm}
+\usepackage[onehalfspacing]{setspace}
+
+\usepackage[utf8x]{inputenc}
+\usepackage{graphicx}
+\usepackage{pdfpages}
+
+\PassOptionsToPackage{hyphens}{url}\usepackage[colorlinks,
+pdfpagelabels,
+urlcolor = black,
+pdfstartview = FitH,
+bookmarksopen = true,
+bookmarksnumbered = true,
+linkcolor = black,
+plainpages = false,
+hypertexnames = false,
+citecolor = black,
+breaklinks=true] {hyperref}
+
+%\urlstyle{tt}
+
+\renewcommand{\UrlBreaks}{\do\/\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z}
+
+
+\usepackage[ngerman]{babel}
+
+\addto\captionsngerman{\renewcommand{\refname}{Bisher gesichtete Literatur}}
+
+\usepackage{setspace}
+\usepackage[flushmargin]{footmisc}
+\usepackage{tikz}
+\usepackage{wrapfig}
+\usepackage{nameref}
+\usepackage{lmodern}
+%\usepackage{natbib}
+\usepackage[square,sort,comma,numbers]{natbib}
+%\usepackage[backend=bibtex,style=verbose-trad2]{biblatex}
+\usepackage[verbose]{placeins}
+\usepackage{fancyhdr}
+\usepackage{listings}
+
+\renewcaptionname{ngerman}{\contentsname}{Inhalt}
+\renewcaptionname{ngerman}{\listfigurename}{Abbildungen}
+\renewcaptionname{ngerman}{\listtablename}{Tabellen}
+\renewcaptionname{ngerman}{\figurename}{Abb.}
+\renewcaptionname{ngerman}{\tablename}{Tab.}
+
+\addto\captionsngerman{\renewcommand\figurename{Abbildung.}}
+\renewcommand{\familydefault}{\sfdefault}
+\setkomafont{subject}{\normalfont\sffamily}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\renewcommand{\sectionmark}[1]{\markright{#1}{}}
+\renewcommand{\subsectionmark}[1]{%
+  \ifsubsectioninheader
+    \def\subsectiontitle{: #1}%
+  \else
+    \def\subsectiontitle{}%
+  \fi}
+\newif\ifsubsectioninheader
+\def\subsectiontitle{}
+\setlength{\parskip}{1em}
+\setlength{\parindent}{0pt}
+%%%%%%%%%%%%%%%%%%%%%
+%% Header & Footer %%
+%%%%%%%%%%%%%%%%%%%%%
+\fancyfoot[L]{}
+\fancyfoot[C]{-\thepage -}
+\fancyfoot[R]{}
+\fancyhead[L]{\nouppercase{\rightmark\ifsubsectioninheader\subsectiontitle\fi}}
+\fancyhead[C]{\rmfamily{\bfseries{}}}
+\fancyhead[R]{}
+

@@ -1,0 +1,165 @@
+\section{Grundlagen}
+    \subsection{Verwendete Software}
+    \subsubsection{Network Common Data Format}
+    
+    Das Network Common Data Format (NetCDF) dient zum Austausch von wissenschaftlichen Daten. Es ist eine Weiterentwicklung des von der NASA entwickelten Common Data Format (CDF). Das Format zeichnet sich dadurch aus, dass es selbstbeschreibend ist. Dadurch wird die Dokumentation mit den Daten mitgeführt. Dies soll die Portabilität des Datensatzes verbessern.  \footnote{vgl. \cite{FisherNetCDF}}
+   
+    Neben einigen anderen Sprachen, wurde auch eine Bibliothek für Python entwickelt \footnote{Siehe \cite{netCDF4}} Mit dieser ist es möglich, die Binärdaten zu öffnen und zu numpy-Arrays zu extrahieren. In Listing \ref{lst:example_netcdf} ist die Verwendung exemplarisch an der Extraktion und Berechnung des Datensatzerstellungsdatum aufgezeigt und im Folgenden beschrieben.
+    
+    \pythonexternal[%
+        % ---------------------------------------------
+        %   PYTHON netCDF als Beispiel JULD
+        caption = {Extraktion und Berechnung des Erstellungsdatums eines NetCDF-Datensatzes},%
+        label = {lst:example_netcdf}]%
+        {scr/beispiele/netCDF_juld.py}
+    
+    Um einen Datensatz zu öffnen, bildet man eine Instanz der Klasse \texttt{netCDF4.Dataset}. Die Auswahl des Profils gelingt durch die Pfadangabe als Parameter bei der Instanzierung.
+    
+    Über das Attribut \texttt{dataset.variables} werden die Datensätze als \texttt{OrderedDict} gehalten. Bei der Extraktion eines Parameters erhält man zunächst die Dokumentation des jeweiligenm Datensatzes. In diesem Fall handelt es sich um den Zeitpunkt der Sattelitenübertragung des betreffenden Messprofils.
+    
+    Aus der Dokumentation lassen sich für die Weiterverarbeitung wichtige Parameter entnehmen.
+    So ist der Datensatz in Form des C-Datentyps \texttt{float64} codiert. Beim Datumsformat handelt es sich um \textit{Julian day} ab dem Zeitpunkt \textit{01. Januar 1950}.
+    
+    Um die Werte eines Datensatzes zu extrahieren, wird über die numpy-slicing Operation \texttt{arr[::]} der Datensatz in vektorieller Form extrahiert. Da in diesem Array nur ein skalarer \texttt{float64} Wert enthalten ist, kann dieser als nulltes Element extrahiert werden.
+    
+    Zur Überführung in das Format des durch die ISO 8601 bei uns normierten Gregorianischen Kalenders wird ein Datumsobjekt des Referenzdatums benötigt. Durch die Verwendung von \texttt{timedelta} werden die Tage aus dem Feld \texttt{JULD} addiert. Da ein Messzyklus 10 Tage andauert, kann an dieser Stelle der Datensatz durch die Entferndung der Dezimalstellen vereinfacht werden. Die Casting-Operation \texttt{int()} rundet in jedem Fall ab.
+    
+% BEGIN NUMPY
+    \subsubsection{numpy}
+    
+    Numpy ist eine Pythonbibliothek zur diskreten Verarbeitung von ein- oder mehrdimensionalen Arrays. 
+    
+    Nach der Extraktion der CDF-Daten, liegen diese als maskierte Arrays vor. Diese erlauben auch das fehlen einzelner Datensätze.
+% END 
+
+% BEGIN JULDATE
+\subsubsection{Julian Date}
+%END
+        
+% BEGIN FLASK
+    \subsubsection{Flask}
+    
+    Flask wurde im Jahre (YXXX) von Armin Ronacher gegründet. 
+    
+    Die Idee startete Ursprünglich als Aprilscherz. \footnote{\cite{openingtheflask}} Der Designansatz wurde aber von vielen Menschen als positiv aufgefasst. Dieser wurde daraufhin unter dem Namen Flask released.
+    
+    \pythonexternal[%
+    caption={Minimalbeispiel für die Verwendung von Flask},%
+    label={lst:flaskHELLOWORLD}]{./scr/beispiele/flask_hello.py}
+    
+    Das Framework verfolgt den Ansatz "`\textit{Why things work the way they work}"'. Funktionalitäten werden also nicht versteckt, sondern sind dem Entwickler einfach zugänglich. Durch diese Designentscheidung ist es möglich ganze Webapplikationen mit nur wenigen Zeilen Code und in einer einzigen Sourcecode-Datei zu realisieren. Diese Transparenz wird durch ein global verfügbares "`magisches"' !sic Objekt ermöglicht. 
+    Es lassen sich auch weitere Instanzen innerhalb einer Applikation erstellen. 
+    Teile der Applikation können über Blueprints modularisiert werden.
+    
+   Durch die Templateengine \textbf{Jinja} erlaubt Flask das generalisieren von HTML-Dokumenten. Durch diese ist es möglich erweiterbare Grundtemplates anzulegen, Variablen abzufragen, zu überprüfen und über Kollektionen zu iterieren.
+   
+   \begin{lstlisting}[language=html]
+   
+   <h1> </h1>
+   
+   \end{lstlisting}
+   
+   
+   
+    
+% END
+
+% BEGIN SQLALCHEMY
+    \subsubsection{SQLAlchemy}
+    
+    Ein  \textbf{Object Ralational Mapper} oder kurz ORM ist die Schnittstelle zwischen in objektorientiert modellierten Programmteilen und realtionalen Datenbanken. 
+    
+    Zwischen diesen beiden Paradigmen existieren strukturelle Unterschiede. So besitzen Objekte im Unterschied zu Relationen eine Identität und unterstützen Vererbung. In der relationalen Algebra ist eine solche Komplexität nicht vorgesehen. Relationen bestehen aus Tupeln, identifizierbar durch den Primärschlüssel mit Beziehungen durch Fremdschlüssel. Durch ein Objekt-relationales Mapping wird versucht, diesen \textbf{impedance Mismatch} möglichst transparent zu überwinden. \\
+    
+    Ein bei der Entwicklung von Programmen mit Python weit verbreiteter ORM ist \textbf{SQLAlchemy}. So wird dieser zum Beispiel im Backend von reddit oder bei Mozilla eingesetzt. SQLAlchemy wird für die Verwendung in Flask empfohlen.\footnote{Siehe \cite{openingtheflask} S. 33} \\
+    % TODO EXTENSION sqlalchemy@flask
+    
+    
+    Im folgenden wird die Verwendung von SQLAlchemy exemplarisch an folgender  Beziehung aufgezeigt \[ \mbox{Messprofil} \to (\mbox{enthält}) \to \mbox{Aufzeichnungen}\] 
+
+
+    In Listing \ref{lst:sqlalchemy1} ist zu sehen, welche Methoden benötigt werden um SQLAlchemy zu verwenden.
+    
+    (...)  Aufzählung????
+    
+    Danach wird ein Basisobjekt erstellt. Dieses wird verwendet um Datenfelder im Kontext des ORM registrieren zu können. 
+    
+    \pythonexternal[%
+    % ---------------------------------------------SQLAlchemy 1
+    %       Eingebundene Methoden und Basisklasse
+    caption={SQLAlchemy 1},%
+    label={lst:sqlalchemy1}]{/home/sebsch/Dokumente/Uni-Workdir/Bachelorarbeit/BA_argo_doc/scr/beispiele/sqlalchemyModels.py}
+   
+    Die Registrierung von Datenklassen um ORM erfolgt durch Vererbung. Wie in Listing \ref{lst:sqlalchemy1a} zu sehen ist, erbt die Klasse '\texttt{Profile}' von der Basisklasse '\texttt{Base}'.
+    
+    Als Attribute besitzt die Klasse \texttt{id}, also den eindeutigen Primärschlüssel für die spätere Zuordnung des Datensatzes. Sowie die Variable \texttt{timestamp}, welche die Zuordnung einer Messung zu einem spezifischen Zeitpunkt erlaubt. Letzterer wird über den initializer der Klasse vorgegeben, muss also bei der Instanzierung des Objektes angegeben werden.
+    
+    \pythonexternal[%
+    % ---------------------------------------------SQLAlchemy 1a
+    %       Model Profile
+    caption={SQLAlchemy 1a},%
+    label={lst:sqlalchemy1a}]{/home/sebsch/Dokumente/Uni-Workdir/Bachelorarbeit/BA_argo_doc/scr/beispiele/sqlalchemyModels2.py}
+    
+    
+    In Listing \ref{lst:sqlalchemy1b} ist der Aufbau der Klasse '\texttt{Record}' zu sehen. Dieser ist etwas komplexer und besitzt neben den reinen Datenfeldern noch die Attribute '\texttt{profile\_id}' und '\texttt{profile}'. Diese erlauben es, die Beziehung der beiden Datenfelder zu beschreiben. Die für die Datenfelder verwendeten Typen werden von SQLAlchemy zur Verfügung gestellt.
+    
+    Über das erste Attribut wird der Fremdschlüssel des Messprofils angegeben, das die spezifische Aufzeichnung enthält. Die Auswahl erfolgt über eine Objekt der Klasse '\texttt{RoreignKey()}'. Die Art der beziehung wird in der darauf folgenden Zeile definiert. Über die Methode '\texttt{relation()}' wird im Klassenattribut '\texttt{profile}' eine beziehung definiert. Bei der Übergabe einer Instanz der Klasse '\texttt{Profile}' wird dieses Objekt in diese Beziehung eingebunden. Wie diese Einbindung von statten gehen soll, wird über den Parameter '\texttt{lazy}' definiert. Der Parameter '\texttt{backref}' erlaubt es, die Beziehung bidirektional zu implementieren. Der hier vergebene Name kann bei der Erstellung eines Profiles verwendet werden um Records zuzuordnen.
+    
+    \pythonexternal[%
+    % ---------------------------------------------SQLAlchemy 1b
+    %       Model Record
+    caption={SQLAlchemy 1b},%
+    label={lst:sqlalchemy1b}]{/home/sebsch/Dokumente/Uni-Workdir/Bachelorarbeit/BA_argo_doc/scr/beispiele/sqlalchemyModels1.py}
+    
+    Durch Attribute werden die jeweiligen Werte und die IDs der Einträge definiert.  Diese werden innerhalb der Klasse, wenn nötig, durch das Schlüsselwort \texttt{self} verfügbar gemacht.                                                                                                                                                                                                                                
+
+    Zwischen den Datenfeldern besteht eine $1 \times N$ Beziehung. Diese wird innerhalb der Klasse \texttt{Record} in den Zeilen 16 und 17 definiert.  In der Variable \texttt{profile\_id} wird der Fremdschlüssel gespeichert. Der Fremdschlüssel ist notwendig, um die Referenzierung zwischen den verschiedenen Tupeln in den Tabellen vornehmen zu können. Über die Methode \texttt{relation()} wird die Art der Beziehung zwischen den Datenfeldern definiert. Da die Beziehung in diesem Fall bidirektional sein soll, wird hier über den Parameter '\texttt{backref}' ein Name definiert, über den die Einträge auf der Seite der Profile angesprochen werden können.
+    
+    
+        
+    SQLAlchemy verwaltet die Verbindung zum DBMS über ein sogenanntes engine-Objekt. Dieses wird in der ersten Zeile in Listing \ref{lst:sqlalchemy2} erstellt. In diesem Fall, wird eine SQLite-Datenbank verwendet.
+    
+    Die Datenklassen aus Listing \ref{lst:sqlalchemy1} werden über deren Basisklasse in dieser engine registriert. Dies ermöglicht das Mapping zwischen den Objekten und der relationalen Datenbank.
+    
+    Die Operationen zur Persestierung, sind in der Klasse Session zusammengefasst. Diese wird erzeugt und instantiiert. 
+    
+    In den Zeilen 7 - 13 in Listing \ref{lst:sqlalchemy2} werden nun spezifische Datenfelder Definiert. Es ist zu sehen, dass die Beziehung zwischen den Datenfeldern eine Implementierung in beide Richtungen zulässt.
+    
+    Zuerst wird ein \texttt{Record} \texttt{r1} mit einem anonymen \texttt{Profile} definiert. Diese Aufzeichnung trägt ein Datenfeld \texttt{Temperature} mit einem spezifischen Wert.
+    
+    Anschließend wird in \texttt{p1} eine Instanz von \texttt{Profile} gespeichert. Dieses trägt zwei Aufzeichnungen die zum selben Zeitpunkt erhoben worden sind.
+    \\
+    
+    Im nächsten Schritt werden über \texttt{add} und \texttt{commit} die Datenfelder zur session hinzugefügt und danach auf die Datenbank übertragen.
+    
+    Wenn ein Fehler bei dieser Operation erfolgt, werden die Änderungen über die Methode \texttt{rollback()} wieder rückgängig gemacht.
+
+    
+    \pythonexternal[%
+    caption={SQLAlchemy 1},%
+    label={lst:sqlalchemy2}]{/home/sebsch/Dokumente/Uni-Workdir/Bachelorarbeit/BA_argo_doc/scr/beispiele/sqlalchemyInsert.py}
+    
+    
+    SQLAlchemy stellt zudem Methoden für das Formulieren von Queries zur Verfügung. In Listing \ref{lst:sqlalchemy3} werden exemplarisch einige der zuvor gespeicherten Werte aus der Datenbank gelesen und angezeigt.
+    
+    Die Abfragen werden intern in SQL Queries übersetzt. Bei Bedarf ist es auch möglich, Abfragen über SQL Queries zu stellen.
+    
+    
+    
+    \pythonexternal[%
+    caption={SQLAlchemy 1},%
+    label={lst:sqlalchemy3}]{/home/sebsch/Dokumente/Uni-Workdir/Bachelorarbeit/BA_argo_doc/scr/beispiele/sqlalchemyQuery.py}
+    
+    
+    Für die Verwendung in Flask gibt es eine Erweiterung für die Verwendung von SQLAlchemy. Durch diese werden einige der oben genannten Schritte vereinfacht. Zum beispiel werden \texttt{Session}, \texttt{engine} und \texttt{Base} über ein zentrales Objekt \texttt{db} abgebildet. Prinzipiell erfordert aber auch die Verwendung von flask-sqlalchemy die selben Schritte.
+% END
+    
+    
+    \subsubsection{JSON?}
+    
+    \subsubsection{openLayers}
+    
+    \subsubsection{D3}
+    
+    \subsection{...}
+

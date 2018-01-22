@@ -1,0 +1,15 @@
+\section{Methodik / Vorgehensweise}
+
+
+\paragraph{Aufbereitung der Daten}
+Die Daten müssen aus dem ASCII-Format in eine Datenbank überführt werden. Dazu wird ein Parser benötigt, um das Format auszulesen und in eine Objektstruktur zu überführen. Vom Objekt geschieht eine weitere Transformation zur relationalen Datenbank. Der periodische Charakter der Daten muss hierbei mit beachtet werden.
+
+\paragraph{Erstellen des Webdienstes}
+
+Zur Anzeige der Daten werden diese durch ein Webframework gerendert. Um die Anfrage durch den Kartenausschnitt zu realisieren muss sichergestellt werden, dass die Bereichsdaten durch das Framework verarbeitet werden können.
+
+\paragraph{Rendern der Karte}
+
+OpenStreetMap-Karten lassen sich durch die Javascriptbibliothek Openlayers zeichnen. Dadurch ist es auch möglich, Objekte in die Karte einzuzeichnen. 
+
+Openlayers erlaubt außerdem das Einfügen von Plots. So ist es möglich, die Verlaufs- und Objektdaten der Bojen anzuzeigen.

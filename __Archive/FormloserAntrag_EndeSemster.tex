@@ -1,0 +1,178 @@
+%---------------------------------------------------------------------------
+\documentclass%%
+%---------------------------------------------------------------------------
+  [fontsize=11pt,%%          Schriftgroesse
+%---------------------------------------------------------------------------
+% Satzspiegel
+   paper=a4,%%               Papierformat
+   %enlargefirstpage=on,%%    Erste Seite anders
+   %pagenumber=headright,%%   Seitenzahl oben mittig  
+%---------------------------------------------------------------------------
+% Layout
+   headsepline=off,%%         Linie unter der Seitenzahl
+   parskip=half,%%           Abstand zwischen Absaetzen
+%---------------------------------------------------------------------------
+% Was kommt in den Briefkopf und in die Anschrift
+   fromalign=right,%%        Plazierung des Briefkopfs
+   fromphone=off,%%           Telefonnummer im Absender
+   fromrule=aftername,%%     Linie im Absender (aftername, afteraddress)
+   fromfax=off,%%            Faxnummer
+   fromemail=off,%%           Emailadresse
+   fromurl=on ,%%            Homepage / STEUERNUMMER
+   fromlogo=off,%%            Firmenlogo
+   addrfield=on,%%           Adressfeld fuer Fensterkuverts
+   backaddress=off,%%         ...und Absender im Fenster
+   subject=beforeopening,%%  Plazierung der Betreffzeile
+   locfield=narrow,%%        zusaetzliches Feld fuer Absender
+   foldmarks=off,%%           Faltmarken setzen
+   numericaldate=off,%%      Datum numerisch ausgeben
+   refline=narrow,%%         Geschaeftszeile im Satzspiegel
+   firstfoot=on,%%           Footerbereich
+%---------------------------------------------------------------------------
+% Formatierung
+   draft=off%%                Entwurfsmodus
+]{scrlttr2}
+%---------------------------------------------------------------------------
+\usepackage[english, ngerman]{babel}  
+\usepackage{url}
+\usepackage{lmodern}
+\usepackage[utf8]{inputenc} 
+\usepackage{tabularx}
+\usepackage{colortbl}
+% symbols: (cell)phone, email
+\RequirePackage{marvosym} % for gray color in header
+%\RequirePackage{color} % for gray color in header
+\usepackage[T1]{fontenc}
+%---------------------------------------------------------------------------
+% Schriften werden hier definiert
+\renewcommand*\familydefault{\sfdefault} % Latin Modern Sans
+\setkomafont{fromname}{\sffamily\color{mygray}\LARGE}
+%\setkomafont{pagenumber}{\sffamily}
+\setkomafont{subject}{\mdseries}
+\setkomafont{backaddress}{\mdseries}
+\setkomafont{fromaddress}{\small\sffamily\mdseries\color{mygray}}
+%---------------------------------------------------------------------------
+\begin{document}
+%---------------------------------------------------------------------------
+% Briefstil und Position des Briefkopfs
+\LoadLetterOption{DINmtext} %% oder: DINmtext, SN, SNleft, KOMAold.
+\makeatletter
+\@setplength{sigbeforevskip}{17mm} % Abstand der Signatur von dem closing
+\@setplength{firstheadvpos}{17mm} % Abstand des Absenderfeldes vom Top
+\@setplength{firstfootvpos}{275mm} % Abstand des Footers von oben
+\@setplength{firstheadwidth}{\paperwidth}
+\@setplength{locwidth}{70mm}   % Breite des Locationfeldes
+\@setplength{locvpos}{65mm}    % Abstand des Locationfeldes von oben
+\ifdim \useplength{toaddrhpos}>\z@
+  \@addtoplength[-2]{firstheadwidth}{\useplength{toaddrhpos}}
+\else
+  \@addtoplength[2]{firstheadwidth}{\useplength{toaddrhpos}}
+\fi
+\@setplength{foldmarkhpos}{6.5mm}
+\makeatother
+%---------------------------------------------------------------------------
+% Farben werden hier definiert
+% define gray for header
+\definecolor{mygray}{gray}{.55}
+% define blue for address
+\definecolor{myblue}{rgb}{0.25,0.45,0.75}
+
+%---------------------------------------------------------------------------
+% Absender Daten
+\setkomavar{fromname}{Sebastian Schmid}
+\setkomavar{fromaddress}{Wilhelminenhofstraße 13, 12459 Berlin}
+\setkomavar{fromphone}[\Mobilefone~]{+49\,(0)\,176\,988 37 418}
+%\setkomavar{fromfax}[\FAX~]{+49\,(0)\,123\,456\,789\,0}
+\setkomavar{fromemail}[\Letter~]{sebastian.schmid@posteo.de}
+\setkomavar{fromurl}[]{\textbf{S0543196}}
+%\setkomafont{fromaddress}{\small\rmfamily\mdseries\slshape\color{myblue}}
+
+\setkomavar{backaddressseparator}{ - }
+%\setkomavar{backaddress}{Max Mustermann, alternative Straße, alternative Stadt} % wenn erwünscht kann hier eine andere Backaddress eingetragen werden
+\setkomavar{signature}{Sebastian Schmid} 
+% signature same indention level as rest
+\renewcommand*{\raggedsignature}{\raggedright}
+\setkomavar{location}{\raggedleft
+
+}
+% Anlage neu definieren
+\renewcommand{\enclname}{Anlagen}
+\setkomavar{enclseparator}{: }
+%---------------------------------------------------------------------------
+% Seitenstil
+%pagenumber=footmiddle
+\pagestyle{plain}%% keine Header in der Kopfzeile bzw. plain
+\pagenumbering{arabic}
+%---------------------------------------------------------------------------
+%---------------------------------------------------------------------------
+\firstfoot{\footnotesize%
+\rule[3pt]{\textwidth}{.4pt} \\
+\begin{tabular}[t]{l@{}}% 
+\usekomavar{fromname}\\
+\usekomavar{fromaddress}\\
+\end{tabular}%
+\hfill
+\begin{tabular}[t]{l@{}}%
+  \usekomavar[\Mobilefone~]{fromphone}\\
+   \usekomavar[\Letter~]{fromemail}\\
+\end{tabular}%
+\ifkomavarempty{frombank}{}{%
+\hfill
+\begin{tabular}[t]{l@{}}%
+Bankverbindung: \\
+\usekomavar{frombank}
+\end{tabular}%
+}%
+}% 
+%---------------------------------------------------------------------------
+% Bankverbindung
+%\setkomavar{frombank}{Kto. 200\,25\,11\,55\\
+%BLZ 720\,501\,01\\
+%Kreissparkasse Augsburg}
+%---------------------------------------------------------------------------
+%\setkomavar{yourref}{}
+%\setkomavar{yourmail}{}
+%\setkomavar{myref}{}
+%\setkomavar{customer}{}
+%\setkomavar{invoice}{AS01.2012}
+%---------------------------------------------------------------------------
+% Datum und Ort werden hier eingetragen
+\setkomavar{date}{\today}
+\setkomavar{place}{Berlin}
+%---------------------------------------------------------------------------
+
+
+%---------------------------------------------------------------------------
+% Hier beginnt der Brief, mit der Anschrift des Empfängers
+
+\begin{letter}
+{
+Prüfungsausschuss des Fachbereichs IV der HTW Berlin\\
+Campus Treskowallee
+Gebäude A, Raum 044\\
+Treskowallee 8\\
+10318 Berlin\\
+}
+%---------------------------------------------------------------------------
+% Der Betreff des Briefes
+\setkomavar{subject}{%
+\textbf{Angabe der Einkommensverhältnisse}
+}
+%---------------------------------------------------------------------------
+\opening{Sehr geehrte Damen und Herren,}
+
+
+hiermit stelle ich einen formlosen Antrag für eine veränderte Bearbeitrungszeit für meine Bachelorarbeit.
+
+Nach Absprache mit Frau Schmidt verschiebe ich arbeitsbedingt den Anfang der Bachelorarbeit auf den \textbf{8. Januar 2018}.
+
+
+\closing{Mit freundlichen Grüßen}
+%---------------------------------------------------------------------------
+\ps{}
+%\cc{}
+%---------------------------------------------------------------------------
+\end{letter}
+%---------------------------------------------------------------------------
+\end{document}
+%---------------------------------------------------------------------------

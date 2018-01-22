@@ -1,0 +1,161 @@
+\documentclass[a4paper,12pt, ngerman,bibliography=totocnumbered ]{scrartcl}
+\usepackage[a4paper]{geometry}
+
+
+\geometry{a4paper,
+        tmargin=3cm, 
+        bmargin=3cm, 
+        lmargin=3.6cm, 
+        rmargin=2.2cm, 
+        headheight=3em, 
+        headsep=2em, 
+        footskip=1cm}
+        
+        
+\usepackage[onehalfspacing]{setspace}
+
+\renewcommand{\familydefault}{\sfdefault}
+
+
+\usepackage{amssymb}% http://ctan.org/pkg/amssymb
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+\newcommand{\pmark}{\ding{48}}
+
+\usepackage[utf8x]{inputenc}
+\usepackage{graphicx}
+\usepackage{pdfpages}
+\usepackage{wrapfig}
+
+\PassOptionsToPackage{hyphens}{url}\usepackage[colorlinks,
+pdfpagelabels,
+urlcolor = black,
+pdfstartview = FitH,
+bookmarksopen = true,
+bookmarksnumbered = true,
+linkcolor = black,
+plainpages = false,
+hypertexnames = false,
+citecolor = black,
+breaklinks=true] {hyperref}
+
+
+\usepackage[automark,headsepline]{scrlayer-scrpage}
+
+\clearpairofpagestyles
+\cfoot[\pagemark]{\pagemark}
+\lehead{\headmark}
+\rohead{\emph{\headmark}}
+\setlength\parindent{0pt}
+
+%\urlstyle{tt}
+
+\renewcommand{\UrlBreaks}{\do\/\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z}
+
+
+\usepackage[ngerman]{babel}
+
+%\addto\captionsngerman{\renewcommand{\refname}{Bisher gesichtete Literatur}}
+
+\usepackage{setspace}
+\usepackage[flushmargin]{footmisc}
+%\usepackage{tikz}
+%\usepackage{wrapfig}
+\usepackage{nameref}
+%\usepackage{lmodern}
+
+\usepackage[T1]{fontenc}
+\usepackage{inconsolata}
+
+\renewcommand\textbullet{\ensuremath{-}}
+
+\usepackage[nottoc]{tocbibind}
+\usepackage[verbose]{placeins}
+
+% -------------------------------------------------------
+%                   LISTINGS
+%
+%
+% Default fixed font does not support bold face
+\DeclareFixedFont{\ttb}{T1}{txtt}{b}{n}{10} % for bold
+\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{10}  % for normal
+%
+% Custom colors
+\usepackage{color}
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codebrown}{rgb}{0.3,0.3,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+%
+\usepackage{listings}
+%
+% -------------------------------
+% Python style for highlighting
+%
+\newcommand\pythonstyle{\lstset{
+    language=Python,
+    backgroundcolor = \color{backcolour},
+    keepspaces=true, 
+    commentstyle=\color{codebrown},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttm,
+    otherkeywords={self, yield},             % Add keywords here
+    keywordstyle=\ttb\color{deepblue},
+    emph={ArgoFloat,__init__,__iter__, __next__,__enter__,__exit__, __repr__, Measurement, Location, Profile, Record },          % Custom highlighting
+    emphstyle=\ttb\color{deepred},    % Custom highlighting style
+    stringstyle=\color{deepgreen},
+    frame=single,                         % Any extra options here
+    rulesepcolor=\color{gray},
+    rulecolor=\color{lightgray},
+    showstringspaces=false,            % 
+    breaklines=true,
+    postbreak=\mbox{\textcolor{lightgray}{$\hookrightarrow$}\space},
+    lineskip={-1.5pt},
+    numbers=left,
+    numbersep=5pt,
+    numberstyle=\small\color{lightgray},
+    stepnumber=1,
+    captionpos=b,
+    basicstyle=\ttfamily\footnotesize,
+    aboveskip=20pt,
+    belowskip=20pt,
+}}
+
+
+% Python environment
+\lstnewenvironment{python}[1][]
+{
+\pythonstyle
+\lstset{#1}
+}
+{}
+
+% Python for external files
+\newcommand\pythonexternal[2][]{{
+\pythonstyle
+\lstinputlisting[#1]{#2}}}
+
+% Python for inline
+\newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
+
+% -------------------------------------------------------------------------------------
+
+\renewcaptionname{ngerman}{\contentsname}{Inhalt}
+\renewcaptionname{ngerman}{\listfigurename}{Abbildungen}
+\renewcaptionname{ngerman}{\listtablename}{Tabellen}
+\renewcaptionname{ngerman}{\figurename}{Abbildung}
+\renewcaptionname{ngerman}{\tablename}{Tabelle}
+\setkomafont{caption}{\footnotesize\itshape}
+\setkomafont{captionlabel}{\usekomafont{caption}}
+
+
+
+
+

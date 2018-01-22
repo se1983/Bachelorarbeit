@@ -1,0 +1,66 @@
+\section{Einleitung}
+
+    \subsection{Motivation}
+    
+    Die Menschheit sieht sich gerade in der einmaligen Lage, über eine noch nie gekannte Ansammlung von Informationen zu verfügen. Die Komplexität der Technik und die Flüchtigkeit der Medien lässt auch vermuten, dass dieser Zustand nicht ewig anhalten wird.
+    
+    Doch diese Chance wird von vielen Menschen nicht genutzt. Anstatt, dass  Verfahren erarbeitet werden, die Informationen zu Bewerten, werden die Prinzipien der wissenschaftlichen Evidenz abgelehnt. Anstatt, dass Menschen sich aus den Informationen Wissen generieren, werden überprüfbare Fakten wie dem Klimawandel nicht geglaubt.
+    
+    Es scheint als wären diese Menschen der Flut an Informationen überdrüssig, als wende sich ein großer Teil überfordert davon ab.\\
+    
+    Die Frage ist, was kann dazu beitragen dieses Potential mehr zu nutzen? Was kann der Transfer von der reinen Information hin zum Wissen erleichtern und ermöglichen?
+    
+    
+    \subsection{Zielsetzung}
+    
+    Ziel dieser Arbeit soll ein Werkzeug sein, dass wissenschaftliche Daten in der Form aufarbeitet, dass die Auswirkungen des Klimawandels intuitiv erfahrbar werden.
+    Über ein webbasiertes exploratives Werkzeug werden Daten aus dem Argo Programm dargestellt. 
+    
+    Es soll eine Identifikation mit den Messwerten und der Beschaffung möglich sein.
+    
+    
+    \subsection{Zielgruppendefinition}
+    
+    Als eine mögliche Zielgruppe, wären Schulklassen zu sehen. Diese können durch eine Kontextvorgabe des Lehrenden  die Auswirkungen des Klimawandels auf die Weltmeere auswerten. Es kann auch das Interesse an der Arbeit der Wissenschaftler aus dem Argo Programm geschaffen werden. 
+
+    Das Angebot richtet sich aber nicht explizit an heranwachsende. Auch erwachsene Personen können sich hier bei Interesse weiterbilden. Die Applikation kann hier außerhalb der wissenschaftlichen Arbeit,  die Relevanz der Forschung und die in diesem Programm erhobenen Messwerte sehen. 
+    
+    
+    \subsection{Aufbau der Arbeit}
+    
+    Am Anfang dieser Arbeit wird das Argo Programm vorgestellt. es wird der Prozess der Datenerhebung und -veröffentlichung eingegangen. 
+    
+    Im Anschluss werden die Anforderungen für die zu entwickelte Software ausgearbeitet und damit die geeignetsten Werkzeuge ermittelt.
+    
+    Daraufhin wird das System entworfen. Es wird eine Architekturbeschreibung durchgeführt und die wichtigsten Geschäftprozesse beschrieben. Hier werden Alternativen aufgezeigt und versucht, die geeignetste zu ermitteln.
+    
+    Die Implementierung wird im darauf folgenden Kapitel beschrieben. Hier werden bestimmte Prozesse iterativ verfeinert und verbessert um die am besten geeignetste Lösung zu finden. 
+    
+    Um die Qualität der Software beschreiben zu können, folgt im darauffolgenden Kapitel eine beschreibung der Verwendeten Test-Verfahren. Es werden die durchgeführten Unit-tests sowie eine Umfrage zur bestimmung der Usability beschrieben.
+    
+    
+    Abschließend wird die fertige Software demonstriert. Hierbei wird versucht einen möglichst kritischen Blick auf das Projekt zu werfen und Alternativen und Verbesserungen vorzustellen.
+    
+    
+    
+    \subsection{existierende Lösungen}
+    
+    
+    \subsubsection{The JCOMM in situ Observing Platform Support centre} 
+    
+    Das Global Ocean Observing System (\url{http://www.goosocean.org/}) bietet mit \url{jcommops.org} eine fundierte und mächtige Grundlage für die wissenschaftliche Arbeit mit den von Argo gesammelten Daten. Neben der Darstellung von Karten erfährt der geneigte Nutzer hier, von Sensordaten über den Bautyp der jeweiligen Boje alles was die Bojen zu erzählen haben. Daneben werden über diese Plattform auch redaktionelle Reports veröffentlicht, um der Leserschaft ein Bild der aktuellen Lage unserer Weltmeere zu vermitteln. Über einen Twitter Account werden Änderungen an der Plattform und neu veröffentlichte Reports veröffentlicht. 
+    
+    Zwar bietet die Plattform durch ihre kartenbasierte explorative Darstellung ein ähnliches Angebot, wie es in ArgoData gemacht wird. Die schiere Fülle der Parameter erfordert vom Benutzer aber die Bereitsschaft sich vertieft in die Matherie einzuarbeiten. Damit richtet sich das Angebot des Global Ocean Observing Systems an Wissenschaftkler und Journalisten. Diesen dient sie als eine hervorragende Datengrundlage für deren Veröffentlichungen. Ein Benutzer aus der hier genannten Zielgruppendefinition wird von einem derartigen Angebot wohl eher abgeschfreckt sein, bevor er dessen Vorteile für sich erarbeiten konnte. 
+    
+    \subsubsection{Data selection and visualization tool at Coriolis GDAC}
+    
+    Das Data selection and visualization tool der Coriolis GDAC \footnote { siehe \cite{ArgoDataSelection}} ermöglicht den Download und von nach verschidenen Filterkriterien ausgewählten Datensätzen. Ein Betrachter erlaubt zusätzlich werte einer spezifischen Treipboje anzusehen und ihren bisher zurückgelegten Weg nachzuvollziehen.
+    
+    Auch wenn die Darstellung hier mit weniger Parameter auskommt, so ist die primäre Daseinsbetrechtigung dieser Plattform wohl das extrahieren der Daten um diese in einem wissenschaftlichen Paper verwenden zu können. Neben der akademischen Verwendung müsste ein Benutzer aber auch hier viel Neugierde und Zeit für die Einarbeitung in das Thema mitbringen um aus den angeboteten Daten einen Mehrwert für sich zu generieren. 
+    
+    
+    \subsection{Alleinstellungsmerkmal \& Abgrenzung}
+    
+    Das Ziel dieser Arbeit ist die Darstellung von wissenschaftlichen Daten aus dem Argo-Programm. Im Gegensatz zu den bereits vorhandenen Lösungen sollen die Daten aber nicht zur wissenschaftlichen Verwendung aufbereitet werden. Vielmehr sollen die hochkomplexen Daten auf ein einfach erfahrbares Maß herunter gebrochen werden. Zum Zeitpunkt dieser Arbeit existiert noch kein exploratives Tool für Daten des Argo Programms mit diesem Ansatz.
+    
+
