@@ -77,7 +77,30 @@ Es ist an dieser Stelle zu erkennen, dass zwei Stellen existieren, die die intri
 % BEGIN OOP ARCHITEKTUR   WEBAPPLIKATION
 
 \subsubsection{Entwurf der Webapplikation}
-.
+
+Die Webapplikation besteht aus zwei Teilkomponenten. Die erste Komponente ist für die Darstellung der Webseite zuständig. Durch diese wird HTMl Und Javascript ausgeliefert, welches im Webbrowser der Benutzenden angezeigt werden kann.
+
+Die zweite Teilkomponente ist dafür zuständig, die für die Anzeige benötigten Daten bereitzustellen. Die hier bereitgestellte API ist Zustandslos und dient als Schnittstelle zur Auswahl und Anzeige von Datensätzen aus dem Backend. 
+
+\subsubsection{Routen}
+
+\begin{python}
+GET     /
+
+GET     /argo_float/[identifier]
+GET     /argo_float/[identifier]/[data]
+GET     /last_seen
+GET     /last_seen/[force_reload]
+\end{python}
+
+
+Die darstellende Schicht verfügt nur über eine einzige Webseite. Über das Root-Element der Webapplikation wird die Karte mit den Messstationen ausgeliefert. Interaktionen und Veränderte Daten werden nach dem \textit{singlepage-Prinzip} über diese Seite verfügbar gemacht.
+
+Die API der Applikation soll zwei Funktionen erfüllen können. Für die Positionsbestimmung auf der Karte wird eine Geojson benötigt. Unter der Route \texttt{/last\_seen} finden sich die letzten Positionen der Mesststationen zusammen mit den Daten die beim Mouseover angezeigt werden sollen. Das hier zurückgegebene Geojson wird über einen Cache vorgehalten. Um diesen Cache neu zu generieren ist es möglich der Route die Variable \texttt{[force\_reload]} zu übergeben. Um versehendliche oder böswillige Verwendungen dieser Route zu verhindern, handelt es sich bei der Variable um ein Geheimnis. Nur wenn dieses richtig angegeben wird, werden die Daten neu erstellt.
+
+Über die Route \texttt{argo\_float/[identifier]} wird ein Datensatz der über \texttt{identifier} ausgewählten Messstation zurückgegeben. Um nur einen spezifischen Messdatensatz zu erhalten, kann dieser über die Variable \texttt{data} ausgewählt werden.
+
+
 % END
 
 % BEGIN DESIGN DARSTELLUNG
