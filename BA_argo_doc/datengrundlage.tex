@@ -53,11 +53,24 @@
     \cite{ArgoDataDocumentation}
     
     
+    \subsection{Datenstruktur}
     
     
-    \subsection{Datenfelder}
+In Listing \ref{lst:dataOrdnerstruktur} ist die Ordner Struktur der netCDF Dateien zu erkennen. Über den Ordnernamen aoml ist die Herkunft des DOI zu erkennen. In diesem Fall wurden die Dateien von einem Server der  Atlantic Oceanografic \& meterolocical Laboratory erstellt. Hier befindet sich für jede Messboje ein Unterordner. In diesem Fall sind die Ordner der Bojen 1900200 und 1900201 zu sehen. Die Dateien meta, prof, Rtraj und tech sind eine Quelle für Metainformationen. (TODO Was steht in den metadaten?) Die Messprofile einer Boje finden sich im Ordner \texttt{profiles}. Hier wird für jeden messzyklus eine Datei angelegt. Dieser startet bei 1 und inkrementiert über jeden Messzyklus um 1.
     
-    
-    Wie in Abbildung \ref{fig:argo_dataflow} zu sehen ist, 
+    \begin{python}[label={lst:dataOrdnerstruktur}, caption={test}]
+./aoml/1900200/
+- 1900200_meta.nc
+- 1900200_prof.nc
+- 1900200_Rtraj.nc
+- 1900200_tech.nc
+- profiles
+    - D1900200_001.nc
+    ...
+    - D1900200_215.nc
+    - D1900200_216.nc
+./aoml/1900201/
+...\end{python}
+
     
     
