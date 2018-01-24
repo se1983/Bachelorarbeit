@@ -1,1 +1,1 @@
-from . import _database_writer as database_writer
+from ._database_writer import DataBaseWriter

@@ -1,1 +1,1 @@
-from . import _data_extractor as data_extractor
+from ._data_extractor import ExtractorFactory

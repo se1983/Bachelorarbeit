@@ -15,7 +15,8 @@ manager = Manager(app)
 
 @manager.command
 def rebuild_db():
-    if prompt_bool("Are you sure you want to rebuild the database?"):
+    print(f"Datafolder: {app.config['data_folder']}")
+    if True or prompt_bool("Rebuild the database?"):
         db.drop_all()
         db.create_all()
 
