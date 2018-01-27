@@ -1,4 +1,5 @@
 import urllib
+from copy import deepcopy
 
 from flask import url_for
 from flask_script import Manager, Server, Shell, prompt_bool
@@ -15,13 +16,22 @@ manager = Manager(app)
 
 @manager.command
 def rebuild_db():
+
     print(f"Datafolder: {app.config['data_folder']}")
     if True or prompt_bool("Rebuild the database?"):
-        db.drop_all()
-        db.create_all()
+
+        session = db.create_scoped_session(
+            options={
+                'bind': db.get_engine(app, 'data_input'),
+                'binds': {}
+            }
+        )
+
+        db.drop_all(bind=['data_input'], app=app)
+        db.create_all(bind=['data_input'], app=app)
 
         for argo_float in db_writer:
-            argo_float.write_data()
+            argo_float.write_data(bind='data_input')
 
 
 @manager.command

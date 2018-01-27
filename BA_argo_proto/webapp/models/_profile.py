@@ -20,3 +20,7 @@ class Profile(db.Model):
 
     def __repr__(self):
         return f'<Profile {self.id!r}>'
+
+
+class ProfileTmpTable(Profile):
+    __bind_key__ = 'data_input'

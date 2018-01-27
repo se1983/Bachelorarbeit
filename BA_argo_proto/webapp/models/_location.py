@@ -16,3 +16,7 @@ class Location(db.Model):
 
     def __repr__(self):
         return f'<Location {self.id!r}>'
+
+
+class LocationTmpTable(Location):
+    __bind_key__ = 'data_input'

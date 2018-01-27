@@ -14,3 +14,7 @@ class ArgoFloat(db.Model):
 
     def __repr__(self):
         return f'<Argo Float {self.id!r}>'
+
+
+class ArgoFloatTmpTable(ArgoFloat):
+    __bind_key__ = 'data_input'

@@ -23,7 +23,7 @@ class Float(object):
     @staticmethod
     def __extract_float_data(file_paths):
         return \
-            [FloatDataset(p) for p in file_paths]
+            (FloatDataset(p) for p in file_paths)
 
     def __repr__(self):
         return \

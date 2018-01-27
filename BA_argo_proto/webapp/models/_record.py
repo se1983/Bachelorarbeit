@@ -19,3 +19,7 @@ class Record(db.Model):
 
     def __repr__(self):
         return f'<Record {self.id!r}>'
+
+
+class RecordTmpTable(Record):
+    __bind_key__ = 'data_input'

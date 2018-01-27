@@ -20,3 +20,7 @@ class Measurement(db.Model):
 
     def __repr__(self):
         return f'<Measurement {self.id!r}>'
+
+
+class MeasurementTmpTable(Measurement):
+    __bind_key__ = 'data_input'

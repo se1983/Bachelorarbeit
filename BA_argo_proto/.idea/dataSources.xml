@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="argo_db@dione.geblubber.org" uuid="c1c81178-9cf2-4890-923b-ed089603cb9d">
+    <data-source source="LOCAL" name="argo_temp_db@dione.geblubber.org" uuid="a68b2b34-8571-4a36-9d33-d15298bf4683">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://dione.geblubber.org:5432/argo_db</jdbc-url>
+      <jdbc-url>jdbc:postgresql://dione.geblubber.org:5432/argo_temp_db</jdbc-url>
     </data-source>
   </component>
 </project>

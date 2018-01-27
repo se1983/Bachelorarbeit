@@ -8,13 +8,21 @@ from webapp.models import ArgoFloat, Location, Measurement, Profile, Record
 #  used by the webapp.
 
 class ArgoFloatProfile:
-    def __init__(self, argo_float, db):
+    def __init__(self, argo_float, db, app):
         self.argo_float = argo_float
 
         self.db = db
+        self.app = app
 
-    def write_data(self):
+    def write_data(self, bind=None):
         print(f"Writing Argo Float {self.argo_float.identifier} to database.")
+
+        session = self.db.create_scoped_session(
+            options={
+                'bind': self.db.get_engine(self.app, bind),
+                'binds': {}
+            }
+        )
 
         # http://flask.pocoo.org/docs/0.12/appcontext/
         argo_model = ArgoFloat(identifier=self.argo_float.identifier)
@@ -28,9 +36,9 @@ class ArgoFloatProfile:
             profile_model = Profile(cycle=int(__data_set.cycle_number),
                                     timestamp=__data_set.date_creation,
                                     measurement=measurement_model)
-            self.db.session.add(Record(data_type='pressure', value=__data_set.pressure, profile=profile_model))
-            self.db.session.add(Record(data_type='temperature', value=__data_set.temperature, profile=profile_model))
-            self.db.session.add(Record(data_type='salinity', value=__data_set.salinity, profile=profile_model))
-            self.db.session.add(Record(data_type='conductivity', value=__data_set.conductivity, profile=profile_model))
+            session.add(Record(data_type='pressure', value=__data_set.pressure, profile=profile_model))
+            session.add(Record(data_type='temperature', value=__data_set.temperature, profile=profile_model))
+            session.add(Record(data_type='salinity', value=__data_set.salinity, profile=profile_model))
+            session.add(Record(data_type='conductivity', value=__data_set.conductivity, profile=profile_model))
 
-        self.db.session.commit()
+        session.commit()
