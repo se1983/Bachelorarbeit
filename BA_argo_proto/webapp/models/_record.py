@@ -11,7 +11,7 @@ class Record(db.Model):
     profile_id = db.Column(db.Integer, db.ForeignKey('profiles.id'))
     profile = db.relationship('Profile')
 
-    def __init__(self, data_type, value, profile):
+    def __init__(self, data_type, value, profile=None):
         self.value = float(value)
         self.data_type = data_type
 

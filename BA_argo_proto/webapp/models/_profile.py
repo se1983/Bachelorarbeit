@@ -13,10 +13,11 @@ class Profile(db.Model):
     measurement_id = db.Column(db.Integer, db.ForeignKey('measurements.id'))
     measurement = db.relationship('Measurement')
 
-    def __init__(self, cycle, timestamp, measurement):
+    def __init__(self, cycle, timestamp, measurement, records=None):
         self.cycle = cycle
         self.timestamp = timestamp
         self.measurement = measurement
+        self.records = records
 
     def __repr__(self):
         return f'<Profile {self.id!r}>'

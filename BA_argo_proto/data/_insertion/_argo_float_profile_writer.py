@@ -15,7 +15,6 @@ class ArgoFloatProfile:
         self.app = app
 
     def write_data(self, bind=None):
-        print(f"Writing Argo Float {self.argo_float.identifier} to database.")
 
         session = self.db.create_scoped_session(
             options={
@@ -33,12 +32,19 @@ class ArgoFloatProfile:
                                       longitude=__data_set.position['longitude'])
             measurement_model = Measurement(argo_float=argo_model,
                                             location=location_model)
-            profile_model = Profile(cycle=int(__data_set.cycle_number),
-                                    timestamp=__data_set.date_creation,
-                                    measurement=measurement_model)
-            session.add(Record(data_type='pressure', value=__data_set.pressure, profile=profile_model))
-            session.add(Record(data_type='temperature', value=__data_set.temperature, profile=profile_model))
-            session.add(Record(data_type='salinity', value=__data_set.salinity, profile=profile_model))
-            session.add(Record(data_type='conductivity', value=__data_set.conductivity, profile=profile_model))
+
+            records = (
+                Record(data_type='pressure', value=__data_set.pressure),
+                Record(data_type='temperature', value=__data_set.temperature),
+                Record(data_type='salinity', value=__data_set.salinity),
+                Record(data_type='conductivity', value=__data_set.conductivity)
+            )
+
+            profile = Profile(cycle=int(__data_set.cycle_number),
+                              timestamp=__data_set.date_creation,
+                              measurement=measurement_model,
+                              records=records)
+
+            session.add(profile)
 
         session.commit()
