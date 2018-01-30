@@ -1,8 +1,14 @@
 // TODO Neue struktur
 
-var margin = {top: 3, right: 2, bottom: 3, left: 5},
-    width = 300 - margin.left - margin.right,
-    height = 150 - margin.top - margin.bottom;
+var margin = {top: 3, right: 2, bottom: 50, left: 25},
+
+
+    node = d3.select(".chart").node();
+nodeDimensons = node.getBoundingClientRect();
+
+width = d3.select(".chart").node().getBoundingClientRect().width - margin.left - margin.right;
+height = d3.select(".panel-body").node().getBoundingClientRect().height;
+
 
 var parseDate = d3.time.format("%a, %d.%b %Y %H:%M:%S GMT").parse;
 //
@@ -17,7 +23,7 @@ var y = d3.scale.linear().range([height, 0]);
 // Einstellen der Achsenbeschriftungen
 // TODO: Eigene Steuerung der Tick-Abstände - Feststellen der Y-Achse
 var xAxis = d3.svg.axis().scale(x)
-    .orient("bottom").ticks(5);
+    .orient("bottom").ticks(10).tickFormat(d3.time.format("%b-%y"));
 var yAxis = d3.svg.axis().scale(y)
     .orient("left").ticks(10);
 // Define the line
@@ -31,7 +37,7 @@ var valueline = d3.svg.line()
     });
 
 // Das SVG Canvas Element hinzufügen
-var svg = d3.select(".animation")
+var svg = d3.select(".chart")
     .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
