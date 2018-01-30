@@ -73,8 +73,14 @@ function create_graph(identifier, data_type) {
     svg.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
-        .call(xAxis);
-    // Zeichnen der Y-Achse
+        .call(xAxis)
+        .selectAll("text")
+        .attr("y", 0)
+        .attr("x", -9)
+        .attr("dy", ".35em")
+        .attr("transform", "rotate(-90)")
+        .style("text-anchor", "end");
+        // Zeichnen der Y-Achse
     svg.append("g")
         .attr("class", "y axis")
         .call(yAxis);
