@@ -8,7 +8,6 @@ class Profile(db.Model):
     cycle = db.Column(db.Integer)
     timestamp = db.Column(db.Date)
 
-
     measurement_id = db.Column(db.Integer, db.ForeignKey('measurements.id'))
     measurement = db.relationship('Measurement')
 
@@ -26,7 +25,6 @@ class Profile(db.Model):
         self.pressure = float(pressure)
         self.conductivity = float(conductivity)
         self.temperature = float(temperature)
-
 
     def __repr__(self):
         return f'<Profile {self.id!r}>'

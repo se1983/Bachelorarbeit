@@ -2,9 +2,9 @@
 import os.path
 import pickle
 
-extract_data = lambda t, r: [x['value'] for x in r if x['data_type'] == t]
+from numpy import nan
 
-from . import db, app
+from webapp import db, app
 
 
 def _sql_query(file_name, var=None):
@@ -45,35 +45,21 @@ def gen_last_seen(force_reload=False):
     return data
 
 
-def argo_data_flat_datastructure(identifier, value=None):
+def argo_data_table_as_dicts(identifier):
+    """
+    Get the data of one specific ArgoFloat as dictionary.
+
+    :param identifier: Argo Float identifier.
+    :return: list(dicts): Data of ArgoFloat<identifier>.
+    """
     results = _sql_query('argo_data.sql', var=identifier)
 
-    if value is None:
-        return sorted([{
-            # Extracting needed values from the SQL Alchemy result Object
-            #
-            # @DOC
-            # - result is some weird and nasty thread-pool
-            #   -> copying the values into a less complex Datastructure
-            # - The Values have to be sorted by the time of the measurement.
-            'location': (row['latitude'], row['longitude']),
-            'timestamp': row['timestamp'],
-            'measurement_id': row['measurement_id'],
-            'data_type': row['data_type'],
-            'value': row['value'],
-            'profile_id': row['profile_id']
+    return sorted([{
+        'location': (row['latitude'], row['longitude']),
+        'timestamp': row['timestamp'],
+        'measurement_id': row['measurement_id'],
+        'pressure': row['pressure'],
+        'salinity': row['salinity'],
+        'conductivity': row['conductivity'],
+        'temperature': row['temperature'],
         } for row in results], key=lambda k: k['timestamp'])
-
-    map_entries = {
-        'location': lambda row: (row['latitude'], row['longitude']),
-        'timestamp': lambda row: row['timestamp'],
-        'measurement_id': lambda row: row['measurement_id'],
-        'data_type': lambda row: row['data_type'],
-        'value': lambda row: row['value'],
-        'profile_id': lambda row: row['profile_id']
-    }
-
-    return sorted([map_entries[value].update(map_entries['timestamp']) for row in results],
-                  key=lambda k: k['timestamp'])
-    # @TODO Generic datastructure
-
