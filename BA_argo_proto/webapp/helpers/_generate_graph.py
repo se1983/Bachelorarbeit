@@ -1,12 +1,14 @@
 from datetime import datetime
 from time import mktime, strptime
 
-from matplotlib.dates import DateFormatter
-from matplotlib.figure import Figure
+import matplotlib
 from matplotlib import gridspec
-from matplotlib.pyplot import style, gcf, xticks
+from matplotlib.figure import Figure
+from matplotlib.pyplot import style
 
 style.use('seaborn-whitegrid')
+matplotlib.rcParams['xtick.labelsize'] = 20
+matplotlib.rcParams['ytick.labelsize'] = 16
 
 
 def _create_plot(data):
@@ -25,15 +27,19 @@ def _create_plot(data):
 
     ax1 = fig.add_subplot(grid[0])
     ax1.set_xticklabels([])
+    ax1.set_ylabel("Temperature")
     do_plot(ax1, (dates, temperature))
 
     ax2 = fig.add_subplot(grid[1])
     ax2.set_xticklabels([])
+    ax2.set_ylabel("Salinity")
     do_plot(ax2, (dates, salinity))
 
     ax3 = fig.add_subplot(grid[2])
+    ax3.set_ylabel("Pressure")
     do_plot(ax3, (dates, pressure))
 
-    xticks(rotation=70)
+    fig.autofmt_xdate()
+    fig.tight_layout()
 
     return fig
