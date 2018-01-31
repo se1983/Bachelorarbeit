@@ -38,19 +38,7 @@
                 </div>
                 <div id="properties" class="panel-collapse collapse in">
                     <div class="panel-body">
-                        <p>
-                        <div class="chart" style="width: 100%">
-                            <script src="{{ url_for('static', filename='js/d3_plot_temperature.js') }}"></script>
-                            <script>create_graph('3900735', 'temperature')</script>
-                            </div>
-                        </p>
-                        <p>
-                            <img src="https://i.stack.imgur.com/eJOoO.png" style="width: 100%">
-                        </p>
-                        <p>
-                            <img src="https://i.stack.imgur.com/eJOoO.png" style="width: 100%">
-                        </p>
-
+                        <img src="{{ url_for('argo_app.deliver_chart', identifier='4900625') }}" style="width: 100%">
                     </div>
                 </div>
             </div>
