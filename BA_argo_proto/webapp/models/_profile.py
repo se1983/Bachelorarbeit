@@ -8,16 +8,25 @@ class Profile(db.Model):
     cycle = db.Column(db.Integer)
     timestamp = db.Column(db.Date)
 
-    records = db.relationship('Record', backref='profiles', lazy='dynamic')
 
     measurement_id = db.Column(db.Integer, db.ForeignKey('measurements.id'))
     measurement = db.relationship('Measurement')
 
-    def __init__(self, cycle, timestamp, measurement, records=None):
+    salinity = db.Column(db.Float)
+    pressure = db.Column(db.Float)
+    conductivity = db.Column(db.Float)
+    temperature = db.Column(db.Float)
+
+    def __init__(self, cycle, timestamp, measurement, salinity, pressure, conductivity, temperature):
         self.cycle = cycle
         self.timestamp = timestamp
         self.measurement = measurement
-        self.records = records
+
+        self.salinity = float(salinity)
+        self.pressure = float(pressure)
+        self.conductivity = float(conductivity)
+        self.temperature = float(temperature)
+
 
     def __repr__(self):
         return f'<Profile {self.id!r}>'

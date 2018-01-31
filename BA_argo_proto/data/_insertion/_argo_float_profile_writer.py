@@ -1,21 +1,29 @@
-from webapp.models import ArgoFloat, Location, Measurement, Profile, Record
+from webapp.models import ArgoFloat, Location, Measurement, Profile
 
-
-# TODO: Think about: To write the ArgoFloatProfile into the database we have dependencies to webapp.models.
-# Is there a better way, following the dependency inversion principle to inject the handler for writing a
-# Argo-Float Profile?
-# If this is the wrong position for this class, then where to put it? It is either a model neither something
-#  used by the webapp.
 
 class ArgoFloatProfile:
     def __init__(self, argo_float, db, app):
-        self.argo_float = argo_float
+        """
+        This writes the extracted data of an Argo Float into the database.
 
+        :param argo_float: ArgoFloat Datahandler (_extraction._float.Float)
+        :param db: SQLAlchemy
+        :param app: Flask App
+        """
+        self.argo_float = argo_float
         self.db = db
         self.app = app
 
     def write_data(self, bind=None):
+        """
+        Writing the Data of this ArgoFloat into the database.
 
+        :param bind: SQLAlchemy bind (optional).
+        """
+
+        # Create a session into the SQLAlchemy bind.  (see argo.cfg)
+        # Scoped-session: http://flask-sqlalchemy-session.readthedocs.io/en/v1.1/
+        # TODO: sessionfactory
         session = self.db.create_scoped_session(
             options={
                 'bind': self.db.get_engine(self.app, bind),
@@ -23,28 +31,32 @@ class ArgoFloatProfile:
             }
         )
 
-        # http://flask.pocoo.org/docs/0.12/appcontext/
-        argo_model = ArgoFloat(identifier=self.argo_float.identifier)
+        try:
+            argo_float_ = ArgoFloat(identifier=self.argo_float.identifier)
+            # Collecting the Data of each Profile of the ArgoFloat
+            for profile_data in self.argo_float.data:
+                location_ = Location(
+                    latitude=profile_data.position['latitude'],
+                    longitude=profile_data.position['longitude']
+                )
+                measurement_ = Measurement(
+                    argo_float=argo_float_,
+                    location=location_
+                )
 
-        for __data_set in self.argo_float.data:
-            # This is the block i don't like:
-            location_model = Location(latitude=__data_set.position['latitude'],
-                                      longitude=__data_set.position['longitude'])
-            measurement_model = Measurement(argo_float=argo_model,
-                                            location=location_model)
+                session.add(Profile(
+                    cycle=int(profile_data.cycle_number),
+                    timestamp=profile_data.date_creation,
+                    measurement=measurement_,
+                    salinity=profile_data.salinity,
+                    pressure=profile_data.pressure,
+                    conductivity=profile_data.conductivity,
+                    temperature=profile_data.temperature
+                ))
 
-            records = (
-                Record(data_type='pressure', value=__data_set.pressure),
-                Record(data_type='temperature', value=__data_set.temperature),
-                Record(data_type='salinity', value=__data_set.salinity),
-                Record(data_type='conductivity', value=__data_set.conductivity)
-            )
-
-            profile = Profile(cycle=int(__data_set.cycle_number),
-                              timestamp=__data_set.date_creation,
-                              measurement=measurement_model,
-                              records=records)
-
-            session.add(profile)
-
-        session.commit()
+            session.commit()
+        except Exception as err:
+            # Something went wrong. Rollback all changes before raising the exception again.
+            # The Data should always written as once. So there will be no mercy at this point.
+            session.rollback()
+            raise err
