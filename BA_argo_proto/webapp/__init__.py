@@ -6,7 +6,7 @@ from .models import db
 
 app = Flask(__name__, static_url_path='/static')
 app.config.from_pyfile('./argo.cfg')
-app.config['data_folder'] = "/root/aoml/"
+app.config['data_folder'] = "/tmp/aoml/"
 
 db.init_app(app)
 
