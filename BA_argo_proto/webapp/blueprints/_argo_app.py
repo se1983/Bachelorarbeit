@@ -1,4 +1,9 @@
-from flask import Blueprint, render_template
+from io import BytesIO
+
+from flask import Blueprint, render_template, url_for, make_response
+import requests
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+from ..helpers import create_plot
 
 argo_app = Blueprint('argo_app', __name__, template_folder='templates')
 
@@ -11,3 +16,26 @@ def index():
 @argo_app.route("/test")
 def test_pattern():
     return render_template('test_pattern.html')
+
+
+@argo_app.route("/chart/<identifier>")
+def deliver_chart(identifier=None):
+    if identifier is None:
+        return
+
+    # Send get-response to the api-url.
+    # This will return json with the data of the specified argofloat.
+    url = url_for('argo_api.get_argo_float', identifier=identifier, _external=True)
+    data = requests.get(url).json()
+
+    # The fig is the actual Plot.
+    fig = create_plot(data)
+    # To deliver the Plot, this have to drawed into a canvas/png picture.
+    canvas = FigureCanvas(fig)
+    png_output = BytesIO()
+    canvas.print_png(png_output)
+    # Directly add the png to the response.
+    response = make_response(png_output.getvalue())
+    response.headers['Content-Type'] = 'image/png'
+
+    return response
