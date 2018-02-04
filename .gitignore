@@ -305,3 +305,4 @@ fabric.properties
 BA_argo_playground/*
 "Quellen Studium"
 # End of https://www.gitignore.io/api/pycharm
+/.idea/

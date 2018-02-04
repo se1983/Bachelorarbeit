@@ -7,5 +7,17 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://dione.geblubber.org:5432/argo_temp_db</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="argo_db@dione.geblubber.org" uuid="5bc5a026-77f5-4920-9f88-c2301720d6fd">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://dione.geblubber.org:5432/argo_db</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="_s0543196__argo_data@db.f4.htw-berlin.de" uuid="880fbc6f-a913-472f-8b42-0b9c2a43f456">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://db.f4.htw-berlin.de:5432/_s0543196__argo_data</jdbc-url>
+    </data-source>
   </component>
 </project>

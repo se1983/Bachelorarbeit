@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="argo_db@dione.geblubber.org">
+  <database-model serializer="dbm" rdbms="POSTGRES" format-version="4.7">
+    <root id="1"/>
+    <database id="2" parent="1" name="argo_temp_db">
+      <ObjectId>25988</ObjectId>
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </database>
+    <database id="3" parent="1" name="postgres">
+      <ObjectId>12407</ObjectId>
+    </database>
+    <database id="4" parent="1" name="argo_db">
+      <ObjectId>25502</ObjectId>
+    </database>
+    <role id="5" parent="1" name="argo_user">
+      <ObjectId>16386</ObjectId>
+      <Inherit>1</Inherit>
+      <CanLogin>1</CanLogin>
+      <ConnectionLimit>-1</ConnectionLimit>
+    </role>
+    <role id="6" parent="1" name="mypguser">
+      <ObjectId>16384</ObjectId>
+      <Inherit>1</Inherit>
+      <CanLogin>1</CanLogin>
+      <ConnectionLimit>-1</ConnectionLimit>
+    </role>
+    <role id="7" parent="1" name="pg_signal_backend">
+      <ObjectId>4200</ObjectId>
+      <Inherit>1</Inherit>
+      <ConnectionLimit>-1</ConnectionLimit>
+    </role>
+    <role id="8" parent="1" name="postgres">
+      <ObjectId>10</ObjectId>
+      <SuperRole>1</SuperRole>
+      <Inherit>1</Inherit>
+      <CreateRole>1</CreateRole>
+      <CreateDb>1</CreateDb>
+      <CanLogin>1</CanLogin>
+      <Replication>1</Replication>
+      <ConnectionLimit>-1</ConnectionLimit>
+      <BypassRls>1</BypassRls>
+    </role>
+    <schema id="9" parent="2" name="public">
+      <ObjectId>2200</ObjectId>
+      <IntrospectionTimestamp>2018-01-30.10:43:34.205</IntrospectionTimestamp>
+      <IntrospectionStateNumber>1854469</IntrospectionStateNumber>
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="10" parent="2" name="pg_catalog">
+      <ObjectId>11</ObjectId>
+    </schema>
+    <schema id="11" parent="2" name="pg_toast">
+      <ObjectId>99</ObjectId>
+    </schema>
+    <schema id="12" parent="2" name="pg_temp_1">
+      <ObjectId>11848</ObjectId>
+    </schema>
+    <schema id="13" parent="2" name="pg_toast_temp_1">
+      <ObjectId>11849</ObjectId>
+    </schema>
+    <schema id="14" parent="2" name="information_schema">
+      <ObjectId>12119</ObjectId>
+    </schema>
+    <sequence id="15" parent="9" name="argo_floats_id_seq">
+      <ObjectId>27855</ObjectId>
+      <StateNumber>1854465</StateNumber>
+      <SequenceIdentity>1</SequenceIdentity>
+      <BelongsToColumn>1</BelongsToColumn>
+      <CacheSize>1</CacheSize>
+    </sequence>
+    <sequence id="16" parent="9" name="locations_id_seq">
+      <ObjectId>27863</ObjectId>
+      <StateNumber>1854466</StateNumber>
+      <SequenceIdentity>1</SequenceIdentity>
+      <BelongsToColumn>1</BelongsToColumn>
+      <CacheSize>1</CacheSize>
+    </sequence>
+    <sequence id="17" parent="9" name="measurements_id_seq">
+      <ObjectId>27871</ObjectId>
+      <StateNumber>1854467</StateNumber>
+      <SequenceIdentity>1</SequenceIdentity>
+      <BelongsToColumn>1</BelongsToColumn>
+      <CacheSize>1</CacheSize>
+    </sequence>
+    <sequence id="18" parent="9" name="profiles_id_seq">
+      <ObjectId>27889</ObjectId>
+      <StateNumber>1854468</StateNumber>
+      <SequenceIdentity>1</SequenceIdentity>
+      <BelongsToColumn>1</BelongsToColumn>
+      <CacheSize>1</CacheSize>
+    </sequence>
+    <sequence id="19" parent="9" name="records_id_seq">
+      <ObjectId>27902</ObjectId>
+      <StateNumber>1854469</StateNumber>
+      <SequenceIdentity>1</SequenceIdentity>
+      <BelongsToColumn>1</BelongsToColumn>
+      <CacheSize>1</CacheSize>
+    </sequence>
+    <table id="20" parent="9" name="argo_floats">
+      <ObjectId>27857</ObjectId>
+      <StateNumber>1854467</StateNumber>
+    </table>
+    <table id="21" parent="9" name="locations">
+      <ObjectId>27865</ObjectId>
+      <StateNumber>1854467</StateNumber>
+    </table>
+    <table id="22" parent="9" name="measurements">
+      <ObjectId>27873</ObjectId>
+      <StateNumber>1854468</StateNumber>
+    </table>
+    <table id="23" parent="9" name="profiles">
+      <ObjectId>27891</ObjectId>
+      <StateNumber>1854469</StateNumber>
+    </table>
+    <table id="24" parent="9" name="records">
+      <ObjectId>27904</ObjectId>
+      <StateNumber>1854469</StateNumber>
+    </table>
+    <column id="25" parent="20" name="id">
+      <Position>1</Position>
+      <DataType>integer|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1854465</StateNumber>
+      <DefaultExpression>nextval(&apos;argo_floats_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+      <SequenceName>argo_floats_id_seq</SequenceName>
+    </column>
+    <column id="26" parent="20" name="identifier">
+      <Position>2</Position>
+      <DataType>varchar(10)|0</DataType>
+      <StateNumber>1854465</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <index id="27" parent="20" name="argo_floats_pkey">
+      <ObjectId>27861</ObjectId>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="28" parent="20" name="argo_floats_pkey">
+      <ObjectId>27862</ObjectId>
+      <ColNames>id</ColNames>
+      <UnderlyingIndexName>argo_floats_pkey</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <column id="29" parent="21" name="id">
+      <Position>1</Position>
+      <DataType>integer|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1854466</StateNumber>
+      <DefaultExpression>nextval(&apos;locations_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+      <SequenceName>locations_id_seq</SequenceName>
+    </column>
+    <column id="30" parent="21" name="longitude">
+      <Position>2</Position>
+      <DataType>double precision|0</DataType>
+      <StateNumber>1854466</StateNumber>
+      <TypeId>701</TypeId>
+    </column>
+    <column id="31" parent="21" name="latitude">
+      <Position>3</Position>
+      <DataType>double precision|0</DataType>
+      <StateNumber>1854466</StateNumber>
+      <TypeId>701</TypeId>
+    </column>
+    <index id="32" parent="21" name="locations_pkey">
+      <ObjectId>27869</ObjectId>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="33" parent="21" name="locations_pkey">
+      <ObjectId>27870</ObjectId>
+      <ColNames>id</ColNames>
+      <UnderlyingIndexName>locations_pkey</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <column id="34" parent="22" name="id">
+      <Position>1</Position>
+      <DataType>integer|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1854467</StateNumber>
+      <DefaultExpression>nextval(&apos;measurements_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+      <SequenceName>measurements_id_seq</SequenceName>
+    </column>
+    <column id="35" parent="22" name="argo_float_id">
+      <Position>2</Position>
+      <DataType>integer|0</DataType>
+      <StateNumber>1854467</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="36" parent="22" name="location_id">
+      <Position>3</Position>
+      <DataType>integer|0</DataType>
+      <StateNumber>1854467</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <index id="37" parent="22" name="measurements_pkey">
+      <ObjectId>27877</ObjectId>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="38" parent="22" name="measurements_pkey">
+      <ObjectId>27878</ObjectId>
+      <ColNames>id</ColNames>
+      <UnderlyingIndexName>measurements_pkey</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="39" parent="22" name="measurements_argo_float_id_fkey">
+      <ObjectId>27879</ObjectId>
+      <ColNames>argo_float_id</ColNames>
+      <RefTableId>27857</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>argo_floats</RefTableName>
+      <RefKeyName>argo_floats_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="40" parent="22" name="measurements_location_id_fkey">
+      <ObjectId>27884</ObjectId>
+      <ColNames>location_id</ColNames>
+      <RefTableId>27865</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>locations</RefTableName>
+      <RefKeyName>locations_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="41" parent="23" name="id">
+      <Position>1</Position>
+      <DataType>integer|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1854468</StateNumber>
+      <DefaultExpression>nextval(&apos;profiles_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+      <SequenceName>profiles_id_seq</SequenceName>
+    </column>
+    <column id="42" parent="23" name="cycle">
+      <Position>2</Position>
+      <DataType>integer|0</DataType>
+      <StateNumber>1854468</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="43" parent="23" name="timestamp">
+      <Position>3</Position>
+      <DataType>date|0</DataType>
+      <StateNumber>1854468</StateNumber>
+      <TypeId>1082</TypeId>
+    </column>
+    <column id="44" parent="23" name="measurement_id">
+      <Position>4</Position>
+      <DataType>integer|0</DataType>
+      <StateNumber>1854468</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <index id="45" parent="23" name="profiles_pkey">
+      <ObjectId>27895</ObjectId>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="46" parent="23" name="profiles_pkey">
+      <ObjectId>27896</ObjectId>
+      <ColNames>id</ColNames>
+      <UnderlyingIndexName>profiles_pkey</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="47" parent="23" name="profiles_measurement_id_fkey">
+      <ObjectId>27897</ObjectId>
+      <ColNames>measurement_id</ColNames>
+      <RefTableId>27873</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>measurements</RefTableName>
+      <RefKeyName>measurements_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="48" parent="24" name="id">
+      <Position>1</Position>
+      <DataType>integer|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1854469</StateNumber>
+      <DefaultExpression>nextval(&apos;records_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+      <SequenceName>records_id_seq</SequenceName>
+    </column>
+    <column id="49" parent="24" name="data_type">
+      <Position>2</Position>
+      <DataType>varchar(30)|0</DataType>
+      <StateNumber>1854469</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="50" parent="24" name="value">
+      <Position>3</Position>
+      <DataType>double precision|0</DataType>
+      <StateNumber>1854469</StateNumber>
+      <TypeId>701</TypeId>
+    </column>
+    <column id="51" parent="24" name="profile_id">
+      <Position>4</Position>
+      <DataType>integer|0</DataType>
+      <StateNumber>1854469</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <index id="52" parent="24" name="records_pkey">
+      <ObjectId>27908</ObjectId>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="53" parent="24" name="records_pkey">
+      <ObjectId>27909</ObjectId>
+      <ColNames>id</ColNames>
+      <UnderlyingIndexName>records_pkey</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="54" parent="24" name="records_profile_id_fkey">
+      <ObjectId>27910</ObjectId>
+      <ColNames>profile_id</ColNames>
+      <RefTableId>27891</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>profiles</RefTableName>
+      <RefKeyName>profiles_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+  </database-model>
+</dataSource>
