@@ -18,8 +18,8 @@ def _feature_list(rows):
     return [{"type": "Feature",
              "geometry": {"type": "Point",
                           "coordinates": [lon, lat]},
-             "properties": {"Argo Float": argo_float,
-                            "last seen": last_seen}
+             "properties": {"identifier": argo_float,
+                            "last_seen": last_seen}
              } for (argo_float, lon, lat, last_seen) in rows]
 
 
