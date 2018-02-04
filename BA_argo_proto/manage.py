@@ -16,14 +16,20 @@ manager = Manager(app)
 
 @manager.command
 def rebuild_db():
+    argo_data_dir = app.config['ARGO_DATA_DIRECTORY']
 
-    print(f"Datafolder: {app.config['data_folder']}")
-    if True or prompt_bool("Rebuild the database?"):
+    print(f"Datafolder: {argo_data_dir}")
 
-        _extractor = ExtractorFactory(app.config['data_folder'])
-        float_count = _extractor.float_count()
-        db_writer = DataBaseWriter(argo_floats=_extractor.get_data_sets(), db=db, app=app)
+    _extractor = ExtractorFactory(argo_data_dir)
+    float_count = _extractor.float_count()
 
+    db_writer = DataBaseWriter(
+        argo_floats=_extractor.get_data_sets(), db=db, app=app
+    )
+
+    print(float_count)
+
+    if prompt_bool("Rebuild the database?"):
         db.drop_all(bind=['data_input'], app=app)
         db.create_all(bind=['data_input'], app=app)
 
