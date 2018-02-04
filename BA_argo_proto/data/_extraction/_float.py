@@ -3,7 +3,7 @@ import os
 import numpy as np
 
 from ._data_set import FloatDataset
-
+from ._data_set_context_manager import DatasetContextManager
 
 class Float(object):
     def __init__(self, datafolder_path):
@@ -24,6 +24,11 @@ class Float(object):
     def __extract_float_data(file_paths):
         return \
             (FloatDataset(p) for p in file_paths)
+
+    def __extract_meta_data(self, file_path):
+        with DatasetContextManager(file_path) as ds:
+            pass
+
 
     def __repr__(self):
         return \
