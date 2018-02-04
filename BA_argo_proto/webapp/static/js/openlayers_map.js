@@ -1,17 +1,26 @@
+// http://plnkr.co/edit/zbqKeJ4lXQ8C60TC4fza?p=preview
+
 var mapLayer = new ol.layer.Tile({
     source: new ol.source.OSM()
 });
 
+// TODO Vector layer css kämpft gegen bootstraps style
+var mapVectorLayer = new ol.layer.Vector({
+    source: new ol.source.Vector({
+        url: '/static/countries.geo.json',
+        format: new ol.format.GeoJSON()
+    })
+});
 
 function geometryStyle(feature) {
     var style = [],
-        geometry_type = feature.getGeometry().getType(),
+        feature_properities = feature.getProperties()['identifier'],
         white = [255, 255, 255, 1],
         blue = [0, 153, 255, 1],
-        red = [255, 0, 0, 1],
-        width = 3;
+        width = 1;
 
-    style['Point'] = [
+
+    var style = [
         new ol.style.Style({
             image: new ol.style.Circle({
                 radius: width * 2,
@@ -23,7 +32,28 @@ function geometryStyle(feature) {
         })
     ];
 
-    return style[geometry_type];
+    return style;
+}
+
+function hoverStyle() {
+    var
+        white = [255, 255, 255, 1],
+        blue = [0, 153, 255, 1],
+        width = 3;
+
+    var style = [
+        new ol.style.Style({
+            image: new ol.style.Circle({
+                radius: width * 2,
+                fill: new ol.style.Fill({color: blue}),
+                stroke: new ol.style.Stroke({
+                    color: white, width: width / 2
+                })
+            })
+        })
+    ];
+
+    return style;
 }
 
 
@@ -48,6 +78,24 @@ var map = new ol.Map({
         center: [0, 0],
         zoom: 2
     })
+});
+
+var hoverInteraction = new ol.interaction.Select({
+    condition: ol.events.condition.pointerMove,
+    layers: [argoFloatsLayer]
+});
+map.addInteraction(hoverInteraction);
+
+var featureOverlay = new ol.FeatureOverlay({
+    map: map,
+    style: hoverStyle
+});
+
+hoverInteraction.on('select', function (evt) {
+    if (evt.selected.length > 0) {
+        console.info('selected: ' + evt.selected[0].getId());
+
+    }
 });
 
 
