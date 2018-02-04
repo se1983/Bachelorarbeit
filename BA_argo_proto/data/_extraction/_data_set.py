@@ -2,19 +2,7 @@ import datetime
 
 import numpy as np
 
-
-from netCDF4 import Dataset
-
-
-class DatasetContextManager(object):
-    def __init__(self, file_path):
-        self.ds = Dataset(file_path)
-
-    def __enter__(self):
-        return self.ds
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        self.ds.close()
+from ._data_set_context_manager import DatasetContextManager
 
 
 class FloatDataset(object):
@@ -27,7 +15,7 @@ class FloatDataset(object):
             def variables_(x):
                 if x not in ds.variables:
                     return np.nan
-                return np.ma.getdata(ds.variables[x][:])[0]
+                return np.ma.getdata(ds.variables[x][:])
 
             #: Average if a is np.array else do nothing
             def average_(a):
@@ -36,19 +24,18 @@ class FloatDataset(object):
                 return np.average(a)
 
             #: IDENTIFIER
-            self.float_identifier = variables_('PLATFORM_NUMBER')
-            self.cycle_number = variables_('CYCLE_NUMBER')
-            # DONE @ Docs julday (seite 22 user manual)
+            self.float_identifier = variables_('PLATFORM_NUMBER')[0]
+            self.cycle_number = variables_('CYCLE_NUMBER')[0]
 
-            self.date_creation = datetime.datetime.strptime('1950-01-01', "%Y-%m-%d") + datetime.timedelta(
-                days=int(variables_('JULD')))
+            self.date_creation = datetime.datetime.strptime('1950-01-01', "%Y-%m-%d") + \
+                                 datetime.timedelta(days=int(variables_('JULD')[0]))
 
             #: DIMENSIONS
             self.n_param = ds.dimensions['N_PARAM'].size
 
             #: DATA
-            self.position = {'latitude': variables_('LATITUDE'),
-                             'longitude': variables_('LONGITUDE')}
+            self.position = {'latitude': variables_('LATITUDE')[0],
+                             'longitude': variables_('LONGITUDE')[0]}
             self.pressure = average_(variables_('PRES'))
             self.temperature = average_(variables_('TEMP'))
             self.salinity = average_(variables_('PSAL'))
