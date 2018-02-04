@@ -2,24 +2,33 @@ var mapLayer = new ol.layer.Tile({
     source: new ol.source.OSM()
 });
 
-var image = new ol.style.Circle({
-    radius: 2.5,
-    fill: null,
-    stroke: new ol.style.Stroke({color: 'red', width: 1})
-});
 
-var styles = {
-    'Point': new ol.style.Style({
-        image: image
-    })
-};
+function geometryStyle(feature) {
+    var style = [],
+        geometry_type = feature.getGeometry().getType(),
+        white = [255, 255, 255, 1],
+        blue = [0, 153, 255, 1],
+        red = [255, 0, 0, 1],
+        width = 3;
 
-var styleFunction = function (feature) {
-    return styles[feature.getGeometry().getType()];
-};
+    style['Point'] = [
+        new ol.style.Style({
+            image: new ol.style.Circle({
+                radius: width * 2,
+                fill: new ol.style.Fill({color: blue}),
+                stroke: new ol.style.Stroke({
+                    color: white, width: width / 2
+                })
+            })
+        })
+    ];
+
+    return style[geometry_type];
+}
+
 
 var argoFloatsLayer = new ol.layer.Vector({
-    style: styleFunction,
+    style: geometryStyle,
     source: new ol.source.Vector({
         format: new ol.format.GeoJSON(),
         url: "/last_seen"
