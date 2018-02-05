@@ -54,7 +54,7 @@ def list_routes():
         print(line)
 
 
-manager.add_command("runserver", Server(threaded=True))
+manager.add_command("runserver", Server(threaded=True, host="0.0.0.0", port=9000))
 manager.add_command("shell", Shell())
 
 if __name__ == "__main__":

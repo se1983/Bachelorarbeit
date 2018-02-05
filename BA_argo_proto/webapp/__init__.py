@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_twisted import Twisted
 
 from .models import db
 
@@ -17,3 +18,5 @@ app.register_blueprint(argo_app)
 # Announce all routes of the Application
 
 from . import models
+
+twisted = Twisted(app)
