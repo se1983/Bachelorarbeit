@@ -35,27 +35,6 @@ function geometryStyle(feature) {
     return style;
 }
 
-function hoverStyle() {
-    var
-        white = [255, 255, 255, 1],
-        blue = [0, 153, 255, 1],
-        width = 3;
-
-    var style = [
-        new ol.style.Style({
-            image: new ol.style.Circle({
-                radius: width * 2,
-                fill: new ol.style.Fill({color: blue}),
-                stroke: new ol.style.Stroke({
-                    color: white, width: width / 2
-                })
-            })
-        })
-    ];
-
-    return style;
-}
-
 
 var argoFloatsLayer = new ol.layer.Vector({
     style: geometryStyle,
@@ -81,6 +60,29 @@ var map = new ol.Map({
     })
 });
 
+/* Hover Stylechange */
+// change the style of a float if the pointer is hovering.
+// This will give the user a feedback which float is waiting for interaction.
+function hoverStyle() {
+    var
+        white = [255, 255, 255, 1],
+        blue = [0, 153, 255, 1],
+        width = 3;
+
+    var style = [
+        new ol.style.Style({
+            image: new ol.style.Circle({
+                radius: width * 2,
+                fill: new ol.style.Fill({color: blue}),
+                stroke: new ol.style.Stroke({
+                    color: white, width: width / 2
+                })
+            })
+        })
+    ];
+
+    return style;
+}
 
 var hoverInteraction = new ol.interaction.Select({
     condition: ol.events.condition.pointerMove,
@@ -102,6 +104,9 @@ hoverInteraction.on('select', function (evt) {
 
     }
 });
+
+////////////////////////////////////////////////7
+
 
 /* Tooltips */
 // A tooltip will be shown if the pointer hovers over a ArgoFloat Feature
