@@ -4,15 +4,26 @@ var mapLayer = new ol.layer.Tile({
     source: new ol.source.OSM()
 });
 
+
+var defaultStyle =
+    new ol.style.Style({
+        fill: new ol.style.Fill({
+            color: [0, 0, 0, 1]
+        }),
+        stroke: new ol.style.Stroke({
+            color: [0, 0, 0, 1],
+            width: 1
+        })
+    });
 // TODO Vector layer css kämpft gegen bootstraps style
 var mapVectorLayer = new ol.layer.Vector({
     source: new ol.source.Vector({
         url: '/static/countries.geo.json',
         format: new ol.format.GeoJSON()
-    })
+    }),
 });
 
-function geometryStyle(feature) {
+function FloatStyle(feature) {
     var style = [],
         feature_properities = feature.getProperties()['identifier'],
         white = [255, 255, 255, 1],
@@ -37,7 +48,7 @@ function geometryStyle(feature) {
 
 
 var argoFloatsLayer = new ol.layer.Vector({
-    style: geometryStyle,
+    style: FloatStyle,
     source: new ol.source.Vector({
         format: new ol.format.GeoJSON(),
         url: "/last_seen"
@@ -46,7 +57,7 @@ var argoFloatsLayer = new ol.layer.Vector({
 
 
 var map = new ol.Map({
-    layers: [mapLayer, argoFloatsLayer],
+    layers: [mapVectorLayer, argoFloatsLayer],
     target: 'map',
     controls: ol.control.defaults({
         attributionOptions: /** @type {olx.control.AttributionOptions} */ ({
@@ -126,7 +137,8 @@ var displayFeatureInfo = function (pixel) {
     var feature = map.forEachFeatureAtPixel(pixel, function (feature, layer) {
         return feature;
     });
-    if (feature) {
+    if (feature && feature.getGeometry().getType() === 'Point') {
+        console.log();
         var properties = feature.getProperties(),
             identifier = properties['identifier'],
             last_seen = new Date(Date.parse(properties['last_seen'])).toDateString(),
