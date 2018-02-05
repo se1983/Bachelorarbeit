@@ -1,5 +1,5 @@
 // http://plnkr.co/edit/zbqKeJ4lXQ8C60TC4fza?p=preview
-
+// http://jsfiddle.net/expedio/mz19nzug/
 var mapLayer = new ol.layer.Tile({
     source: new ol.source.OSM()
 });
@@ -19,7 +19,7 @@ function geometryStyle(feature) {
         blue = [0, 153, 255, 1],
         width = 1;
 
-
+    // TODO different styles for different floatstates
     var style = [
         new ol.style.Style({
             image: new ol.style.Circle({
@@ -81,15 +81,19 @@ var map = new ol.Map({
     })
 });
 
+
 var hoverInteraction = new ol.interaction.Select({
     condition: ol.events.condition.pointerMove,
     layers: [argoFloatsLayer]
 });
 map.addInteraction(hoverInteraction);
 
-var featureOverlay = new ol.FeatureOverlay({
+var featureOverlay = new ol.layer.Vector({
     map: map,
-    style: hoverStyle
+    useSpatialIndex: false,
+    updateWhileAnimating: true,
+    updateWhileInteracting: true,
+    style: hoverStyle,
 });
 
 hoverInteraction.on('select', function (evt) {
@@ -99,4 +103,44 @@ hoverInteraction.on('select', function (evt) {
     }
 });
 
+/* Tooltips */
+// A tooltip will be shown if the pointer hovers over a ArgoFloat Feature
+var info = $('#info');
+info.tooltip({
+    animation: false,
+    trigger: 'manual'
+});
 
+var displayFeatureInfo = function (pixel) {
+
+    info.css({
+        left: pixel[0] + 'px',
+        top: (pixel[1] - 15) + 'px'
+    });
+    var feature = map.forEachFeatureAtPixel(pixel, function (feature, layer) {
+        return feature;
+    });
+    if (feature) {
+        var props = feature.getProperties(),
+            identifier = props['identifier'],
+            last_seen = props['last_seen'];
+
+
+        info.tooltip('hide')
+            .attr('data-original-title', identifier + '( ' + last_seen + ' )')
+            .tooltip('fixTitle')
+            .tooltip('show');
+    } else {
+        info.tooltip('hide');
+    }
+};
+
+map.on('pointermove', function (evt) {
+    if (evt.dragging) {
+        info.tooltip('hide');
+        return;
+    }
+    displayFeatureInfo(map.getEventPixel(evt.originalEvent));
+});
+
+/////////////////
