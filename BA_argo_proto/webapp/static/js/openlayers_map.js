@@ -1,5 +1,6 @@
 // http://plnkr.co/edit/zbqKeJ4lXQ8C60TC4fza?p=preview
 // http://jsfiddle.net/expedio/mz19nzug/
+// https://openlayers.org/en/latest/examples/select-features.html
 var mapLayer = new ol.layer.Tile({
     source: new ol.source.OSM()
 });
@@ -74,48 +75,12 @@ var map = new ol.Map({
 /* Hover Stylechange */
 // change the style of a float if the pointer is hovering.
 // This will give the user a feedback which float is waiting for interaction.
-function hoverStyle() {
-    var
-        white = [255, 255, 255, 1],
-        blue = [0, 153, 255, 1],
-        width = 3;
-
-    var style = [
-        new ol.style.Style({
-            image: new ol.style.Circle({
-                radius: width * 2,
-                fill: new ol.style.Fill({color: blue}),
-                stroke: new ol.style.Stroke({
-                    color: white, width: width / 2
-                })
-            })
-        })
-    ];
-
-    return style;
-}
-
 var hoverInteraction = new ol.interaction.Select({
     condition: ol.events.condition.pointerMove,
     layers: [argoFloatsLayer]
 });
+
 map.addInteraction(hoverInteraction);
-
-var featureOverlay = new ol.layer.Vector({
-    map: map,
-    useSpatialIndex: false,
-    updateWhileAnimating: true,
-    updateWhileInteracting: true,
-    style: hoverStyle,
-});
-
-hoverInteraction.on('select', function (evt) {
-    if (evt.selected.length > 0) {
-        console.info('selected: ' + evt.selected[0].getId());
-
-    }
-});
-
 ////////////////////////////////////////////////7
 
 
@@ -161,4 +126,39 @@ map.on('pointermove', function (evt) {
     displayFeatureInfo(map.getEventPixel(evt.originalEvent));
 });
 
+
 /////////////////
+
+
+/* Clicking at Float */
+
+
+var displayPlot = function (pixel) {
+    var feature = map.forEachFeatureAtPixel(pixel, function (feature, layer) {
+        return feature;
+    });
+    var img = new Image();
+    var div = document.getElementById('chart-picture');
+    var width = div.offsetWidth;
+
+    if (div.hasChildNodes()) {
+        div.innerHTML = '';
+    }
+
+    if (feature && feature.getGeometry().getType() === 'Point') {
+        var identifier = feature.getProperties()['identifier'];
+
+
+        img.onload = function () {
+            div.appendChild(img);
+        };
+
+        img.src = '/chart/' + identifier;
+        img.width = width;
+    }
+};
+
+
+map.on('click', function (evt) {
+    displayPlot(map.getEventPixel(evt.originalEvent))
+});
