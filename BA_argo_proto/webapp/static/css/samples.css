@@ -188,9 +188,6 @@ body {
     filter: alpha(opacity=75);
 }
 
-.tooltip.top .tooltip-arrow {
-    border-top-color: white;
-}
 
 .tooltip-inner {
     border: 2px solid black;

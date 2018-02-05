@@ -108,7 +108,8 @@ hoverInteraction.on('select', function (evt) {
 var info = $('#info');
 info.tooltip({
     animation: false,
-    trigger: 'manual'
+    trigger: 'manual',
+    html: true
 });
 
 var displayFeatureInfo = function (pixel) {
@@ -121,13 +122,13 @@ var displayFeatureInfo = function (pixel) {
         return feature;
     });
     if (feature) {
-        var props = feature.getProperties(),
-            identifier = props['identifier'],
-            last_seen = props['last_seen'];
-
+        var properties = feature.getProperties(),
+            identifier = properties['identifier'],
+            last_seen = new Date(Date.parse(properties['last_seen'])).toDateString(),
+            tooltip_text = '<strong>' + identifier + '</strong>' + '</br>' + last_seen;
 
         info.tooltip('hide')
-            .attr('data-original-title', identifier + '( ' + last_seen + ' )')
+            .attr('data-original-title', tooltip_text)
             .tooltip('fixTitle')
             .tooltip('show');
     } else {
