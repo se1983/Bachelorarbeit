@@ -121,7 +121,7 @@ var displayFeatureInfo = function (pixel) {
         return feature;
     });
 
-    if (feature) {
+    if (feature && feature.getGeometry().getType() === 'Point') {
         var properties = feature.getProperties(),
             identifier = properties['identifier'],
             tooltip_text;
