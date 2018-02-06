@@ -68,7 +68,7 @@ function FloatStyle(feature) {
                     radius: width,
                     fill: new ol.style.Fill({color: red}),
                     stroke: new ol.style.Stroke({
-                        color: blue, width: width * 7
+                        color: black, width: width * 7
                     })
                 })
             })
@@ -77,7 +77,7 @@ function FloatStyle(feature) {
         style['position_history_edge'] = [
             new ol.style.Style({
                 stroke: new ol.style.Stroke({
-                    color: black, width: width
+                    color: blue, width: width
                 })
             })
         ];
