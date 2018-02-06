@@ -5,6 +5,12 @@ var mapLayer = new ol.layer.Tile({
     source: new ol.source.OSM()
 });
 
+var stamen_layer = new ol.layer.Tile({
+    source: new ol.source.Stamen({
+        layer: 'watercolor'
+    })
+});
+
 
 var defaultStyle =
     new ol.style.Style({
@@ -28,11 +34,12 @@ function FloatStyle(feature) {
     var style = [],
         feature_properities = feature.getProperties()['identifier'],
         white = [255, 255, 255, 1],
+        red = [255, 0, 0, 1];
         blue = [0, 153, 255, 1],
         width = 1;
 
     // TODO different styles for different floatstates
-    var style = [
+    style['latest_position'] = [
         new ol.style.Style({
             image: new ol.style.Circle({
                 radius: width * 2,
@@ -42,9 +49,20 @@ function FloatStyle(feature) {
                 })
             })
         })
-    ];
+    ],
+        style['position_history'] = [
+            new ol.style.Style({
+                image: new ol.style.Circle({
+                    radius: width * 2,
+                    fill: new ol.style.Fill({color: red}),
+                    stroke: new ol.style.Stroke({
+                        color: white, width: width / 2
+                    })
+                })
+            })
+        ];
 
-    return style;
+    return style[feature.get('feature_type')];
 }
 
 
@@ -131,6 +149,11 @@ map.on('pointermove', function (evt) {
 
 
 /* Clicking at Float */
+var singleclickInteraction = new ol.interaction.Select({
+    condition: ol.events.condition.singleClick,
+    layers: [argoFloatsLayer]
+});
+map.addInteraction(singleclickInteraction);
 
 
 var displayPlot = function (pixel) {
@@ -141,9 +164,7 @@ var displayPlot = function (pixel) {
     var div = document.getElementById('chart-picture');
     var width = div.offsetWidth;
 
-    if (div.hasChildNodes()) {
-        div.innerHTML = '';
-    }
+    div.innerHTML = '';
 
     if (feature && feature.getGeometry().getType() === 'Point') {
         var identifier = feature.getProperties()['identifier'];
@@ -155,10 +176,43 @@ var displayPlot = function (pixel) {
 
         img.src = '/chart/' + identifier;
         img.width = width;
+        img.classList.add('img-responsive');
     }
 };
 
 
+var positionLayer;
+
+function displayPositions(pixel) {
+    var feature = map.forEachFeatureAtPixel(pixel, function (feature, layer) {
+        return feature;
+    });
+
+    if (positionLayer) {
+        map.removeLayer(positionLayer);
+    }
+
+    if (feature && feature.getGeometry().getType() === 'Point') {
+        var identifier = feature.get('identifier');
+
+        var url = '/positions/' + identifier;
+
+
+        positionLayer = new ol.layer.Vector({
+            style: FloatStyle,
+            source: new ol.source.Vector({
+                format: new ol.format.GeoJSON(),
+                url: url
+            })
+        });
+
+        map.addLayer(positionLayer);
+        console.log(positionLayer);
+    }
+
+}
+
 map.on('click', function (evt) {
-    displayPlot(map.getEventPixel(evt.originalEvent))
+    displayPlot(map.getEventPixel(evt.originalEvent));
+    displayPositions(map.getEventPixel(evt.originalEvent))
 });

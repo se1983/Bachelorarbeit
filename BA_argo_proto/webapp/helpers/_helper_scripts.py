@@ -2,8 +2,6 @@
 import os.path
 import pickle
 
-from numpy import nan
-
 from webapp import db, app
 
 
@@ -18,8 +16,11 @@ def _feature_list(rows):
     return [{"type": "Feature",
              "geometry": {"type": "Point",
                           "coordinates": [lon, lat]},
-             "properties": {"identifier": argo_float,
-                            "last_seen": last_seen}
+             "properties": {
+                 'feature_type': 'latest_position',
+                 "identifier": argo_float,
+                 "last_seen": last_seen
+             }
              } for (argo_float, lon, lat, last_seen) in rows]
 
 
@@ -54,7 +55,7 @@ def argo_data_table_as_dicts(identifier):
     """
     results = _sql_query('argo_data.sql', var=identifier)
 
-    return sorted([{
+    return [{
         'location': (row['latitude'], row['longitude']),
         'timestamp': row['timestamp'],
         'measurement_id': row['measurement_id'],
@@ -62,4 +63,19 @@ def argo_data_table_as_dicts(identifier):
         'salinity': row['salinity'],
         'conductivity': row['conductivity'],
         'temperature': row['temperature'],
-        } for row in results], key=lambda k: k['timestamp'])
+    } for row in results]
+
+
+def position_history(identifier):
+    """
+
+    :param identifier:
+    :return:
+    """
+
+    results = _sql_query('argo_positions.sql', var=identifier)
+
+    return [{
+        'location': (row['longitude'], row['latitude']),
+        'timestamp': row['timestamp']
+    } for row in results]
