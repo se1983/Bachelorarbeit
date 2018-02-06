@@ -22,7 +22,6 @@ var defaultStyle =
             width: 1
         })
     });
-// TODO Vector layer css kämpft gegen bootstraps style
 var mapVectorLayer = new ol.layer.Vector({
     source: new ol.source.Vector({
         url: '/static/countries.geo.json',
@@ -69,8 +68,16 @@ function FloatStyle(feature) {
                     radius: width,
                     fill: new ol.style.Fill({color: red}),
                     stroke: new ol.style.Stroke({
-                        color: black, width: width * 7
+                        color: blue, width: width * 7
                     })
+                })
+            })
+        ],
+
+        style['position_history_edge'] = [
+            new ol.style.Style({
+                stroke: new ol.style.Stroke({
+                    color: black, width: width
                 })
             })
         ];
@@ -232,7 +239,6 @@ function displayPositions(pixel) {
         });
 
         map.addLayer(positionLayer);
-        console.log(positionLayer);
     }
 
 }

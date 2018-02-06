@@ -33,27 +33,44 @@ def get_argo_float(identifier):
 def get_argo_float_position_history(identifier):
     rows = position_history(identifier)
 
-    transfer_points = {
-        "type": "FeatureCollection",
-        "features": [
-            {
-                "type": "Feature",
-                "properties": {
-                    # The first element is of type position_history_start
-                    # every other element is of type postion_history.
-                    'feature_type': 'position_history_start' if i <= 0 else 'position_history',
-                    'name': 'EPSG:4326',
-                    'timestamp': feature['timestamp'],
-                    'transfer_number': i,
-                    'identifier': identifier
-                },
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [*feature['location']]
-                }
+    transfer_points = [
+        {
+            "type": "Feature",
+            "properties": {
+                # The first element is of type position_history_start
+                # every other element is of type postion_history.
+                'feature_type': 'position_history_start' if i <= 0 else 'position_history',
+                'name': 'EPSG:4326',
+                'timestamp': feature['timestamp'],
+                'transfer_number': i,
+                'identifier': identifier
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [*feature['location']]
             }
-            for i, feature in enumerate(rows[1:])]
-    }
+        }
+        for i, feature in enumerate(rows)]
 
-    geoJSON = transfer_points
-    return jsonify(geoJSON)
+    edges = [
+        {
+            "type": "Feature",
+            "properties": {
+                # The first element is of type position_history_start
+                # every other element is of type postion_history.
+                'feature_type': 'position_history_edge',
+                'name': 'EPSG:4326',
+                'identifier': identifier
+            },
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [feature['location'] for feature in rows]
+            }
+        }
+    ]
+
+    geo_json = {
+        "type": "FeatureCollection",
+        "features": transfer_points + edges
+    }
+    return jsonify(geo_json)
