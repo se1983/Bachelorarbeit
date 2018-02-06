@@ -35,7 +35,7 @@ function FloatStyle(feature) {
         feature_properities = feature.getProperties()['identifier'],
         white = [255, 255, 255, 1],
         red = [255, 0, 0, 1];
-        blue = [0, 153, 255, 1],
+    blue = [0, 153, 255, 1],
         width = 1;
 
     // TODO different styles for different floatstates
@@ -120,20 +120,31 @@ var displayFeatureInfo = function (pixel) {
     var feature = map.forEachFeatureAtPixel(pixel, function (feature, layer) {
         return feature;
     });
-    if (feature && feature.getGeometry().getType() === 'Point') {
-        console.log();
+
+    if (feature) {
         var properties = feature.getProperties(),
             identifier = properties['identifier'],
-            last_seen = new Date(Date.parse(properties['last_seen'])).toDateString(),
-            tooltip_text = '<strong>' + identifier + '</strong>' + '</br>' + last_seen;
+            tooltip_text;
 
+        if (feature.get("feature_type") === 'latest_position') {
+            var last_seen = new Date(Date.parse(properties['last_seen'])).toDateString();
+
+            tooltip_text = '<strong>' + identifier + '</strong>' + '</br>' + last_seen;
+        }
+        else if (feature.get("feature_type") === 'position_history') {
+            var transfer_date = new Date(Date.parse(properties['timestamp'])).toDateString(),
+                transfer_number = properties['transfer_number'];
+            tooltip_text = '<strong>' + identifier + '[' + transfer_number + ']</strong>' + '</br>' + transfer_date;
+        }
         info.tooltip('hide')
             .attr('data-original-title', tooltip_text)
             .tooltip('fixTitle')
             .tooltip('show');
-    } else {
+    }
+    else {
         info.tooltip('hide');
     }
+
 };
 
 map.on('pointermove', function (evt) {

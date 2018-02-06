@@ -44,14 +44,16 @@ def get_argo_float_position_history(identifier):
                     "marker-color": "#e71010",
                     "marker-size": "small",
                     "marker-symbol": "circle",
-                    'timestamp': feature['timestamp']
+                    'timestamp': feature['timestamp'],
+                    'transfer_number': i,
+                    'identifier': identifier
                 },
                 "geometry": {
                     "type": "Point",
                     "coordinates": [*feature['location']]
                 }
             }
-            for feature in rows]
+            for i, feature in enumerate(rows)]
     }
 
     return jsonify(geoJSON)
