@@ -10,22 +10,28 @@
 %  //__.....----~~~~._\ | /_.~~~~----.....__\\
 % ====================\\|//====================
 %                     `---`  
-
 \begin{document} 
-
+\pagestyle{plain}
+\setcounter{page}{-1}
+\pagenumbering{Roman} 
 \bibliographystyle{alpha}
-\pagestyle{empty}
 \include{titlepage}
 \newpage
 \tableofcontents
 \newpage
 \listoffigures
-\thispagestyle{empty} 
 \lstlistoflistings
+\listoftables
+
+
 % Content ---------------------------------------------------------------------------------------------------------
+
+\pagebreak
 \pagestyle{scrheadings}
-\include{einleitung}
+\pagenumbering{arabic} 
 \setcounter{page}{1}
+\input{einleitung}
+
 \include{datengrundlage}
 \include{anforderungen}
 \include{systementwurf}
