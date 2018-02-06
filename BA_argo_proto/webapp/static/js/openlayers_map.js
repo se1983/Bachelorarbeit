@@ -34,6 +34,7 @@ function FloatStyle(feature) {
     var style = [],
         feature_properities = feature.getProperties()['identifier'],
         white = [255, 255, 255, 1],
+        black = [0, 0, 0, 1],
         red = [255, 0, 0, 1];
     blue = [0, 153, 255, 1],
         width = 1;
@@ -57,6 +58,18 @@ function FloatStyle(feature) {
                     fill: new ol.style.Fill({color: red}),
                     stroke: new ol.style.Stroke({
                         color: white, width: width / 2
+                    })
+                })
+            })
+        ],
+
+        style['position_history_start'] = [
+            new ol.style.Style({
+                image: new ol.style.Circle({
+                    radius: width,
+                    fill: new ol.style.Fill({color: red}),
+                    stroke: new ol.style.Stroke({
+                        color: black, width: width * 7
                     })
                 })
             })
@@ -131,7 +144,8 @@ var displayFeatureInfo = function (pixel) {
 
             tooltip_text = '<strong>' + identifier + '</strong>' + '</br>' + last_seen;
         }
-        else if (feature.get("feature_type") === 'position_history') {
+        else if (feature.get("feature_type") === 'position_history'
+            || feature.get("feature_type") === 'position_history_start') {
             var transfer_date = new Date(Date.parse(properties['timestamp'])).toDateString(),
                 transfer_number = properties['transfer_number'];
             tooltip_text = '<strong>' + identifier + '[' + transfer_number + ']</strong>' + '</br>' + transfer_date;

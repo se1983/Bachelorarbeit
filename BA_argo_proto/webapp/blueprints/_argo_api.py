@@ -33,17 +33,16 @@ def get_argo_float(identifier):
 def get_argo_float_position_history(identifier):
     rows = position_history(identifier)
 
-    geoJSON = {
+    transfer_points = {
         "type": "FeatureCollection",
         "features": [
             {
                 "type": "Feature",
                 "properties": {
-                    'feature_type': 'position_history',
+                    # The first element is of type position_history_start
+                    # every other element is of type postion_history.
+                    'feature_type': 'position_history_start' if i <= 0 else 'position_history',
                     'name': 'EPSG:4326',
-                    "marker-color": "#e71010",
-                    "marker-size": "small",
-                    "marker-symbol": "circle",
                     'timestamp': feature['timestamp'],
                     'transfer_number': i,
                     'identifier': identifier
@@ -53,7 +52,8 @@ def get_argo_float_position_history(identifier):
                     "coordinates": [*feature['location']]
                 }
             }
-            for i, feature in enumerate(rows)]
+            for i, feature in enumerate(rows[1:])]
     }
 
+    geoJSON = transfer_points
     return jsonify(geoJSON)
