@@ -1,6 +1,10 @@
 // http://plnkr.co/edit/zbqKeJ4lXQ8C60TC4fza?p=preview
 // http://jsfiddle.net/expedio/mz19nzug/
 // https://openlayers.org/en/latest/examples/select-features.html
+
+var sidebar = document.getElementsByClassName("sidebar-body")[0];
+
+
 var mapLayer = new ol.layer.Tile({
     source: new ol.source.OSM()
 });
@@ -100,8 +104,9 @@ var map = new ol.Map({
     target: 'map',
     controls: ol.control.defaults({
         attributionOptions: /** @type {olx.control.AttributionOptions} */ ({
-            collapsible: false
-        })
+            collapsible: false,
+        }),
+        zoom: false,
     }),
     view: new ol.View({
         center: [0, 0],
@@ -109,6 +114,7 @@ var map = new ol.Map({
         minZoom: 3
     })
 });
+
 
 /* Hover Stylechange */
 // change the style of a float if the pointer is hovering.
@@ -189,6 +195,8 @@ map.addInteraction(singleclickInteraction);
 
 
 var displayPlot = function (pixel) {
+    sidebar.style.display = "block";
+
     var feature = map.forEachFeatureAtPixel(pixel, function (feature, layer) {
         return feature;
     });
@@ -199,8 +207,8 @@ var displayPlot = function (pixel) {
     div.innerHTML = '';
 
     if (feature && feature.getGeometry().getType() === 'Point') {
-        var identifier = feature.getProperties()['identifier'];
 
+        var identifier = feature.getProperties()['identifier'];
 
         img.onload = function () {
             div.appendChild(img);
@@ -209,6 +217,9 @@ var displayPlot = function (pixel) {
         img.src = '/chart/' + identifier;
         img.width = width;
         img.classList.add('img-responsive');
+    }
+    else {
+        sidebar.style.display = "none";
     }
 };
 
