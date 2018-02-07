@@ -24,8 +24,8 @@ class FloatDataset(object):
                 return np.average(a)
 
             #: IDENTIFIER
-            self.float_identifier = variables_('PLATFORM_NUMBER')[0]
-            self.cycle_number = variables_('CYCLE_NUMBER')[0]
+            # self.float_identifier = variables_('PLATFORM_NUMBER')[0]
+            self.cycle_number = ds.variables['CYCLE_NUMBER'][0]
 
             self.date_creation = datetime.datetime.strptime('1950-01-01', "%Y-%m-%d") + \
                                  datetime.timedelta(days=int(variables_('JULD')[0]))
