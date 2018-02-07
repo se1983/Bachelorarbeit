@@ -197,6 +197,7 @@ map.addInteraction(singleclickInteraction);
 var displayPlot = function (pixel) {
     sidebar.style.display = "block";
 
+
     var feature = map.forEachFeatureAtPixel(pixel, function (feature, layer) {
         return feature;
     });
@@ -209,6 +210,7 @@ var displayPlot = function (pixel) {
     if (feature && feature.getGeometry().getType() === 'Point') {
 
         var identifier = feature.getProperties()['identifier'];
+        document.getElementById('argo_float_identifier').innerHTML = identifier;
 
         img.onload = function () {
             div.appendChild(img);
