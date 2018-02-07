@@ -23,7 +23,9 @@ class Float(object):
     @staticmethod
     def __extract_float_data(file_paths):
         return \
-            (FloatDataset(p) for p in file_paths)
+            (FloatDataset(p) for p in file_paths
+             # Don use the control and metafiles.
+             if not any([pattern in p for pattern in ('_prof', '_meta', '_tech', '_Rtraj')]))
 
     def __extract_meta_data(self, file_path):
         with DatasetContextManager(file_path) as ds:
