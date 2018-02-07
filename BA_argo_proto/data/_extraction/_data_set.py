@@ -34,8 +34,12 @@ class FloatDataset(object):
             self.n_param = ds.dimensions['N_PARAM'].size
 
             #: DATA
-            self.position = {'latitude': variables_('LATITUDE')[0],
-                             'longitude': variables_('LONGITUDE')[0]}
+
+            self.position = {
+                'latitude': np.float(np.ma.getdata(ds.variables['LATITUDE'][0])),
+                'longitude': np.float(np.ma.getdata(ds.variables['LATITUDE'][0]))
+            }
+            print(self.position)
             self.pressure = average_(variables_('PRES'))
             self.temperature = average_(variables_('TEMP'))
             self.salinity = average_(variables_('PSAL'))
