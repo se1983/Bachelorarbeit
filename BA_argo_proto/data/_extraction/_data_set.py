@@ -37,9 +37,8 @@ class FloatDataset(object):
 
             self.position = {
                 'latitude': np.float(np.ma.getdata(ds.variables['LATITUDE'][0])),
-                'longitude': np.float(np.ma.getdata(ds.variables['LATITUDE'][0]))
+                'longitude': np.float(np.ma.getdata(ds.variables['LONGITUDE'][0]))
             }
-            print(self.position)
             self.pressure = average_(variables_('PRES'))
             self.temperature = average_(variables_('TEMP'))
             self.salinity = average_(variables_('PSAL'))
