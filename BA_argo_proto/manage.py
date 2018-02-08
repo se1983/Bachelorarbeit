@@ -29,7 +29,7 @@ def rebuild_db():
 
     print(float_count)
 
-    if prompt_bool("Rebuild the database?"):
+    if app.config['ARGO_AUTO_REBUILD'] or prompt_bool("Rebuild the database?"):
         db.drop_all(bind=['data_input'], app=app)
         db.create_all(bind=['data_input'], app=app)
 

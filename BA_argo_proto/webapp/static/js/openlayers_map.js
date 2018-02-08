@@ -103,9 +103,7 @@ var map = new ol.Map({
     layers: [mapVectorLayer, argoFloatsLayer],
     target: 'map',
     controls: ol.control.defaults({
-        attributionOptions: /** @type {olx.control.AttributionOptions} */ ({
-            collapsible: false,
-        }),
+        attributionOptions: false,
         zoom: false,
     }),
     view: new ol.View({

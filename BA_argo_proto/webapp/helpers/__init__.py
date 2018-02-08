@@ -1,2 +1,5 @@
 from ._generate_graph import _create_plot as create_plot
-from ._helper_scripts import gen_last_seen, argo_data_table_as_dicts, position_history
+
+from ._query_factory import QueryFactory as _QueryFactory
+
+queries = _QueryFactory()

@@ -33,7 +33,8 @@ class QueryFactory(object):
                     'timestamp': _profile.timestamp,
                     'temperature': _profile.temperature,
                     'salinity': _profile.salinity,
-                    'conductivity': _profile.conductivity
+                    'conductivity': _profile.conductivity,
+                    'pressure': _profile.pressure
                 } for (_, _profile) in query.yield_per(200)
             ]
 
@@ -42,7 +43,7 @@ class QueryFactory(object):
             db.session.rollback()
 
     def last_seen(self):
-        result = self.__execute(self.__load_template('last_seen.sql'))
+        results = self.__execute(self.__load_template('last_seen.sql'))
 
         return [{"type": "Feature",
                  "geometry": {"type": "Point",
@@ -52,7 +53,7 @@ class QueryFactory(object):
                      "identifier": argo_float,
                      "last_seen": last_seen
                  }
-                 } for (argo_float, lon, lat, last_seen) in result]
+                 } for (argo_float, lon, lat, last_seen) in results]
 
     def argo_positions(self, identifier):
         try:
