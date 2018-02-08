@@ -53,3 +53,22 @@ class QueryFactory(object):
                      "last_seen": last_seen
                  }
                  } for (argo_float, lon, lat, last_seen) in result]
+
+    def argo_positions(self, identifier):
+        try:
+            query = db.session.query(ArgoFloat, Location, Profile) \
+                .join(Measurement) \
+                .join(Location) \
+                .join(Profile) \
+                .filter(ArgoFloat.identifier == identifier) \
+                .order_by(Profile.timestamp)
+
+            return [
+                {
+                    'location': (_location.longitude, _location.latitude),
+                    'timestamp': _profile.timestamp
+                } for (_, _location, _profile) in query.yield_per(200)
+            ]
+        except Exception as err:
+            print(err)
+            db.session.rollback()
