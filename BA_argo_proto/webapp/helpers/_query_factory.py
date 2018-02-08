@@ -40,3 +40,16 @@ class QueryFactory(object):
         except Exception as err:
             print(err)
             db.session.rollback()
+
+    def last_seen(self):
+        result = self.__execute(self.__load_template('last_seen.sql'))
+
+        return [{"type": "Feature",
+                 "geometry": {"type": "Point",
+                              "coordinates": [lon, lat]},
+                 "properties": {
+                     'feature_type': 'latest_position',
+                     "identifier": argo_float,
+                     "last_seen": last_seen
+                 }
+                 } for (argo_float, lon, lat, last_seen) in result]
