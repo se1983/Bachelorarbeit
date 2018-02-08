@@ -2,29 +2,32 @@
 \section{Einleitung}
 
     
-    Die im Jahre 1965 von Gordon Moore vorhergesagte Gesätzmäßigkeit, die Komplexität, und damit die Speicherdichte, integrierter Schaltkreise, würden sich regelmäßig verdoppeln,  hat sich bis zum heutigen Tag bewahrheitet. Damit sieht sich die Menschheit über 50 Jahre später in einer einmaligen Lage. 
+    Die im Jahre 1965 von Gordon Moore vorhergesagte Gesätzmäßigkeit, die Komplexität, und damit die Speicherdichte integrierter Schaltkreise, würde sich regelmäßig verdoppeln (vgl. \cite{moore1998cramming}),  hat sich seit dem bis zum heutigen Tag bewahrheitet. Damit sieht sich die Menschheit über 50 Jahre später in einer einmaligen Lage. 
     Zum einen verfügen wir über eine noch nie dagewesene Ansammlung an Informationen, zum anderen wurden die Speichermedien, durch die wachsende Komplexität immer flüchtiger und schwieriger in der Handhabung. Werden kommende Zivilisationen in der Lage sein, diesen Pool an Informationen für sich zu nutzen oder sollten wir vielmehr annehmen, dass wir eine einmalige Chance haben, die wir nicht vergeuden sollten? \\
     
-    Was hält uns davon ab, Bildung und Wohlstand aus diesem Pool zu generieren? Viele der Informationen stehen frei zur Verfügung und können genutzt werden und doch werden gerade in dieser Zeit die Prinzipien der wissenschaftlichen Evidenz von einem, gefühlt immer größeren Anteil unseres Kulturkreises, abgelehnt. 
+    In diesem Kontext scheint es als folgerichtig, dass Bewegungen wie Freie Software, Creative-Commons und Open-Access die Hürden für den Zugang zu den Informationen noch weiter verringern.  Viele der Informationen stehen frei zur Verfügung und können genutzt werden und doch werden, von einem gefühlt immer größeren Anteil unseres Kulturkreises, Prinzipien der wissenschaftlichen Evidenz von einem abgelehnt. 
     In einer Zeit in der es einfacher den je ist, Fakten zu überprüfen, werden wissenschaftlich bewiesenen Aussagen wie dem Klimawandel einfach nicht geglaubt.
     Es scheint als wären viele Menschen der Flut an Informationen überdrüssig, als wende sich ein großer Teil überfordert davon ab.
     Die Frage ist, was kann dazu beitragen dieses Potential mehr zu nutzen? 
-    Über welche Mittel verfügt die Informatik, Daten in einen Kontext einzubetten, über die Menschen an  die wissenschaftliche Arbeit herangeführt werden können? Welche Daten sind geeignet, um die Brisanz und das Potential unserer Zeit einem breiteren Publikum zuzuführen.
+    Über welche Mittel verfügt die Informatik, Daten in einen Kontext einzubetten? Wie muss der Kontext gestaltet sein, über die Menschen an  wissenschaftliche Arbeit herangeführt werden können? Welche Daten sind geeignet, um die Brisanz und das Potential unserer Zeit einem breiteren Publikum zuzuführen? 
     
-    Hier bietet das Argoprogramm eine Möglichkeit die hierfür benötigten Daten bereitzustellen. Unter dem Dach dieses Programms, werden seit anfang dieses Jahrtausends die Weltmeere nach den Parametern Temperatur, Salzgehalt und Leitfähigkeit untersucht. Diese Daten stehen unter einer freien Lizenz zur Verfügung und können in eigene Projekte eingebunden werden.  Diese dienen Wissenschaftlern um die Auswirkungen des globalen Klimawandels zu untersuchen.
-   
-    Ziel dieser Arbeit ist eine einfache Darstellung aus diese Messwerten zu erarbeiten. Über ein exploratives Werkzeug sollen die  die wissenschaftlichen Daten intuitiv erfahrbar sein. Dies geschieht mit der Hoffnung, hier eine Identifikation mit den Messwerten und des wissenschaftlichen Prozesses zu erreichen. 
-   
-   
-    Diese Anwendung wäre zum Beispiel für Schulklassen geeignet. Die Schüler können durch eine Kontextvorgabe des Lehrenden  die Auswirkungen des Klimawandels auf die Weltmeere für sich explorieren. Zusätzlich könnte beim ein oder anderen Interesse an der wissenschaftlichen Arbeit geweckt werden.
-    Das Angebot richtet sich aber nicht explizit an heranwachsende. Auch erwachsene Personen können sich hier bei Interesse weiterbilden. Die Applikation kann hier außerhalb der wissenschaftlichen Arbeit die Relevanz der Forschung und die in diesem Programm erhobenen Messwerte  erfahrbar machen. 
+    Mit diesen Fragestellungen motiviert sich die hier vorliegende Arbeit. Im Rahmen dieser Abschlussarbeit wurde, über die Aggregation wissenschaftlicher Daten, ein exploratives Werkzeug geschaffen, um diese intuitiv erfahrbar zu gestalten. Dies geschieht mit der Hoffnung, hier eine Identifikation mit den Messwerten und des wissenschaftlichen Prozesses zu erreichen. Als Datengrundlage wurden die daten aus dem Argoprogramm verwendet. Unter dem Dach dieses Projektes, werden seit dem Beginn dieses Jahrtausends das Wasser der Weltmeere nach den Parametern Temperatur, Salzgehalt und Leitfähigkeit untersucht. Diese Daten stehen unter einer freien Lizenz zur Verfügung und können in eigene Projekte eingebunden werden.  Diese dienen Wissenschaftlern um die Auswirkungen des globalen Klimawandels zu untersuchen. Die Frage ist hier, ob es möglich scheint, diese hochkomplexen Messdaten insoweit aufzubereiten, dass diese intuitiv erfahrbar werden.
     
-    Am Anfang dieser Arbeit wird das Argo Programm vorgestellt. es wird der Prozess der Datenerhebung und -veröffentlichung eingegangen. 
-    Im Anschluss werden die Anforderungen für die zu entwickelte Software ausgearbeitet und damit die geeignetsten Werkzeuge ermittelt.
-    Daraufhin wird das System entworfen. Es wird eine Architekturbeschreibung durchgeführt und die wichtigsten Geschäftprozesse beschrieben. Hier werden Alternativen aufgezeigt und versucht, die geeignetste zu ermitteln.
-    Die Implementierung wird im darauf folgenden Kapitel beschrieben. Hier werden bestimmte Prozesse iterativ verfeinert und verbessert um die am besten geeignetste Lösung zu finden. 
-    Um die Qualität der Software beschreiben zu können, folgt im darauf folgenden Kapitel eine Beschreibung der Verwendeten Test-Verfahren. Es werden die durchgeführten Unit-tests sowie eine Umfrage zur Bestimmung der Usability beschrieben.    
-    Abschließend wird die fertige Software demonstriert. Hierbei wird versucht einen möglichst kritischen Blick auf das Projekt zu werfen und Alternativen und Verbesserungen vorzustellen.
+    
+    Ein solches Werkzeug könnte zum Beispiel in Schulklassen eingesetzt werden. 
+    Die Schüler könnten, durch eine Kontextvorgabe des Lehrenden, die Auswirkungen des Klimawandels auf die Weltmeere erfahren.
+    Hier könnte auch das Interesse und ein eventueller Berufswunsch im Wissenschaftssektor geweckt werden.
+    Die Applikation richtet sich aber nicht explizit an Heranwachsende. Auch erwachsene Personen könnten sich, eigenes Interesse vorausgesetzt, weiterbilden. Die Applikation kann hier Relevanz der Forschung und die in diesem Programm erhobenen Messwerte erfahrbar machen. \\
+    
+    
+    Der schriftliche Teil dieser Arbeit handelt von der Konzeption und Entwicklung eines Prototypen mit der oben genannten Problemstellung. Zu Beginn wird das Argo Programm näher vorgestellt. Es wird auf den Prozess der Datenerhebung und Aufbereitung eingegangen. Im Anschluss daran werden die Anforderungen der Software ausgearbeitet, um im Anschluss darauf gangbare Lösungsansätze und die geeignetsten Werkzeuge ermittelt.
+    Im Anschluss darauf wird das Softwaresystem entworfen. Es werden die geplante Architektur und die wichtigsten Geschäftsprozesse ausgearbeitet und beschrieben. Über das 
+    Aufzeigen von gangbaren Alternativen werden die passendsten Werkzeuge und Entwicklungsmuster für diese Problemstellung ermittelt.
+    Nach der Planung folgt eine Beschreibung der vorgenommenen Implementierung vorgenommen. Auch hier werden Implementierungen iterativ verfeinert, so das die passendste Lösung gefunden werden kann.
+
+    Um die Qualität der Software beschreiben zu können, folgt im darauf folgenden Kapitel eine Beschreibung der Verwendeten Test-Verfahren. Hier werden Metriken ausgearbeitet, welche erlauben funktionale als auch nicht-funktionale Anforderungen überprüfbar messen zu können. Die Messung erfolgt dabei über Funktions-, wie Unittests, als auch über eine Umfrage, zur Ermittlung der erreichten Benutzbarkeit. 
+    
+    Im Abschluss findet eine Präsentation des entwickelten Prototypen statt. Dabei wird ein möglichst kritischer Blick auf Problemstellung und Lösungen geworfen. Abschließend wird ein Ausblick auf Alternativen und mögliche Weiterentwicklungen der Prototypen gegeben.
     
     
     
