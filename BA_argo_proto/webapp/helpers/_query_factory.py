@@ -30,11 +30,11 @@ class QueryFactory(object):
 
             return [
                 {
-                    'timestamp': elem[1].timestamp,
-                    'temperature': elem[1].temperature,
-                    'salinity': elem[1].salinity,
-                    'conductivity': elem[1].conductivity
-                } for elem in query.yield_per(200)
+                    'timestamp': _profile.timestamp,
+                    'temperature': _profile.temperature,
+                    'salinity': _profile.salinity,
+                    'conductivity': _profile.conductivity
+                } for (_, _profile) in query.yield_per(200)
             ]
 
         except Exception as err:
