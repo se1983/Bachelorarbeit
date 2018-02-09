@@ -306,4 +306,7 @@ BA_argo_playground/*
 "Quellen Studium"
 # End of https://www.gitignore.io/api/pycharm
 .idea/
+BA_argo_literatur/
 /__ARCHIVE/*
+
+.directory
