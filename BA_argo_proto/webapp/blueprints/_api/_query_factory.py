@@ -70,7 +70,7 @@ class QueryFactory(object):
             data = [{
                 'location': (row[keys.index('locations_longitude')],
                              row[keys.index('locations_latitude')]),
-                'timestamp': row[keys.index('locations_latitude')]
+                'timestamp': row[keys.index('profiles_timestamp')]
             } for row in result_proxy]
 
             return data
