@@ -11,7 +11,7 @@ matplotlib.rcParams['xtick.labelsize'] = 20
 matplotlib.rcParams['ytick.labelsize'] = 16
 
 
-def _create_plot(data):
+def create_plot(data):
     temperature = data['temperature']
     salinity = data['salinity']
     pressure = data['pressure']

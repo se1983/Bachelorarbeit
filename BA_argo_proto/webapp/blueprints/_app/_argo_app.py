@@ -3,7 +3,7 @@ from io import BytesIO
 from flask import Blueprint, render_template, url_for, make_response
 import requests
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
-from ..helpers import create_plot
+from webapp.helpers import create_plot
 
 argo_app = Blueprint('argo_app', __name__, template_folder='templates')
 
