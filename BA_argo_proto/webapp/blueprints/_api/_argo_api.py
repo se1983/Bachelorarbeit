@@ -7,7 +7,7 @@ from webapp import app
 
 from . import _queries as queries
 
-from ._geojson_builder import positions_geojson, argo_float_data, last_seen
+from ._geojson_builder import positions_json, argo_float_data_json, last_seen_json
 
 argo_api = Blueprint('argo_api', __name__)
 
@@ -19,7 +19,7 @@ def last_seen(force_reload=""):
     __cache_file_path = f'{app.root_path}/last_seen.pickle'
 
     if force_reload == __token or not os.path.isfile(__cache_file_path):
-        argo_floats = last_seen(queries.last_seen())
+        argo_floats = last_seen_json(queries.last_seen())
         pickle.dump(argo_floats, open(__cache_file_path, 'wb'))
     else:
         argo_floats = pickle.load(open(__cache_file_path, 'rb'))
@@ -31,7 +31,7 @@ def last_seen(force_reload=""):
 def get_argo_float(identifier):
     rows = queries.argo_data(identifier)
 
-    return jsonify(argo_float_data(rows))
+    return jsonify(argo_float_data_json(rows))
 
 
 @argo_api.route("/positions/<identifier>")
@@ -40,6 +40,6 @@ def get_argo_float_position_history(identifier):
 
     geo_json = {
         "type": "FeatureCollection",
-        "features": positions_geojson(rows, identifier)
+        "features": positions_json(rows, identifier)
     }
     return jsonify(geo_json)

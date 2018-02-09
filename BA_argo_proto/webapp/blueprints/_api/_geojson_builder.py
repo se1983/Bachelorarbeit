@@ -1,4 +1,4 @@
-def positions_geojson(rows, identifier):
+def positions_json(rows, identifier):
 
     transfer_points = [
         {
@@ -41,7 +41,7 @@ def positions_geojson(rows, identifier):
     return transfer_points + edge_features
 
 
-def argo_float_data(rows):
+def argo_float_data_json(rows):
     return {
         'pressure': [x['pressure'] for x in rows],
         'temperature': [x['temperature'] for x in rows],
@@ -51,7 +51,7 @@ def argo_float_data(rows):
     }
 
 
-def last_seen(rows):
+def last_seen_json(rows):
     return {'type': "FeatureCollection",
             'crs': {
                 'type': 'name',
