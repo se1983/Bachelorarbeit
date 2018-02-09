@@ -1,3 +1,5 @@
+from flask_sqlalchemy import BaseQuery
+
 from webapp import db, app
 from webapp.models import Measurement, Location, Profile, ArgoFloat
 
@@ -8,8 +10,13 @@ class QueryFactory(object):
         pass
 
     @staticmethod
-    def __execute(raw_sql):
-        return db.engine.execute(raw_sql)
+    def __execute(query):
+
+        return {
+            BaseQuery: lambda q: db.session.execute(q, None, bind=db.get_engine(app, None)),
+            str: lambda q: db.engine.execute(q)
+        }[type(query)](query)
+
 
     @staticmethod
     def __load_template(file_name):
@@ -17,8 +24,7 @@ class QueryFactory(object):
             sql = raw_sql.read()
         return sql
 
-    @staticmethod
-    def argo_data(identifier):
+    def argo_data(self, identifier):
 
         try:
             query = db.session.query(ArgoFloat, Profile) \
@@ -28,16 +34,20 @@ class QueryFactory(object):
                 .filter(ArgoFloat.identifier == identifier) \
                 .order_by(Profile.timestamp)
 
-            return [
+            result_proxy = self.__execute(query)
+            keys = result_proxy.keys()
+
+            data = [
                 {
-                    'timestamp': _profile.timestamp,
-                    'temperature': _profile.temperature,
-                    'salinity': _profile.salinity,
-                    'conductivity': _profile.conductivity,
-                    'pressure': _profile.pressure
-                } for (_, _profile) in query.yield_per(200)
+                    'timestamp': row[keys.index('profiles_timestamp')],
+                    'temperature': row[keys.index('profiles_temperature')],
+                    'salinity': row[keys.index('profiles_salinity')],
+                    'conductivity': row[keys.index('profiles_conductivity')],
+                    'pressure': row[keys.index('profiles_pressure')]
+                } for row in result_proxy
             ]
 
+            return data
         except Exception as err:
             print(err)
             db.session.rollback()
@@ -45,8 +55,7 @@ class QueryFactory(object):
     def last_seen(self):
         return self.__execute(self.__load_template('last_seen.sql'))
 
-    @staticmethod
-    def argo_positions(identifier):
+    def argo_positions(self, identifier):
         try:
             query = db.session.query(ArgoFloat, Location, Profile) \
                 .join(Measurement) \
@@ -55,12 +64,16 @@ class QueryFactory(object):
                 .filter(ArgoFloat.identifier == identifier) \
                 .order_by(Profile.timestamp)
 
-            return [
-                {
-                    'location': (_location.longitude, _location.latitude),
-                    'timestamp': _profile.timestamp
-                } for (_, _location, _profile) in query.yield_per(200)
-            ]
+            result_proxy = self.__execute(query)
+            keys = result_proxy.keys()
+
+            data = [{
+                'location': (row[keys.index('locations_longitude')],
+                             row[keys.index('locations_latitude')]),
+                'timestamp': row[keys.index('locations_latitude')]
+            } for row in result_proxy]
+
+            return data
         except Exception as err:
             print(err)
             db.session.rollback()
