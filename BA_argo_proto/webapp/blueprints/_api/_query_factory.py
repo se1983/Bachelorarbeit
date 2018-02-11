@@ -17,7 +17,6 @@ class QueryFactory(object):
             str: lambda q: db.engine.execute(q)
         }[type(query)](query)
 
-
     @staticmethod
     def __load_template(file_name):
         with open(f'{app.root_path}/{app.template_folder}/{file_name}') as raw_sql:
@@ -25,7 +24,6 @@ class QueryFactory(object):
         return sql
 
     def argo_data(self, identifier):
-
         try:
             query = db.session.query(ArgoFloat, Profile) \
                 .join(Measurement) \
@@ -70,8 +68,13 @@ class QueryFactory(object):
             data = [{
                 'location': (row[keys.index('locations_longitude')],
                              row[keys.index('locations_latitude')]),
-                'timestamp': row[keys.index('profiles_timestamp')]
+                'timestamp': row[keys.index('profiles_timestamp')],
+                'temperature': row[keys.index('profiles_temperature')],
+                'salinity': row[keys.index('profiles_salinity')],
+                'pressure': row[keys.index('profiles_pressure')]
             } for row in result_proxy]
+
+            print(data)
 
             return data
         except Exception as err:

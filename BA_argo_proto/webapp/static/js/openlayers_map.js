@@ -155,11 +155,26 @@ var displayFeatureInfo = function (pixel) {
 
             tooltip_text = '<strong>' + identifier + '</strong>' + '</br>' + last_seen;
         }
+
+        /* POSITION HISTORY */
         else if (feature.get("feature_type") === 'position_history'
             || feature.get("feature_type") === 'position_history_start') {
             var transfer_date = new Date(Date.parse(properties['timestamp'])).toDateString(),
-                transfer_number = properties['transfer_number'];
-            tooltip_text = '<strong>' + identifier + '[' + transfer_number + ']</strong>' + '</br>' + transfer_date;
+                transfer_number = properties['transfer_number'],
+                salinity = properties['salinity'],
+                temperature = properties['temperature'];
+
+            if (salinity === 'NaN') {
+                salinity = "";
+            }
+
+            tooltip_text = '' +
+                '<strong>'
+                + identifier + '[' + transfer_number + ']' +
+                '</strong>' + '</br>'
+                + transfer_date + '</br>'
+                + "<b>Temperatur: </b>" + temperature + "°C" + '</br>'
+                + "<b>Salzhehalt: </b>" + salinity + " g / l" + '</br>'
         }
         info.tooltip('hide')
             .attr('data-original-title', tooltip_text)

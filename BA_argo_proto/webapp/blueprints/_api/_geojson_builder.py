@@ -1,4 +1,9 @@
+from numpy import nan
+
+
 def positions_json(rows, identifier):
+    # Nan is not part of parsable JSON so wer will convert this value to None(Null)
+    __extract = lambda f: f"{f:.2f}" if not f is nan else ''
 
     transfer_points = [
         {
@@ -9,6 +14,9 @@ def positions_json(rows, identifier):
                 'feature_type': 'position_history_start' if i <= 0 else 'position_history',
                 'name': 'EPSG:4326',
                 'timestamp': feature['timestamp'],
+                'temperature': __extract(feature['temperature']),
+                'salinity': __extract(feature['salinity']),
+                'pressure': __extract(feature['pressure']),
                 'transfer_number': i,
                 'identifier': identifier
             },
