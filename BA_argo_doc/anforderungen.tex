@@ -2,14 +2,14 @@
 
 \subsection{Systembeschreibung}
 
-    Die zu entwickelnde Anwendung verfolgt einen datengetriebenen Ansatz. Die Daten müssen erhoben werden um diese dann über ein Webfrontend darstellbar zu machen.  Die interessierten Benutzer  können sich über die Web Präsenz die letzte Position der Bojen auf einer Karte ansehen. Durch einen Klick auf die Darstellung einer Messboje erhalten sie zudem Informationen und eine Darstellung der von dieser Messstation gemessenen Messwerte.
+    Die zu entwickelnde Anwendung verfolgt einen datengetriebenen Ansatz. Daten aus dem Argo-Programm werden erhoben und eine Auswahl davon in ein Datenformat überführt. Zur Darstellung wird eine Webapplikation verwendet. Über diese werden   über Postionsmarker auf einer Weltkarte, die letzten Positionen der Messstationen angezeigt.  Über einen Klick auf die Repräsentation einer Messboje werden weitere Daten der Messstation präsentiert.
     
     
 
 % BEGIN ermittlung  Anforderungen 
     \subsection{Ermittlung der Anforderungen}
     
-    Ausgehend von einem ersten Prototypen  und über User-Stories wurden einige Use-Cases entwickelt \footnote{Siehe Abbildung \ref{fig:use_case}: \nameref{fig:use_case}}.  Hierbei wurden die zwei Klassen "`Benutzende"' \textbf{(B)} und "`Administrierende"'  \textbf{(A)} mit den ihnen zugehörigen Anwendungsfällen herausgearbeitet. 
+    Ausgehend von einem ersten Prototypen wurden Use-Cases entwickelt(Siehe Abbildung \ref{fig:use_case}). Dabei wurden zwei Klassen von Akteuren herausgearbeitet. Darunter finden sich die Benutzenden, also die eigentlichen Anwender der Applikation. Diese erwarten einen reibungslosen Betrieb der Applikation und die Darstellung der Messstationen in der gegebenen Form. Zum anderen existiert die Klasse der Administrierenden. Diese benötigen Werkzeuge um die Daten zu restrukturieren und in die Datenhaltung einzuspielen. Beide Klassen haben verschiedene Sichten auf die Datenhaltung. Daraus entsteht ein Spannungsverhältnis, welches minimiert werden muss.
     
     \begin{figure}[h!]
         \centering
@@ -18,8 +18,8 @@
         \label{fig:use_case}
     \end{figure}
     
-    Anhand des so vorliegenden Modells wurde ein Abhängigkeitsgraph ausgearbeitet.\footnote{Siehe Abbildung \ref{fig:graph_anforderungen}: \nameref{fig:graph_anforderungen}}.  Dieser beschreibt die Anforderungen und deren Abhängikeiten anhand eines gerichteten Graphen. Mit hilfe dieser Darstellung konnten die Anforderungen noch feiner ausgearbeitet und um Definitionslücken erweitert werden.  
-    
+    Anhand dieses Modelles  wurden Anforderungen ausgearbeitet. Diese wurden in Form eines gerichteten Graphen aufbereitet (Siehe Abbildung: \ref{fig:graph_anforderungen}). Dabei werden die Anforderungen und deren Nachbedingungen über Knoten des Graphen repräsentiert. Finden sich in einer Anforderung Vorbedingungen zu den Nachbedingungen einer anderen Anforderung, so wird diese Abhängigkeit über eine Kante dargestellt. Diese Darstellung half dabei, Definitionslücken in den Beziehungen  der Anforderungskette besser verstehen zu können und formale Lücken schließen zu können.
+      
     \begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{pix/graph_anforderungen.png}
@@ -35,24 +35,15 @@
     
     \subsubsection{Anwendende Perspektive}
     
-    Die benutzenden erwarten die Darstellung einer Webapplikatin wenn diese die ihr zugehörige URL öffnen. Die Webseite soll über eine Kartenapplikation die Grenzen der Ozeane und der umliegenden Kontinente ersichtlich machen.  Eine genauere Darstellung von Landmarkern wie Straßen, Städte oder Gebirge ist für den Aussagewert der Applikation nicht erforderlich. Die Kartendarstellung soll außerdem über Interaktionsmöglichkeiten, wie dem Einstellen der Zoomstufe, sowie des ausgewählten Kartenbereichs, verfügen.
-    
-    Über den Kartendienst sind außerdem die letzte Position jeder Messboje aus dem Datensatz ersichtlich. Über Farbcodes wird der Status der Boje auf den ersten Blick erfahrbar gemacht. Um Streuung und Verdichtung an spezifischen Orten ersichtlich zu halten, werden alle Messstationen des angezeigten Kartenausschnittes dargestellt. Es erfolgt keine Zusammenfassung oder Ausblendung der Messstationen.
-    
-    Wird die Maus über eine Boje geführt, so ist es sinnvoll hier bereits grundlegende Daten der Messstation darzustellen um eine Identifikation des jeweiligen Datensatzes zu ermöglichen.
-    
-    Ein Mausklick auf die schematische Darstellung der Boje soll spezifischere Daten der Boje anzeigen. Dazu soll in einem separierten Darstellungsfeld, der Verlauf der Messdaten, sowie einiger weiterer sinnvoller Werte der jeweiligen Messstation angezeigt werden. Es ist sinnvoll, wenn dieser Bereich je nach Wunsch des Benutzenden zu- und wieder abgestellt werden kann. 
-    
+    In der Anwendung wird die Darstellung einer Webapplikation erwartet. Angesteuert durch die zugehörige URL 
+    sollen über eine Kartenapplikation die Grenzen der Ozeane und der umliegenden Kontinente erkennbar werden.  Eine genauere Darstellung von Landmarken wie Straßen, Städte oder Gebirge ist für den Aussagewert der Applikation nicht erforderlich. Die Kartendarstellung soll über Interaktionsmöglichkeiten, wie dem Einstellen der Zoomstufe, sowie des ausgewählten Kartenbereichs, verfügen. Über den Kartendienst sind die letzte Position jeder Messboje aus dem Datensatz ersichtlich. Um Streuung und Verdichtung an spezifischen Orten sehen zu können, werden alle Bojen des angezeigten Kartenausschnittes dargestellt. Es erfolgt keine Zusammenfassung oder Ausblendung.
+    Wird die Maus über die visuelle Repräsentation einer Messboje geführt, so sollen grundlegende Daten der Messstationen dargestellt werden, gleichzeitig wird diese Station optisch hervorgehoben.
+    Ein Mausklick auf die schematische Darstellung soll hier gemessene, spezifische Daten anzeigen. Dazu werden in einem separierten Darstellungsfeld der Verlauf der Messdaten, sowie weiterer sinnvoller Werte angezeigt. Zusätzlich soll der zurückgelegte Weg der Messtation ersichtlich sein.  Eine Trendanalyse der Daten könnte hier ein Maß für die Richtung der Messwerte ermöglichen. Könnten mehrere Messstationen gleichzeitig ausgewählt werden, so wäre es sinnvoll die akkumulierten Werte darzustellen.
     
     \subsubsection{Administrative Perspektive}
     
-    Um die Inhalte zu erstellen, werden auf Administrativer Sicht keine Journalistischen Tätigkeiten erwartet. Durch den Datengetriebenen Ansatz der Applikation müssen für das Erstellen der Inhalte keine Webmasken wie Texteingabefelder zur Verfügung gestellt werden. Vielmehr ist es hier sinnvoll, die hier benötigten Werkzeuge als Skripte zur Verfügung zu stellen, um die Administrativen Aufgaben über die Kommandozeile ausführen zu können. 
-    
-    Administrierende erwarten vom System dass sie neue Daten  in die Datenbank überführen können. Hierbei ist es notwendig, dass die Datensätze des Argo Programms ausgelesen und in ein für die Datenbank aufbereitetes Format überführt werden. 
-    
-    Es wäre sinnvoll, die Aggregation der POIs ebenfalls über einen Programmablauf zu modellieren.  In diesem Schritt müssten die Daten von der Webpräsenz des gooc heruntergeladen und an einem Ort entpackt werden. Zusätzlich müsste darauf geachtet werden, die Daten wieder zu entfernen, nachdem diese in die Datenbank des Systems überführt worden ist.
-    
-    Der Prozess der Beschaffung und Aktualisierung der Daten kann bis hin zur Vollautomatisierung abgebildet werden. 
+    Es notwendig, dass die Datensätze des Argo Programms ausgelesen und in ein für die Datenbank aufbereitetes Format überführt werden. Neue Daten müssen hierfür aus den Quellen des Argo Programms heruntergeladen werden. Um die Inhalte zu erstellen, werden statt einer journalistischen eine administrative Tätigkeiten erwartet. Durch den Datengetriebenen Ansatz der Applikation müssen für das Erstellen der Inhalte keine Webmasken wie Texteingabefelder zur Verfügung gestellt werden. Vielmehr ist es hier sinnvoll, die hier benötigten Werkzeuge als Skripte zur Verfügung zu stellen, um die administrativen Aufgaben über die Kommandozeile ausführen zu können. Dies würde eine Abbildung der Prozesse bis hin zu einer Vollautomatisierung erlauben und eine örtliche Trennung von Datenaggregation und -darstellung vereinfachen.
+    Für die administrativen Tätigkeiten werden Werkzeuge benötigt, um neue Daten  in die Datenbank überführen können.  
 % END 
     
 
@@ -62,13 +53,13 @@
 \subsection{Nicht-Funktionale Anforderungen}
     
     \subsubsection{Anwendende Perspektive}
-        Für die Benutzenden ist die Usability der wichtigste Aspekt. Die Benutzungsmuster müssen klar ersichtlich und intuitiv erfahrbar sein. Die Darstellung der Applikation soll einfach und schlicht gehalten werden und dem gewohnten Erscheinen modernen Web Applikationen entsprechen. 
-        
-        Es soll darauf Wert gelegt werden, die Daten möglichst schnell nach der Interaktion zu Anzeige zu bringen, da das Warten auf Webapplikationen mit Frust verbunden ist, und eine hohe Absprungrate zur Folge hätte.
-        
+        Für die Benutzenden sind Usability und Benutzbarkeit der wichtigste Aspekt. Die Bedienungsmuster müssen klar ersichtlich und intuitiv erfahrbar sein. Die Darstellung der Applikation soll einfach und schlicht gehalten werden und dem gewohnten Erscheinen modernen Web Applikationen entsprechen. 
+        Es soll Wert auf die wichtigsten Aspekte des Datenschutzes Wert gelegt werden. Insbesondere im Hinblick auf Datensparsamkeit sind das Einbinden von Trackern, Loginfunktionen und das Speichern von Logfiles zu bewerten.
+        Sicherheitsaspekten ist aus der Anwendersicht nur eine normale Rolle zugewiesen werden. Dabei sollen die heute normalen Sicherheitsvorkehrungen, wie zum Beispiel Transportverschlüsselung und Schutz gegen SQL-Injections erfolgen.
         
     \subsubsection{Administrative Perspektive}
         Für die Aggregation der Daten ist die Sicherheit ein zentraler Aspekt. Dies umfasst sowie Aspekte von Authentifizierung und Autorisierung der Rolle der Datenaggregation als auch eine Sicherheit um die Integrität der Heruntergeladenen Daten.
+        
     
 % END 
 
@@ -82,51 +73,63 @@ Aus diesem Grund findet sich im Folgenden eine Auswahl aus dem Datenkatalog \foo
 \begin{center}
 \begin{table}
   \label{table:Datenauswahl}
-  \begin{tabular}{ | l | p{4cm} |p{6cm} |}
+  \begin{tabular}{ | l | p{7cm}| c |}
     \hline
-    \textbf{Datenfeld} & \textbf{Beschreibung} & \textbf{Wird verwendet weil} \\\hline
+    \textbf{Datenfeld} & \textbf{Beschreibung} & \textbf{Datentyp} \\\hline
    
     PLATFORM\_NUMBER 
-        & Eindeutige Identifikationsnummer einer einer Messstation
-        & Wird benötigt um Messprofile eindeutig der Plattform zuordnen zu können. \\\hline 
+        &  Eindeutige Identifikationsnummer einer einer Messstation
+        & <STRING8>
+        \\\hline 
     
     CYCLE\_NUMBER 
-        & Fortlaufende und innerhalb einer Messboje eindeutige Identifikationsnummer eines Messprofils
-        & Dieser Wert wird benötigt, um Messungen eindeutig zuordnen zu können. \\\hline
+        &  Fortlaufende und innerhalb einer Messboje eindeutige Identifikationsnummer eines Messprofils
+        & <int32>
+        \\\hline
     
     JULD
         & In Julian Date codierter Zeitpunkt der Übertragung (Begin oder ende?) einer Messung
-        & Der Zeitpunkt wird benötigt um die Messungen in einen Zeitlichen Kontext zu stellen. \\\hline
+        & <float64>
+       \\\hline
         
     N\_PARAM
         & Anzahl der Messsensoren. 
-        & Durch diesen Wert lässt sich die Anzahl der Sensoren ableiten. \\\hline
+        & <STRING16>
+        \\\hline
         
     LATITUDE \& LONGITUDE
         & Die Positionsdaten einer Messung zum Zeitpunkt der Übetragung der Werte.
-        & Dies ist ein essentieller Parameter um die Messungen in einen lokalen Zusammenhang zu stellen. \\\hline
+        & <float64>
+        \\\hline
         
     PRES
         & Messvektor des Wasserdrucks
-        & Durch diesen Messwert lässt sich die Dichte der überliegenden Wassersäule herleiten. \\\hline
+        & <float32>
+        \\\hline
         
     TEMP
         & Messvektor der Wassertemperaturen 
-        &  Die Temperatur des umliegenden Wassers ist einer der zentralen Messwerte. Durch diesen Messwert und seinen Trend lässt sich der Globale Klimawandel anschaulich darstellen.  \\\hline
+        & <float32>
+          \\\hline
         
     PSAL
         & Messvektoren des Salzgehaltes
-        & Ein weiterer Parameter, um die Auswirkungen des Klimawandels zu erfahren. Durch das Schmelzen der großen Eissschelfs an den Polen des Planeten ist eine Verringerung des Salzgehaltes der meere zu erwarten. \\\hline
+        & <float32>
+         \\\hline
     \end{tabular}
-      \caption{Auswahl der Daten aus dem ArgoProgramm}
+      \caption{Beschreibung der ausgewählten Daten}
 \end{table}
 \end{center}
+
+Das Feld PLATFORM\_NUMBER wird benötigt um Messprofile eindeutig der Plattform zuordnen zu können. Während die CYCLE\_NUMBER eine Messung innerhalb ihrer Plattform eindeutig zuordenbar macht. Das Datum der Messdatenübertragung kann aus dem Feld JULD ermittelt werden, dieses erlaubt es, die Messreihe in ihren zeitlichen Kontext zu sehen. Die Anzahl der Sensoren lässt sich aus dem Feld N\_PARAM herleiten. Dies wird benötigt, da einige Messstationen nicht alle Sensoren eingebaut haben. Über die Geokoordinaten wird die lokale Zuordnung der Datenübertragung erreicht. Dies wird benötigt um in der Kartendarstellung der Messung einen Ort zuzuweisen.
+Aus den Messwerten werden die Felder PRES, TEMP und PSAL ausgewählt. Neue Modelle von Argo Floats besitzen noch das Feld COND über den sich die Leitfähigkeit des umliegenden Wassers herleiten lässt. Dieser ist aber noch nicht bei vielen Messstationen implementiert und wird deswegen hier nicht verwendet.
+
 
  
 
 %TODO Der kleine Satz möchte aus den Untiefen der Schachtelsätze abgeholt und verbessert werden
 \paragraph{Vereinfachung der Messdaten}
-Die verwendeten Messwerte PRES, TEMP und PSAL eines Messprofils liegen in Vektorieller Form vor. Für die Darstellung über einen univariaten Graphen wird nur ein skalarer Wert pro Messprofil benötigt. Die Daten sollen zusammengefasst werden, bevor diese in die Datenstruktur überführt werden um die größe der Daten zu verringern. 
+Die verwendeten Messwerte PRES, TEMP und PSAL eines Messprofils liegen in Vektorieller Form vor. Für die Darstellung über einen univariaten Graphen wird nur ein skalarer Wert pro Messprofil benötigt. Die Daten sollen zusammengefasst werden, bevor diese in die Datenstruktur überführt werden um die Größe der Daten zu verringern. 
 %TODO Implementierung welcher Algorithmus zurzusammenfassung 
  
 % END 
@@ -148,21 +151,10 @@ Python besitzt in Hinsicht auf Laufzeitkosten und einer nicht strikten Typisieru
 
 
 
-\subsubsection{Server}
-
-Für die Laufzeitumgebung der Applikation wird ein GNU/Linux eingesetzt werden. Die Software wird so entwickelt das sie unter den gängigen Distributionen lauffähig sein wird. Hier wird sich aber für Debian stable als Betriebssystem udn Laufzeitumgebung entschieden.
+\subsubsection{Betriebssystem des Servers}
 
 
-% ?? FOLGENDE ZEILEN NOCH VERWENDEN ??
-% 
-% Als Laufzeitumgebung ist ein GNU/Linux System einzusetzen. Die Aktualität der Pakete ist nicht von hoher Priorität, vielmehr sollten die bereitgestellten Programme gut getestet und stabil sein. In diesem Kontext gibt es zwei große Distributionen.
-% 
-% \begin{description}
-%  \item [RHEL / centOS] Eine Kommerzielle Distribution und ihr freier Ableger. Von Vorteil sind hier der gute kommerzielle Support. In der Grundausstattung liefert Red Hat nur eine sehr beschränkte Paketauswahl.
-%  \item [Debian] Diese Distribution besitzt eine große Community, die aktiv arbeitet und guten Support bietet. Die Paketauswahl ist sehr groß und sicherheitspatches werden schnell bereitgestellt. Mit apt und dpkg besitzt Debian einen exelenten Paketmanager. 
-% \end{description}
-% 
-% Unter diesen Gesichtspunkten erscheint Debian als die geeignetste Distribution für dieses Projekt.
+Für die Laufzeitumgebung der Applikation wird ein GNU/Linux eingesetzt werden. Die Software wird so entwickelt das sie unter den gängigen Distributionen lauffähig sein wird. Für diese Applikation wird sich hier für die Distribution Debian-Stable entschieden. Diese zeichnet sich insbesondere gegenüberweiteren Distribution mit einer ähnlichen Verbreitung wie RHEL und Ubuntu durch ihre nicht kommerzielle Ausrichtung aus. Debian ist sehr verbreitet und stark auf Stabilität ausgelegt. Als Nachteil ist der fehlende kommerzielle Support zu sehen. Diese Arbeit sollte voraussichtlich aber in keine Bereiche vordringen, welche einen kostenpflichtigen Support rechtfertigen würde.
 
 \subsubsection{Webframework}
 
