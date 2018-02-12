@@ -8,9 +8,9 @@ class ArgoFloat(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     identifier = db.Column(db.String(10))
-    project_name = db.Column(db.String(30))
+    project_name = db.Column(db.String(100))
     launch_date = db.Column(db.Date)
-    float_owner = db.Column(db.String(60))
+    float_owner = db.Column(db.String(100))
 
     def __init__(self, identifier, project_name, launch_date, float_owner):
         self.identifier = identifier

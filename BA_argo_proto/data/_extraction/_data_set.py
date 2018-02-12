@@ -21,16 +21,19 @@ class FloatDataset(object):
                 return np.average(a)
 
             #: IDENTIFIER
-            self.cycle_number = extract_variable(ds, 'CYCLE_NUMBER')[0]
+            # Some floats holding the scalar values in arrays with duplicates.
+            # Therefor we have to check the type of the value ( - - > SCALAR?)
 
-            juld = extract_variable(ds, 'JULD')[0]
-            self.date_creation = datetime.datetime.strptime('1950-01-01', "%Y-%m-%d") + datetime.timedelta(
-                days=int(juld))
+            self.cycle_number = ds.variables['CYCLE_NUMBER'][0]
 
-            #: DATA
+            juld = ds.variables['JULD'][0]
+            juld = np.ma.getdata(juld) if np.ma.is_masked(juld) else juld
+            self.date_creation = datetime.datetime.strptime('1950-01-01', "%Y-%m-%d") \
+                                 + datetime.timedelta(days=int(juld))
+
             self.position = {
-                'latitude': np.float(extract_variable(ds, 'LATITUDE')[0]),
-                'longitude': np.float(extract_variable(ds, 'LATITUDE')[0])
+                'latitude': np.float(np.ma.getdata(ds.variables['LATITUDE'][0])),
+                'longitude': np.float(np.ma.getdata(ds.variables['LONGITUDE'][0]))
             }
             self.pressure = np.average(extract_variable(ds, 'PRES'))
             self.temperature = np.average(extract_variable(ds, 'TEMP'))
