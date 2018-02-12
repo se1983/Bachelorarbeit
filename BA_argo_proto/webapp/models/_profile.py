@@ -13,18 +13,19 @@ class Profile(db.Model):
 
     salinity = db.Column(db.Float)
     pressure = db.Column(db.Float)
-    conductivity = db.Column(db.Float)
     temperature = db.Column(db.Float)
+    valid_data_range = db.Column(db.Boolean)
 
-    def __init__(self, cycle, timestamp, measurement, salinity, pressure, conductivity, temperature):
+    def __init__(self, cycle, timestamp, measurement, salinity, pressure, temperature, valid_data_range):
         self.cycle = cycle
         self.timestamp = timestamp
         self.measurement = measurement
 
         self.salinity = float(salinity)
         self.pressure = float(pressure)
-        self.conductivity = float(conductivity)
         self.temperature = float(temperature)
+
+        self.valid_data_range = bool(valid_data_range)
 
     def __repr__(self):
         return f'<Profile {self.id!r}>'

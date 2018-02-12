@@ -32,7 +32,13 @@ class ArgoFloatProfile:
         )
 
         try:
-            argo_float_ = ArgoFloat(identifier=self.argo_float.identifier)
+            argo_float_ = ArgoFloat(
+                identifier=self.argo_float.identifier,
+                project_name=self.argo_float.project_name,
+                launch_date=self.argo_float.launch_date,
+                float_owner=self.argo_float.float_owner
+
+            )
             # Collecting the Data of each Profile of the ArgoFloat
             for profile_data in self.argo_float.data:
                 location_ = Location(
@@ -50,8 +56,8 @@ class ArgoFloatProfile:
                     measurement=measurement_,
                     salinity=profile_data.salinity,
                     pressure=profile_data.pressure,
-                    conductivity=profile_data.conductivity,
-                    temperature=profile_data.temperature
+                    temperature=profile_data.temperature,
+                    valid_data_range=profile_data.valid_data_ranges
                 ))
 
             session.commit()
