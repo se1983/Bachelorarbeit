@@ -1,7 +1,42 @@
 \section{Grundlagen}
+ 
+\subsection{Objekt-Relationale Unverträglichkeit}
+  
+In einem Softwareparadigma manifestiert sich eine bestimmte Art und Weise der Betrachtung oder Modellierung der Welt. 
+Jedes dieser Paradigmen beeinflusst damit sowohl den Prozess als auch die Ergebnisse des Software-Designs
+und Entwicklung. Als impedance Missmatch oder Unverträglichkeit werden Probleme bei der Kombination verschiedener Technologien oder Paradigmen bezeichnet. 
+In der Softwareentwicklung ist die objekt-relationale Unverträglichkeit (object-relational impedance mismatch) eine häufig auftretende Herausforderung. (vgl. \cite{ireland2009classification})
 
-    \subsection{Object Ralational Mapper}
+\paragraph{Strukturelle Unterschiede} In der Objektorientierten Programmierung können beliebige, durch Methoden definierte Strukturen und Semantiken aufgebaut werden. Durch hierarchische Vererbungsstrukturen ist es möglich Objekte zu zu spezialisieren oder zu generalisieren. Relationen bestehen aus Tupeln und verhalten sich wie die Zeilen in einer Tabelle. Inhärente wiederholbare Strukturen oder Hierarchien können darin nicht umgesetzt werden. 
 
+\paragraph{Kapselung}
+Durch Kapselung erlauben Objekte den Zugriff auf Objekte einzuschränken. Dies ist in Relationen nicht gegeben.
+
+\paragraph{Identität}
+Ein Objekt ist die Instanz einer Klasse. Zwei Objekte von der selben Klasse habe zwei eigenständige Identitäten. In der relationalen Algebra ist dies nicht vorgesehen.
+
+
+
+
+
+    
+    Object Relational Mapper (ORM) ist eine Abstraktionsschicht oder Schnittstelle zur Überwindung der objekt-relationalen Unverträglichkeit (impedance Mismatch).  
+    
+    Obje
+    
+    Zwischen Objektorientierten Programmen und Relationen existieren strukturelle Unterschiede. 
+    Objekte besitzen eine Identität und erlauben komplexe Vererbungshierarchien und . In der relationalen Algebra sind solche Beziehungstypen nicht vorgesehen. 
+    Relationen bestehen aus Tupeln, identifizierbar durch einen Primärschlüssel. Beziehungen werden durch Fremdschlüssel, modelliert. Das Objekt-relationale Mapping versucht diesen impedance Mismatch möglichst transparent zu überwinden.
+    
+
+
+
+% BEGIN -- Geographische Informationssysteme
+    \subsection{Geographische Informationssysteme  ODER }
+
+% END
+
+% BEGIN -- Software
     \subsection{Verwendete Software}
     \subsubsection{Network Common Data Format}
     
@@ -18,7 +53,7 @@
     
     Um einen Datensatz zu öffnen, bildet man eine Instanz der Klasse \texttt{netCDF4.Dataset}. Die Auswahl des Profils gelingt durch die Pfadangabe als Parameter bei der Instanzierung.
     
-    Über das Attribut \texttt{dataset.variables} werden die Datensätze als \texttt{OrderedDict} gehalten. Bei der Extraktion eines Parameters erhält man zunächst die Dokumentation des jeweiligenm Datensatzes. In diesem Fall handelt es sich um den Zeitpunkt der Sattelitenübertragung des betreffenden Messprofils.
+    Über das Attribut \texttt{dataset.variables} werden die Datensätze als \texttt{OrderedDict} gehalten. Bei der Extraktion eines Parameters erhält man zunächst die Dokumentation des jeweiligen Datensatzes. In diesem Fall handelt es sich um den Zeitpunkt der Sattelitenübertragung des betreffenden Messprofils.
     
     Aus der Dokumentation lassen sich für die Weiterverarbeitung wichtige Parameter entnehmen.
     So ist der Datensatz in Form des C-Datentyps \texttt{float64} codiert. Beim Datumsformat handelt es sich um \textit{Julian day} ab dem Zeitpunkt \textit{01. Januar 1950}.
@@ -79,10 +114,6 @@
 
 % BEGIN SQLALCHEMY
     \subsubsection{SQLAlchemy}
-    
-    Ein  \textbf{Object Ralational Mapper} oder kurz ORM ist die Schnittstelle zwischen in objektorientiert modellierten Programmteilen und realtionalen Datenbanken. 
-    
-    Zwischen diesen beiden Paradigmen existieren strukturelle Unterschiede. So besitzen Objekte im Unterschied zu Relationen eine Identität und unterstützen Vererbung. In der relationalen Algebra ist eine solche Komplexität nicht vorgesehen. Relationen bestehen aus Tupeln, identifizierbar durch den Primärschlüssel mit Beziehungen durch Fremdschlüssel. Durch ein Objekt-relationales Mapping wird versucht, diesen \textbf{impedance Mismatch} möglichst transparent zu überwinden. \\
     
     Ein bei der Entwicklung von Programmen mit Python weit verbreiteter ORM ist \textbf{SQLAlchemy}. So wird dieser zum Beispiel im Backend von reddit oder bei Mozilla eingesetzt. SQLAlchemy wird für die Verwendung in Flask empfohlen.\footnote{Siehe \cite{openingtheflask} S. 33} \\
     % TODO EXTENSION sqlalchemy@flask
@@ -206,3 +237,4 @@
     
     \subsection{...}
 
+% END
