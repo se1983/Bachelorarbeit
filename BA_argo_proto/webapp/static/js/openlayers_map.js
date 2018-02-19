@@ -250,10 +250,12 @@ var displayArgoData = function (pixel) {
         return feature;
     });
 
-    var identifier = feature.getProperties()['identifier'];
-
+    console.log(feature);
 
     if (feature && feature.getGeometry().getType() === 'Point') {
+
+        var identifier = feature.getProperties()['identifier'];
+
         sidebar.style.display = "block";
 
         display_info(identifier);
@@ -261,6 +263,7 @@ var displayArgoData = function (pixel) {
 
     }
     else {
+        console.log("Hiding sidebar");
         sidebar.style.display = "none";
     }
 };
