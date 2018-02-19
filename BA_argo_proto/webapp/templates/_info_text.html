@@ -1,19 +1,37 @@
 {% if data %}
 
-    <p>
-        Dies ist Argo Nummer {{ data.identifier }}.
-    </p>
+    <table class="table table-hover">
+        <tbody>
 
+        <tr>
+            <td>Messstation</td>
+            <td>{{ data.identifier }}</td>
+        </tr>
 
-    <p>
-        Diese Messstation wurde im Rahmen des Forschungsprojektes {{ data.project_name }}
-        installiert. Sie gehört {{ data.float_owner }} und misst seit dem {{ data.launch_date }}.
-    </p>
+        <tr>
+            <td>Forschungsprojekt</td>
+            <td>{{ data.project_name }}</td>
+        </tr>
+
+        <tr>
+            <td>Projektleitung</td>
+            <td>{{ data.float_owner }}</td>
+        </tr>
+
+        <tr>
+            <td>Startdatum</td>
+            <td>{{ data.launch_date }}</td>
+        </tr>
+
+        </tbody>
+    </table>
 
     {% if not data.valid %}
+
         <div class="alert alert-warning">
             <strong>Warnung!</strong> Einige Werte scheinen außerhalb der erlaubten Wertebereiche zu liegen.
         </div>
+
     {% endif %}
 
 {% endif %}
