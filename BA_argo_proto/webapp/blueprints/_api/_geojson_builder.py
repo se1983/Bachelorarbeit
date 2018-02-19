@@ -1,5 +1,5 @@
 from numpy import nan
-
+import datetime
 
 def positions_json(rows, identifier):
     # Nan is not part of parsable JSON so wer will convert this value to None(Null)
@@ -50,13 +50,21 @@ def positions_json(rows, identifier):
 
 
 def argo_float_data_json(rows):
-    return {
-        'pressure': [x['pressure'] for x in rows],
-        'temperature': [x['temperature'] for x in rows],
-        'salinity': [x['salinity'] for x in rows],
-        'conductivity': [x['conductivity'] for x in rows],
-        'timestamp': [x['timestamp'] for x in rows]
+    print(rows)
+
+    data = {
+        'pressure': [x['pressure'] for x in rows['measurements']],
+        'temperature': [x['temperature'] for x in rows['measurements']],
+        'salinity': [x['salinity'] for x in rows['measurements']],
+        'timestamp': [x['timestamp'] for x in rows['measurements']],
+        'valid': all([x['valid_data'] for x in rows['measurements']]),
+        'float_owner': rows['float_owner'],
+        'project_name': rows['project_name'],
+        'launch_date': rows['launch_date'].strftime('%d. %b %Y'),
+        'identifier': rows['identifier']
     }
+
+    return data
 
 
 def last_seen_json(rows):

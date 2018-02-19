@@ -13,6 +13,14 @@ def index():
     return render_template('map.html')
 
 
+@argo_app.route("/info/<identifier>")
+def info_text(identifier):
+    url = url_for('argo_api.get_argo_float', identifier=identifier, _external=True)
+    data = requests.get(url).json()
+
+    return render_template('_info_text.html', data=data)
+
+
 @argo_app.route("/test")
 def test_pattern():
     return render_template('test_pattern.html')

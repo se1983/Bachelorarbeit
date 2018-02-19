@@ -207,31 +207,58 @@ var singleclickInteraction = new ol.interaction.Select({
 map.addInteraction(singleclickInteraction);
 
 
-var displayPlot = function (pixel) {
-    sidebar.style.display = "block";
+var displayArgoData = function (pixel) {
 
+    function display_chart(identifier) {
 
-    var feature = map.forEachFeatureAtPixel(pixel, function (feature, layer) {
-        return feature;
-    });
-    var img = new Image();
-    var div = document.getElementById('chart-picture');
-    var width = div.offsetWidth;
+        var img = new Image();
+        var chart_div = document.getElementById('chart-picture');
+        var width = chart_div.offsetWidth;
 
-    div.innerHTML = '';
+        chart_div.innerHTML = '';
 
-    if (feature && feature.getGeometry().getType() === 'Point') {
-
-        var identifier = feature.getProperties()['identifier'];
-        document.getElementById('argo_float_identifier').innerHTML = identifier;
 
         img.onload = function () {
-            div.appendChild(img);
+            chart_div.appendChild(img);
         };
 
         img.src = '/chart/' + identifier;
         img.width = width;
         img.classList.add('img-responsive');
+    }
+
+    function display_info(identifier) {
+
+        document.getElementById('argo_float_identifier').innerHTML = "Info";
+
+        var info_text_div = document.getElementById('argo_info');
+
+        info_text_div.innerHTML = "";
+
+        $.ajax({
+            url: 'http://' + window.location.host + '/info/' + identifier,
+            success: function (data) {
+                console.log(data);
+                info_text_div.innerHTML = data;
+            }
+        });
+
+
+    }
+
+    var feature = map.forEachFeatureAtPixel(pixel, function (feature, layer) {
+        return feature;
+    });
+
+    var identifier = feature.getProperties()['identifier'];
+
+
+    if (feature && feature.getGeometry().getType() === 'Point') {
+        sidebar.style.display = "block";
+
+        display_info(identifier);
+        display_chart(identifier);
+
     }
     else {
         sidebar.style.display = "none";
@@ -270,6 +297,6 @@ function displayPositions(pixel) {
 }
 
 map.on('click', function (evt) {
-    displayPlot(map.getEventPixel(evt.originalEvent));
+    displayArgoData(map.getEventPixel(evt.originalEvent));
     displayPositions(map.getEventPixel(evt.originalEvent))
 });

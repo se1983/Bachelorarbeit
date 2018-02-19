@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, url_for
 from flask_twisted import Twisted
 
 from .models import db

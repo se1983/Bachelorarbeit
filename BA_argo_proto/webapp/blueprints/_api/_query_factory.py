@@ -35,15 +35,31 @@ class QueryFactory(object):
             result_proxy = self.__execute(query)
             keys = result_proxy.keys()
 
-            data = [
+            measurements = [
                 {
                     'timestamp': row[keys.index('profiles_timestamp')],
                     'temperature': row[keys.index('profiles_temperature')],
                     'salinity': row[keys.index('profiles_salinity')],
-                    'conductivity': row[keys.index('profiles_conductivity')],
-                    'pressure': row[keys.index('profiles_pressure')]
+                    'pressure': row[keys.index('profiles_pressure')],
+                    'valid_data': row[keys.index('profiles_valid_data_range')]
                 } for row in result_proxy
             ]
+
+            query = db.session.query(ArgoFloat) \
+                .filter(ArgoFloat.identifier == identifier)
+            result_proxy = self.__execute(query)
+
+            row = result_proxy.fetchone()
+            keys = result_proxy.keys()
+            print(row)
+
+            data = {
+                'measurements': measurements,
+                'float_owner': row[keys.index('argo_floats_float_owner')],
+                'project_name': row[keys.index('argo_floats_project_name')],
+                'launch_date': row[keys.index('argo_floats_launch_date')],
+                'identifier': identifier
+            }
 
             return data
         except Exception as err:
