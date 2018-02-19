@@ -50,7 +50,7 @@ def positions_json(rows, identifier):
 
 
 def argo_float_data_json(rows):
-    print(rows)
+    time_string = '%d. %B %Y'
 
     data = {
         'pressure': [x['pressure'] for x in rows['measurements']],
@@ -60,7 +60,8 @@ def argo_float_data_json(rows):
         'valid': all([x['valid_data'] for x in rows['measurements']]),
         'float_owner': rows['float_owner'],
         'project_name': rows['project_name'],
-        'launch_date': rows['launch_date'].strftime('%d. %b %Y'),
+        'launch_date': rows['launch_date'].strftime(time_string),
+        'last_seen': rows['measurements'][-1]['timestamp'].strftime(time_string),
         'identifier': rows['identifier']
     }
 
