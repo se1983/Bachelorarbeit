@@ -11,6 +11,7 @@ def extract_variable(dataset, field_name):
 
 
 def string_from_bytearray(arr):
-    return "".join(
-        [c.decode('utf-8') for c in arr]
-    )
+    if type(arr) == np.ndarray:
+        return "".join([c.decode('utf-8') if type(c) in (np.bytes_, bytes) else c for c in arr])
+    else:
+        return arr
