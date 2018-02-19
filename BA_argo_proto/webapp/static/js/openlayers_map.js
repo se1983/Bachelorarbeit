@@ -238,7 +238,6 @@ var displayArgoData = function (pixel) {
         $.ajax({
             url: 'http://' + window.location.host + '/info/' + identifier,
             success: function (data) {
-                console.log(data);
                 info_text_div.innerHTML = data;
             }
         });
@@ -250,7 +249,6 @@ var displayArgoData = function (pixel) {
         return feature;
     });
 
-    console.log(feature);
 
     if (feature && feature.getGeometry().getType() === 'Point') {
 
@@ -263,7 +261,6 @@ var displayArgoData = function (pixel) {
 
     }
     else {
-        console.log("Hiding sidebar");
         sidebar.style.display = "none";
     }
 };
