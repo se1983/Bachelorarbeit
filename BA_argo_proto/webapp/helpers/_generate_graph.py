@@ -5,6 +5,7 @@ import matplotlib
 from matplotlib import gridspec
 from matplotlib.figure import Figure
 from matplotlib.pyplot import style
+import matplotlib.patches as mpatches
 
 style.use('seaborn-whitegrid')
 matplotlib.rcParams['xtick.labelsize'] = 20
@@ -27,17 +28,22 @@ def create_plot(data):
 
     ax1 = fig.add_subplot(grid[0])
     ax1.set_xticklabels([])
-    ax1.set_ylabel("Temperature")
-    do_plot(ax1, (dates, temperature))
+    patch = mpatches.Patch(color='dodgerblue', label='Temperatur\n$°C$')
+    ax1.legend(handles=[patch], prop={'size': 20}, loc=3)
+    ax1.plot(dates, temperature, '-', color='dodgerblue')
 
     ax2 = fig.add_subplot(grid[1])
     ax2.set_xticklabels([])
-    ax2.set_ylabel("Salinity")
+    patch = mpatches.Patch(color='dodgerblue', label='Salzgehalt\n$g/l$')
+    ax2.legend(handles=[patch], prop={'size': 20}, loc=3)
     do_plot(ax2, (dates, salinity))
+    ax2.plot(dates, salinity, '-', color='dodgerblue')
 
     ax3 = fig.add_subplot(grid[2])
-    ax3.set_ylabel("Pressure")
+    patch = mpatches.Patch(color='dodgerblue', label='Druck')
+    ax3.legend(handles=[patch], prop={'size': 20}, loc=3)
     do_plot(ax3, (dates, pressure))
+    ax3.plot(dates, pressure, '-', color='dodgerblue')
 
     fig.autofmt_xdate()
     fig.tight_layout()
