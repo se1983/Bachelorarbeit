@@ -90,8 +90,6 @@ class QueryFactory(object):
                 'pressure': row[keys.index('profiles_pressure')]
             } for row in result_proxy]
 
-            print(data)
-
             return data
         except Exception as err:
             print(err)
