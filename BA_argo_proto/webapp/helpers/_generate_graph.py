@@ -6,6 +6,8 @@ from matplotlib import gridspec
 from matplotlib.figure import Figure
 from matplotlib.pyplot import style
 import matplotlib.patches as mpatches
+import matplotlib.dates as mdates
+
 
 import numpy as np
 
@@ -35,24 +37,25 @@ def create_plot(data):
     if not any(np.isnan(temperature)):
         ax1 = fig.add_subplot(grid[0])
         ax1.set_xticklabels([])
-        patch = mpatches.Patch(color='dodgerblue', label='Temperatur\n$°C$')
+        patch = mpatches.Patch(color='dodgerblue', label='Temperatur [$°C$]')
         ax1.legend(handles=[patch], prop={'size': 20}, loc=3)
         ax1.plot(dates, temperature, '-', color='dodgerblue')
 
     if not any(np.isnan(salinity)):
         ax2 = fig.add_subplot(grid[1])
         ax2.set_xticklabels([])
-        patch = mpatches.Patch(color='dodgerblue', label='Salzgehalt\n$g/l$')
+        patch = mpatches.Patch(color='dodgerblue', label='Salzgehalt [$g/l$]')
         ax2.legend(handles=[patch], prop={'size': 20}, loc=3)
-        do_plot(ax2, (dates, salinity))
         ax2.plot(dates, salinity, '-', color='dodgerblue')
 
     if not any(np.isnan(pressure)):
         ax3 = fig.add_subplot(grid[2])
-        patch = mpatches.Patch(color='dodgerblue', label='Druck\n$p$')
+        patch = mpatches.Patch(color='dodgerblue', label='Druck [$p$]')
         ax3.legend(handles=[patch], prop={'size': 20}, loc=3)
-        do_plot(ax3, (dates, pressure))
+        ax3.format_xdata = mdates.DateFormatter("%m")
         ax3.plot(dates, pressure, '-', color='dodgerblue')
+        ax3.grid(True)
+
 
     fig.autofmt_xdate()
     fig.tight_layout()
