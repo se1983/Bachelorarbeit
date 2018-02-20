@@ -213,6 +213,8 @@ var displayArgoData = function (pixel) {
 
         var img = new Image();
         var chart_div = document.getElementById('chart-picture');
+
+
         var width = chart_div.offsetWidth;
 
         chart_div.innerHTML = '';
@@ -225,18 +227,19 @@ var displayArgoData = function (pixel) {
         img.src = '/chart/' + identifier;
         img.width = width;
         img.classList.add('img-responsive');
+
+
     }
 
     function display_info(identifier) {
 
         document.getElementById('argo_float_identifier').innerHTML = "Info";
-
         var info_text_div = document.getElementById('argo_info');
 
         info_text_div.innerHTML = "";
 
         $.ajax({
-            url: 'http://' + window.location.host + '/info/' + identifier,
+            url: 'https://' + window.location.host + '/info/' + identifier,
             success: function (data) {
                 info_text_div.innerHTML = data;
             }
@@ -255,6 +258,9 @@ var displayArgoData = function (pixel) {
         var identifier = feature.getProperties()['identifier'];
 
         sidebar.style.display = "block";
+
+        $('#layers').collapse('hide');
+
 
         display_info(identifier);
         display_chart(identifier);
