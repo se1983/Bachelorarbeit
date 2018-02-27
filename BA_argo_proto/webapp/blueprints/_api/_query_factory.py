@@ -10,10 +10,10 @@ class QueryFactory(object):
         pass
 
     @staticmethod
-    def __execute(query):
+    def __execute(query, bind=None):
 
         return {
-            BaseQuery: lambda q: db.session.execute(q, None, bind=db.get_engine(app, None)),
+            BaseQuery: lambda q: db.session.execute(q, None, bind=db.get_engine(app, bind)),
             str: lambda q: db.engine.execute(q)
         }[type(query)](query)
 
