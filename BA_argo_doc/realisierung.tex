@@ -8,8 +8,9 @@
  \label{fig:modulschema}
 \end{figure}
 
+
 % BEGIN DATENAGGREGATION
-\subsection{Schnittstellen der Datenaggregation}
+\subsection{Datenaggregation}
 
 Bei der Aggregation der Daten aus dem Argo Programm sind Schnittstellen auszuarbeiten. Diese Implementierung ist im folgenden beschrieben. 
 
@@ -64,64 +65,174 @@ Durch diese Klasse wird somit ein Generator definiert, der es erlaubt, alle im A
 
 %END
 
-% BEGIN SQLALCHEMY
-\subsection{SQLAlchemy}
 
-Die Einbindung von SQLAlchemy in den Kontext der Webapplikation muss Festgelegten Muster folgen. In Abbildung \ref{fig:sequenzSQLALCHEMY} kann dieser Ablauf über ein Sequenzdiagramm nachvollzogen werden.
+% BEGIN Webapp
+\subsection{Webapplikation}
 
-\begin{figure}[!h]
- \centering
- \includegraphics[width=\textwidth]{pix/seq_db.png}
- % seq_db.png: 1310x617 px, 96dpi, 34.66x16.32 cm, bb=0 0 982 463
- \label{fig:sequenzSQLALCHEMY}
-\end{figure}
+\subsubsection{Controller}
 
-Die Besonderheit in diesem Prozess besteht darin, das zirkuläre Imports vermieden werden müssen. Daher wird das Objekt für die Verwaltung der Datenbank Schritt für Schritt implementiert.
+% 1. Vorstellung Flask -- warum gewählt; Vor- und Nachteile
+% 2. Trennung von API und APP in verscheidene Blueprints
+% 3. Zentrale Steuerungseinheit via manage.py
 
-Das Objekt von SQLAlchemy wird bei der Erstellung der Models mit erzeugt.
-In Listing \ref{lst:initpy_models} ist dargestellt, auf welche Art die Initialisierung des Moduls \textit{Models} erfolgen kann. 
+\subsubsection{Objektrelationales Mapping}
 
-\pythonexternal[%
-    caption={Initialisierung der Mpodulstruktur mitsamt SQLAlchemy},%
-    label={lst:initpy_models}]{/home/sebsch/Dokumente/Uni-Workdir/Bachelorarbeit/BA_argo_proto/webapp/models/__init__.py}
+% 1. Vorstellung SQL-Alchemy -- warum gewählt; Vor- und Nachteile
+
+Als Objektrelationalen Mapper wurde sich hier für SQLAlchemy entschieden. Diese Software gilt als erprobt und wird bereits in einer Vielzahl von Softwaresystemen eingesetzt. So verwendet unter anderem reddit oder die Mozilla Foundation SQLAlchemy als Schnittstelle zur Datenhaltung. SQLAlchemy wird für die Verwendung in Flask empfohlen und es existiert eine Erweiterung um die Verwendung des Mappers in Flask zu vereinfachen (vgl. \cite{openingtheflask} S. 33). \\
+%% TODO Konzepte, Pattern und Nachteile von SQLAlchemy -- Pattern in Grundlagen zu ORM
+%           1. LazyLoading
+%           2. databinding
+%           3. Foreign Key Mapping 
+%           4. rollback
+
+
+% 2. Implementierung von Entitäten, und Relationen 
+In SQLAlchemy werden die Tabelleneinträge in Modellklassenabgebildet. In Listing \ref{lst:models_argofloat} ist die Implementierung des Models für eine ArgoFloat-Messtation zu sehen.
+
+\pythonexternal[%                       -> SQLALCHEMY: ArgoFloat
+    caption={Modellklasse für ein Argo-Float},%
+    label={lst:models_argofloat}]%
+    {/home/sebsch/Dokumente/Uni-Workdir/Bachelorarbeit/BA_argo_proto/webapp/models/_argo_float.py}
     
-Die Schnittstelle zur Datenbank wird in Zeile 3 über eine Instanz der Klasse SQLAlchemy initialisiert. Diese trägt zu diesem Zeitpunkt noch keinerlei Informationen zu Datenbank oder verwendeter Models.
-Erst nachdem dieses Objekt erzeugt wurde, dürfen die Klassen für die Models in den sichtbaren Bereich des Modules gebracht werden. 
+Die Registrierung des Models erfolgt über die Vererbung einer Metaklasse \texttt{db.Model}. Die Schlüssel der Entität werden Attribute des Objektes implementiert. Diese werden in instanzen von \texttt{db.Column} transferiert. Dies erlaubt das festsetzen des Datentyps. Über \texttt{db.Column} lassen sich auch weitere Dateiattribute definieren, wie in diesem Fall der Festlegung von \texttt{id} als Primärschlüssel. Die Datenwerte werden durch die Parameterübergabe in der \texttt{\_\_init\_\_} Methode realisiert.  
+Um das Databinding für die Temporäre Datenbank zu realisieren wurden Nachfahren der Modellklassen erzeugt. Diese benötigen für die Zuordnung das Attribut \texttt{\_\_bind\_key\_\_}.
 
-In Listing \ref{lst:modelArgoFloat} ist exemplarisch die Implementierung des Models für ein ArgoFloat aufgezeigt.
 
-\pythonexternal[%
-    caption={Implementierung des Modules für eine Entität eines ArgoFloats},%
-    label={lst:modelArgoFloat}]{/home/sebsch/Dokumente/Uni-Workdir/Bachelorarbeit/BA_argo_proto/webapp/models/_argo_float.py}
+Über das Schlüsselwort \texttt{db.relationship} werden Beziehungen beschrieben. In diesem Fall besteht eine $1 - N$ Beziehung zu \texttt{measurements} (Siehe auch Figure \ref{fig:ERM} auf Seite \pageref{fig:ERM}). Als Übergabeparameter wird ein Name für die Beziehung erwartet. Der Parameter \texttt{backref} gibt den Namen der Klasse auf dem Mapper an. Diese Einstellung erlaubt den Aufruf der Beziehung auch in die andere Richtung. Der Parameter \texttt{lazy} definiert die verwendete Strategie für das Lazyloading. In diesem Fall wurde sich für \texttt{'dynamic'} entschieden. Diese Einstellung gibt bei Lesezugriffen ein vorkonfiguriertes Query-Objekt zurück. Dies erlaub das Hinzufügen weiterer Filter, vor dem Zugriff auf die Tabellen. Die durch diese Beziehung verbundene Modellklasse Measurements ist in Listing \ref{lst:models_measurement} zu sehen.
+
+\pythonexternal[%                       -> SQLALCHEMY: measurement
+    caption={Modellklasse für eine Messung},%
+    label={lst:models_measurement}]%
+    {/home/sebsch/Dokumente/Uni-Workdir/Bachelorarbeit/BA_argo_proto/webapp/models/_measurement.py}
+   
+Die Beziehung $\mbox{measurement} \to \mbox{argo\_float}$ unterscheidet sich in dieser Programmimplementierung. Für die eindeutige Zuordnung des übergeordneten Argo-Floats, wird deren \texttt{id} als Fremdschlüssel registriert.  \\
+
+
+% 3. Lesen und schreiben von Daten aus der Datenbank -- Rollbacks 
+
+
+Das Schreiben von Daten über den Mapper SQLAlchemy ist Teil der Datenaggregation. Der dort implementierte Programmcode ist in Listing \ref{lst:sqlalchemy_write} zu sehen.
+
+
+\pythonexternal[%                       -> SQLALCHEMY: Schreiben
+    caption={Das Schreiben der Daten eines Argo-Floats in die Datenbank},%
+    label={lst:sqlalchemy_write}]%
+    {/home/sebsch/Dokumente/Uni-Workdir/Bachelorarbeit/BA_argo_proto/data/_insertion/_argo_float_profile_writer.py}
+
+
+Die hier implementierte Klasse \texttt{ArgoFloatProfile} ist für das Schreiben aller Datensätze eines ArgoFloats zuständig. Diese verwendet für die Zuordnung der Daten die Modell-Klassen aus der Webapplikation. Durch die Methode \texttt{write\_data} werden die Daten des durch \texttt{\_\_init\_\_} übergebenen Datensatzes in die Datenbank überführt.
+Um ein dynamisches Binding realisieren zu können, wird der betreffende Parameter \texttt{bind} übergeben. Mithilfe dieses Parameters wird eine Session aufgebaut, welcher das Schreiben in die Datenbank erlaubt, die über das binding definiert ist.
+
+Für jeden Datensatz eine Instanz der betreffenden Modell-Klasse instanziiert. Die dafür benötigten Daten werden aus den Datensätzen des Klasseneigenen Generator-Objektes \texttt{argo\_float} angefordert und als Parameter übergeben.
+
+Der zuvor definierten Session werden nur die Instanzen der \texttt{Profile}-Klassen übergeben. Da alle zum Messprofil gehörenden Modells in diesem Kontext eindeutig sind, kann SQLAlchemy diese selbstständig zuordnen.
+Zum Abschluss werden die Daten über \texttt{session.commit()} in die Datenbank überführt.
+\texttt{session.rollback()} erlaubt es, die Veränderungen, die innerhalb dieser Session an der Datenbank herbeigeführt wurden, wieder auf den Urzustand zurückzuführen.  \\
+
+SQLAlchemy bietet eine eigene Abfrage-Sprache an. In Listing \ref{lst:sqlalchemyreadquery} ist eine vereinfachte Implementierung der Abfage zur Bestimmung der Positionshistorie einer Argo-Float zu sehen, wie sie auch in der Web-API implementiert ist. 
+
+\pythonexternal[%                       -> SQLALCHEMY: Lesen 1
+    caption={Anfragen über SQLAlchemy zum Lesen von Daten},%
+    label={lst:sqlalchemyreadquery}]%
+    {scr/beispiele/sqlalchemy_read.py}
+
+In diesem Beispiel wird eine Projektion auf Elemente von Attribute von \texttt{ArgoFloat}, \texttt{Location} und \texttt{Profile} angefordert. SQLAlchemy erlaubt die Definition von Joins über mehere Tabellen, diese werden durch die in den Modell-Klassen definierten Beziehungen aufgelöst. Die Selektion erfolgt durch die Methode \texttt{query.filter()}. In diesem Fall werden nur Relationen der Argo-Float mit dem identifier '1900037' ausgewählt. Die Methode \texttt{query.order\_by()} erlaubt das Sortieren der Ergebnisse. In diesem Fall werden die Datensätze durch das Attribut \texttt{Profile.timestamp} chronologisch sortiert.
+\\
+
+SQLAlchemy ist auch in der Lage, in SQL-Sprache definierte Anfragen zu verarbeiten. In Listing \ref{lst:sqlalchemyreadSQL} ist eine vereinfachte Implementierung aus der Web-API zu sehen. Diese extrahiert die letzten ÜPositionen mit den dazugehörigen Zeitpunkten aus der Datenbank. 
+
+\pythonexternal[%                       -> SQLALCHEMY: Lesen 2
+    caption={Das Ausführen von SQL Anfragen über SQLAlchemy},%
+    label={lst:sqlalchemyreadSQL}]%
+    {scr/beispiele/sqlalchemy_read_query.py}
     
-In Zeile 1 ist zu sehen, dass die Instanz der Datenbankschnittstelle aus dem Modulkontext geladen wird. Dies wäre nicht möglich, wäre das Objekt noch nicht initialisiert, bevor das Model über die \pythoninline{__init__.py} aufgerufen worden wäre. 
-
-In Zeile 4 ist zu sehen, das das Model von der Oberklasse \pythoninline{db.Model} erbt. Dadurch wird das in den folgenden Zeilen definierte Model im Kontext der Datenbankschnittstelle registriert und kann nun angesprochen werden. Auf diese Weise werden alle Models an der Schnittstelle registriert. 
-
-\pythonexternal[%
-    caption={Initialisierung des Modules der webapplikation},%
-    label={lst:init_webapp}]{/home/sebsch/Dokumente/Uni-Workdir/Bachelorarbeit/BA_argo_proto/webapp/__init__.py}
-
-% END
-
-
-\subsection{Controller und Webapplikation}
-
-Der Controller der Webapplikation teilt sich in zwei Teilbereiche auf.
-Diese Teilbereiche werden über flasks Blueprints realisiert.
-
-Daten werden über eine API angefragt. Diese sendet bei GET-Requests auf spezifischen URLs JSON-Objekte zurück. Die hierfür benötigten Daten werden über ein Query-Objekt von SQLAlchemy angefragt.
-
-Der zweite Teilbereich ist für die Darstellung der Applikation. HIer werden zum einen HTML Seiten geredert, aber auch die Bilder für die Graphen-Darstellung erzeugt. Werden hier Daten aus der API benötigt, so stellt diese einen Request an die Seite um das dazugehörige JSON anzufordern.
-
-\subsection{Kartendarstellung über OpenLayers}
+Über die Methode \texttt{db.engine.execute()} können SQL-Queries direkt verarbeitet werden. Dies hat aber zwei entscheidende Nachteile. Der Query-Dialekt beschränkt die Anfrage auf ein bestimmtes DBMS. Diese Anfrage ist für PostgreSQL entworfen und würde auf einem anderen DBMS nicht funktionieren. Zum anderen würden Eingaben nicht gegen SQL-Injections gesichert werden. Eine Abfrage wie 
+\pythoninline{
+db.engine.execute('SELECT * FROM argo\_floats WHERE argo_floats.identifier=\%s' \% user\_input)
+} würde also unabschätzbare Sicherheitsrisiken mit sich bringen.
 
 
 
 
+% 4. Einbindung von SQLALCHEMY in den Flask Kontext als Beispiel für zeitkritische import in flask
 
 
+\subsubsection{Frontend}
+
+% 1. Verwendete Software -- warum gewähöt; Vor- und Nachteile
+% 2. Templatestruktur
+% 3. Boostrap 
+% 4. openlayers
+% 5. Plotting
 
 
+%END
 
+% 
+% % BEGIN SQLALCHEMY
+% \subsection{Objektrelationales Mapping}
+% 
+% 
+% 
+% 
+% 
+% 
+% Die Einbindung von SQLAlchemy in den Kontext der Webapplikation muss Festgelegten Muster folgen. In Abbildung \ref{fig:sequenzSQLALCHEMY} kann dieser Ablauf über ein Sequenzdiagramm nachvollzogen werden.
+% 
+% \begin{figure}[!h]
+%  \centering
+%  \includegraphics[width=\textwidth]{pix/seq_db.png}
+%  % seq_db.png: 1310x617 px, 96dpi, 34.66x16.32 cm, bb=0 0 982 463
+%  \label{fig:sequenzSQLALCHEMY}
+% \end{figure}
+% 
+% Die Besonderheit in diesem Prozess besteht darin, das zirkuläre Imports vermieden werden müssen. Daher wird das Objekt für die Verwaltung der Datenbank Schritt für Schritt implementiert.
+% 
+% Das Objekt von SQLAlchemy wird bei der Erstellung der Models mit erzeugt.
+% In Listing \ref{lst:initpy_models} ist dargestellt, auf welche Art die Initialisierung des Moduls \textit{Models} erfolgen kann. 
+% 
+% \pythonexternal[%
+%     caption={Initialisierung der Mpodulstruktur mitsamt SQLAlchemy},%
+%     label={lst:initpy_models}]{/home/sebsch/Dokumente/Uni-Workdir/Bachelorarbeit/BA_argo_proto/webapp/models/__init__.py}
+%     
+% Die Schnittstelle zur Datenbank wird in Zeile 3 über eine Instanz der Klasse SQLAlchemy initialisiert. Diese trägt zu diesem Zeitpunkt noch keinerlei Informationen zu Datenbank oder verwendeter Models.
+% Erst nachdem dieses Objekt erzeugt wurde, dürfen die Klassen für die Models in den sichtbaren Bereich des Modules gebracht werden. 
+% 
+% In Listing \ref{lst:modelArgoFloat} ist exemplarisch die Implementierung des Models für ein ArgoFloat aufgezeigt.
+% 
+% \pythonexternal[%
+%     caption={Implementierung des Modules für eine Entität eines ArgoFloats},%
+%     label={lst:modelArgoFloat}]{/home/sebsch/Dokumente/Uni-Workdir/Bachelorarbeit/BA_argo_proto/webapp/models/_argo_float.py}
+%     
+% In Zeile 1 ist zu sehen, dass die Instanz der Datenbankschnittstelle aus dem Modulkontext geladen wird. Dies wäre nicht möglich, wäre das Objekt noch nicht initialisiert, bevor das Model über die \pythoninline{__init__.py} aufgerufen worden wäre. 
+% 
+% In Zeile 4 ist zu sehen, das das Model von der Oberklasse \pythoninline{db.Model} erbt. Dadurch wird das in den folgenden Zeilen definierte Model im Kontext der Datenbankschnittstelle registriert und kann nun angesprochen werden. Auf diese Weise werden alle Models an der Schnittstelle registriert. 
+% 
+% \pythonexternal[%
+%     caption={Initialisierung des Modules der webapplikation},%
+%     label={lst:init_webapp}]{/home/sebsch/Dokumente/Uni-Workdir/Bachelorarbeit/BA_argo_proto/webapp/__init__.py}
+% 
+% % END
+% 
+% 
+% \subsection{Controller und Webapplikation}
+% 
+% Der Controller der Webapplikation teilt sich in zwei Teilbereiche auf.
+% Diese Teilbereiche werden über flasks Blueprints realisiert.
+% 
+% Daten werden über eine API angefragt. Diese sendet bei GET-Requests auf spezifischen URLs JSON-Objekte zurück. Die hierfür benötigten Daten werden über ein Query-Objekt von SQLAlchemy angefragt.
+% 
+% Der zweite Teilbereich ist für die Darstellung der Applikation. HIer werden zum einen HTML Seiten geredert, aber auch die Bilder für die Graphen-Darstellung erzeugt. Werden hier Daten aus der API benötigt, so stellt diese einen Request an die Seite um das dazugehörige JSON anzufordern.
+% 
+% \subsection{Frontend}
+% 
+% 
+% 
+% 
+% 
+% 
+% 
+% 
+% 
 
