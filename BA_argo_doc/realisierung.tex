@@ -95,8 +95,8 @@ In SQLAlchemy werden die Tabelleneinträge in Modellklassenabgebildet. In Listin
     label={lst:models_argofloat}]%
     {/home/sebsch/Dokumente/Uni-Workdir/Bachelorarbeit/BA_argo_proto/webapp/models/_argo_float.py}
     
-Die Registrierung des Models erfolgt über die Vererbung einer Metaklasse \texttt{db.Model}. Die Schlüssel der Entität werden Attribute des Objektes implementiert. Diese werden in instanzen von \texttt{db.Column} transferiert. Dies erlaubt das festsetzen des Datentyps. Über \texttt{db.Column} lassen sich auch weitere Dateiattribute definieren, wie in diesem Fall der Festlegung von \texttt{id} als Primärschlüssel. Die Datenwerte werden durch die Parameterübergabe in der \texttt{\_\_init\_\_} Methode realisiert.  
-Um das Databinding für die Temporäre Datenbank zu realisieren wurden Nachfahren der Modellklassen erzeugt. Diese benötigen für die Zuordnung das Attribut \texttt{\_\_bind\_key\_\_}.
+Die Registrierung des Models erfolgt über die Vererbung einer Metaklasse \texttt{db.Model}. Die Eigenschaften der jeweiligen Entitäten werden über Attribute des Objektes implementiert. Diese werden in Instanzen von \texttt{db.Column} transferiert. Dies erlaubt das Festsetzen des Datentyps. So lassen sich auch weitere Dateiattribute, wie der Festlegung des  Primärschlüssels, definieren. Die Attribute werden durch eine Parameterübergabe in den Initiator der Klasse mit Werten versehen.  
+Um das Binding zu umzusetzen, wurden Nachfahren der Modellklassen erzeugt. Diese benötigen für die Zuordnung das Attribut \texttt{\_\_bind\_key\_\_}.
 
 
 Über das Schlüsselwort \texttt{db.relationship} werden Beziehungen beschrieben. In diesem Fall besteht eine $1 - N$ Beziehung zu \texttt{measurements} (Siehe auch Figure \ref{fig:ERM} auf Seite \pageref{fig:ERM}). Als Übergabeparameter wird ein Name für die Beziehung erwartet. Der Parameter \texttt{backref} gibt den Namen der Klasse auf dem Mapper an. Diese Einstellung erlaubt den Aufruf der Beziehung auch in die andere Richtung. Der Parameter \texttt{lazy} definiert die verwendete Strategie für das Lazyloading. In diesem Fall wurde sich für \texttt{'dynamic'} entschieden. Diese Einstellung gibt bei Lesezugriffen ein vorkonfiguriertes Query-Objekt zurück. Dies erlaub das Hinzufügen weiterer Filter, vor dem Zugriff auf die Tabellen. Die durch diese Beziehung verbundene Modellklasse Measurements ist in Listing \ref{lst:models_measurement} zu sehen.
@@ -105,8 +105,8 @@ Um das Databinding für die Temporäre Datenbank zu realisieren wurden Nachfahre
     caption={Modellklasse für eine Messung},%
     label={lst:models_measurement}]%
     {/home/sebsch/Dokumente/Uni-Workdir/Bachelorarbeit/BA_argo_proto/webapp/models/_measurement.py}
-   
-Die Beziehung $\mbox{measurement} \to \mbox{argo\_float}$ unterscheidet sich in dieser Programmimplementierung. Für die eindeutige Zuordnung des übergeordneten Argo-Floats, wird deren \texttt{id} als Fremdschlüssel registriert.  \\
+
+Auf dieser Seite der Beziehung   $\left( \mbox{measurement} \to \mbox{argo\_float} \right)$ ungterscheidet sich deren Implementierung. Für die eindeutige Zuordnung des übergeordneten Argo-Floats, wird deren \texttt{id} als Fremdschlüssel registriert. Die Beziehung benötigt neben dem Namen der anderen Seite keine Weiteren Parameter, da die Beziehung bereits konfiguriert worden ist.
 
 
 % 3. Lesen und schreiben von Daten aus der Datenbank -- Rollbacks 
@@ -151,11 +151,41 @@ SQLAlchemy ist auch in der Lage, in SQL-Sprache definierte Anfragen zu verarbeit
 \pythoninline{
 db.engine.execute('SELECT * FROM argo\_floats WHERE argo_floats.identifier=\%s' \% user\_input)
 } würde also unabschätzbare Sicherheitsrisiken mit sich bringen.
-
-
-
+\\
 
 % 4. Einbindung von SQLALCHEMY in den Flask Kontext als Beispiel für zeitkritische import in flask
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[width=\textwidth]{pix/seq_db.png}
+ % seq_db.png: 1310x617 px, 96dpi, 34.66x16.32 cm, bb=0 0 982 463
+ \label{fig:sequenzSQLALCHEMY}
+\end{figure}
+
+Flask bietet für die Einbindung von SQLAlchemy eine Erweiterung an. Diese erlaubt die Abstraktion der SQLAlchemy-Instanz Flask-Typisch durch ein scheinbar globales Objekt. Die Einfachheit dieser Datenabstraktion wird durch eine zeitlich exakt getaktete Erstellung und Registrierung von Objekten und während dem importieren von Submodulen erkauft. Dieser Prozess ist bei der Einbindung von \texttt{flask-sqlalchemy} gut sichtbar. Aus diesem Grund wird die Initialisierung dieser Erweiterung hier gesondert dargestellt.
+
+In Figure \ref{fig:sequenzSQLALCHEMY} ist eine sequentielle Darstellung des Prozesses zu sehen. 
+
+
+Das SQLAlchemy-Objekt muss erzeugt werden, noch bevor die Model-Klassen initialisiert werden. Da diese sich im Submodul \texttt{webapp.models} befinden, muss sichergestellt werden, dass die Instantiierung beim Laden des Submoduls erfolgt. Die hierfür verantwortliche \texttt{\_\_init\_\_.py} ist in Listing \ref{lst:initpy_models} zu sehen.
+
+\pythonexternal[%
+    caption={Modulinitialisierung des Submoduls der Modell-Klassen},%
+    label={lst:initpy_models}]{/home/sebsch/Dokumente/Uni-Workdir/Bachelorarbeit/BA_argo_proto/webapp/models/__init__.py}
+
+
+In den Listings \ref{lst:models_argofloat} und \ref{lst:models_measurement} ist zu sehen, wie das Objekt \texttt{db} aus dem Modul geladen wird und die Klasse daraufhin von dieser Instanz erbt. Somit sind die Modell-Klassen in der \texttt{db}-Instanz registriert. Dies geschieht in dem Momeent, wenn die Klassen über den Submodulkontext hinaus bekannt gemacht werden.
+
+
+Der nächste Schritt ist die Registrierung der \textit{db}-Instanz im Kontext des Controllers. Dies geschieht bei der Initialisierung der webapplikation. Die hierfür zuständige \texttt{\_\_init\_\_.py} ist in Listing  \ref{lst:init_webapp} zu sehen.
+
+\pythonexternal[%
+    caption={Initialisierung des Modules der webapplikation},%
+    label={lst:init_webapp}]{/home/sebsch/Dokumente/Uni-Workdir/Bachelorarbeit/BA_argo_proto/webapp/__init__.py}
+    
+Durch den Import der \texttt{db}-Instanz aus dem Submodul \texttt{.models} wird der oben beschriebene Ablauf angestoßen. 
+
+daraufhin wird das globale Objekt für die Webapplikation erzeugt und die Konfiguration ausgelesen. Nachdem dieser Schritt erfolgt ist, wird die Datenbank in der Webapplikation registriert. Der Befehl \texttt{db.ini\_app(app)} stellt sicher das dies geschieht. Anschließend ist \texttt{db} fertig konfiguriert. Das Objekt \texttt{db} aus dem Modulkontext \texttt{webapp} kann nun in andere Programmteile eingebunden und dort verwendet werden.
 
 
 \subsubsection{Frontend}
