@@ -1,35 +1,32 @@
 \section{Grundlagen}
  
 \subsection{Objekt-Relationale Unverträglichkeit}
-  
-In einem Softwareparadigma manifestiert sich eine bestimmte Art und Weise der Betrachtung oder Modellierung der Welt. 
-Jedes dieser Paradigmen beeinflusst damit sowohl den Prozess als auch die Ergebnisse des Software-Designs
-und Entwicklung. Als impedance Missmatch oder Unverträglichkeit werden Probleme bei der Kombination verschiedener Technologien oder Paradigmen bezeichnet. 
-In der Softwareentwicklung ist die objekt-relationale Unverträglichkeit (object-relational impedance mismatch) eine häufig auftretende Herausforderung. (vgl. \cite{ireland2009classification})
 
-\paragraph{Strukturelle Unterschiede} In der Objektorientierten Programmierung können beliebige, durch Methoden definierte Strukturen und Semantiken aufgebaut werden. Durch hierarchische Vererbungsstrukturen ist es möglich Objekte zu zu spezialisieren oder zu generalisieren. Relationen bestehen aus Tupeln und verhalten sich wie die Zeilen in einer Tabelle. Inhärente wiederholbare Strukturen oder Hierarchien können darin nicht umgesetzt werden. 
+In einem Softwareparadigma manifestiert sich ein bestimmtes Konzept in der Modellierung der Welt. Durch diese konzeptionelle Betrachtungsweise beeinflusst ein Paradigma den Erstellungsprozess sowie die Ergebnisse des Softwaredesigns und zwingt diesem seine Grenzen auf. Probleme bei der Kombination verschiedener Paradigmen werden dabei als Unverträglichkeit (impedance Missmatch) bezeichnet.
+Objektorientierte Programmierung  und eine relationale Abfrage von Datensätzen sind weit verbreitete Paradigmen in der Softwareentwicklung. Damit ist die objekt-relationale Unverträglichkeit (object-relational impedance mismatch) eine häufig auftretende Herausforderung. (vgl. \cite{ireland2009classification} S. 36-38)\\
 
-\paragraph{Kapselung}
-Durch Kapselung erlauben Objekte den Zugriff auf Objekte einzuschränken. Dies ist in Relationen nicht gegeben.
+\cite{ireland2009classification} nennt dabei unter anderem folgende Betrachtungsweisen als Ursachen für die objektrelationale Unverträglichkeit.
 
-\paragraph{Identität}
-Ein Objekt ist die Instanz einer Klasse. Zwei Objekte von der selben Klasse habe zwei eigenständige Identitäten. In der relationalen Algebra ist dies nicht vorgesehen.
+\begin{description}
+ \item [Strukturelle Unterschiede]  
+ Die objektorientierte Programmierung erlaubt das definieren, beliebig komplexer Strukturen aus Methoden und Klassen. Durch Vererbungsstrukturen ist es möglich, Objekte zu spezialisieren und Konzepte für die Erstellung der Klassen zu generalisieren. Spricht man von einer relationalen Algebra, diese wird durch Tupeln, Mengen und Wahrheitswerten definiert. Inhärent wiederholbare Strukturen oder Hierarchien können mit diesen Mitteln nicht umgesetzt werden.   
+ 
+ \item [Datenkapselung] 
+ In der objektorientierten Programmierung können die intrinsischen Attribute eines Objektes verborgen werden. Dieses Konzept sit als Kapselung bekannt und erlaubt es den Zugriff auf die gekapselten Strukturen einzuschränken. In einer relationalen Algebra ist eine derartige Abstraktion über die Daten nicht vorgesehen.
+ 
+ 
+ \item [Objektidentität]  
+ Durch die Instanziierung eines Objektes aus einer Klasse erhält dieses eine eindeutige Identität, somit unterscheiden sich zwei Objekte auch wenn diese träger eines identischen Datensatzes sind, durch ihre Repräsentation im Arbeitsspeicher. Relationen werden durch den Primärschlüssel, und damit über ihre Daten, definiert. Zwei eigenständige Relationen mit identischem Datensatz ist damit nicht möglich.
+\end{description}
+
+
+Als Hilfsmittel zur Überwindung der oben genannten Probleme werden Objekt-Realtionale Mapper (ORM bzw. O/R-Mapper) eingesetzt. Durch dieses Mapping wird eine Schnittstelle oder Abstraktionsebene zwischen Programmteilen aus den jeweiligen Sprachparadigmen definiert, um den impedance Mismatch möglichst transparent zu überwinden.
 
 
 
-
+%% TODO: Vorstellung der in SQLALCHEMY verwendeten Entwurfsmuster zur Überwindung des impedance mismatch 
 
     
-    Object Relational Mapper (ORM) ist eine Abstraktionsschicht oder Schnittstelle zur Überwindung der objekt-relationalen Unverträglichkeit (impedance Mismatch).  
-    
-    Obje
-    
-    Zwischen Objektorientierten Programmen und Relationen existieren strukturelle Unterschiede. 
-    Objekte besitzen eine Identität und erlauben komplexe Vererbungshierarchien und . In der relationalen Algebra sind solche Beziehungstypen nicht vorgesehen. 
-    Relationen bestehen aus Tupeln, identifizierbar durch einen Primärschlüssel. Beziehungen werden durch Fremdschlüssel, modelliert. Das Objekt-relationale Mapping versucht diesen impedance Mismatch möglichst transparent zu überwinden.
-    
-
-
 
 % BEGIN -- Geographische Informationssysteme
     \subsection{Geographische Informationssysteme  ODER }

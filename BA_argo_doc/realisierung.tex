@@ -48,7 +48,9 @@ Die Verwendung der Schnittstelle ist in Listing \ref{lst:iterator_verwendung} zu
     
     
     
-\paragraph{Die Extraktion der Daten über Lazy Loading} ist eine zentrale Problemstellung des Programmablaufs an dieser Stelle. Aus diesem Grund wurde eine Factory Klasse implementiert um den Vorgang und die Datenstruktur in einem generator-Objekt zu realisieren. Der Vorteil eines Generators gegenüber einer Liste Oder Tupes besteht darin, dass Daten erst zu dem Zeitpunkt angefragt und geschaffen werden, wenn diese aus der Sequenz angefordert werden. In Listing \ref{lst:dataextractor} ist die Implementierung dieser Schnittstelle zu sehen. Diese erwartet als Parameter den Pfad zum Verzeichnis, der netCDF-Daten. 
+Eine zentrale Problemstellung im Prozess der Überführung der Daten in das Relationale Schema ist die effektive Verwendung des flüchtigen Speichers. Eine klassische, sequenzielle Verarbeitung würde die Daten initial auslesen und diese in Gänze im Ram vorhalten bevor diese über den Mapper in die Datenbank überführt würden. Dieser Prozess wurde durch die Verwendung von Generatoren aufgebrochen. In Listing \ref{lst:dataextractor} ist die Implementierung dieser Schnittstelle zu sehen. Da in der Comprehension runde statt eckige Klammern verwendet werden, wird initial nur die logische Struktur als Sequenz vorgehalten. Die inhärenten Float-Objekte des Generators werden zu dem Zeitpunkt erzeugt, wenn diese durch eine Iteration aufgerufen werden. Damit werden die Daten erst zu dem Zeitpunkt ausgelesen wenn diese für die weitere Verarbeitung benötigt werden,
+    
+
 
 Die Methode \texttt{get\_data\_sets()} erzeugt aus jedem Unterordner im definierten Arbeitsverzeichnis ein Float-Objekt und gibt dieses über das Schlüsselwort \texttt{yield} zurück. 
 
@@ -56,7 +58,7 @@ Durch diese Klasse wird somit ein Generator definiert, der es erlaubt, alle im A
 
 
 \pythonexternal[%
-        caption = {Factory zur Extrahierung der Datensätze.},%
+        caption = {Factory zur Extraktion der Datensätze.},%
         label = {lst:dataextractor}
     ]{/home/sebsch/Dokumente/Uni-Workdir/Bachelorarbeit/BA_argo_proto/data/_extraction/_data_extractor.py}
 
@@ -103,9 +105,18 @@ In Zeile 4 ist zu sehen, das das Model von der Oberklasse \pythoninline{db.Model
 % END
 
 
-\subsection{Flask Webapp}
+\subsection{Controller und Webapplikation}
+
+Der Controller der Webapplikation teilt sich in zwei Teilbereiche auf.
+Diese Teilbereiche werden über flasks Blueprints realisiert.
+
+Daten werden über eine API angefragt. Diese sendet bei GET-Requests auf spezifischen URLs JSON-Objekte zurück. Die hierfür benötigten Daten werden über ein Query-Objekt von SQLAlchemy angefragt.
+
+Der zweite Teilbereich ist für die Darstellung der Applikation. HIer werden zum einen HTML Seiten geredert, aber auch die Bilder für die Graphen-Darstellung erzeugt. Werden hier Daten aus der API benötigt, so stellt diese einen Request an die Seite um das dazugehörige JSON anzufordern.
 
 \subsection{Kartendarstellung über OpenLayers}
+
+
 
 
 
