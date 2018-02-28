@@ -162,30 +162,52 @@ db.engine.execute('SELECT * FROM argo\_floats WHERE argo_floats.identifier=\%s' 
  \label{fig:sequenzSQLALCHEMY}
 \end{figure}
 
-Flask bietet für die Einbindung von SQLAlchemy eine Erweiterung an. Diese erlaubt die Abstraktion der SQLAlchemy-Instanz Flask-Typisch durch ein scheinbar globales Objekt. Die Einfachheit dieser Datenabstraktion wird durch eine zeitlich exakt getaktete Erstellung und Registrierung von Objekten und während dem importieren von Submodulen erkauft. Dieser Prozess ist bei der Einbindung von \texttt{flask-sqlalchemy} gut sichtbar. Aus diesem Grund wird die Initialisierung dieser Erweiterung hier gesondert dargestellt.
+Flask bietet für die Einbindung von SQLAlchemy eine Erweiterung an. 
+Durch diese Erweiterung wird eine SQLAlchemy-Instanzdurch ein zentrales und scheinbar globales Objekt (\texttt{db}) repräsentiert. Dies ermöglicht eine einfache Datenabstraktion und ist für Flask typisch. Dieser Mechanismus wird durch die zeitkritische und in ihrem Ablauf fest vorgeschriebene Erstellung von Objekten und Submodulen erkauft.
+Dieser Prozess ist bei der Einbindung von \texttt{flask-sqlalchemy} gut sichtbar. Aus diesem Grund wird die Initialisierung dieser Erweiterung hier gesondert dargestellt.
 
-In Figure \ref{fig:sequenzSQLALCHEMY} ist eine sequentielle Darstellung des Prozesses zu sehen. 
+In Figure \ref{fig:sequenzSQLALCHEMY} ist eine sequentielle Darstellung des Prozesses zu sehen und wird im folgenden beschrieben. 
 
-
-Das SQLAlchemy-Objekt muss erzeugt werden, noch bevor die Model-Klassen initialisiert werden. Da diese sich im Submodul \texttt{webapp.models} befinden, muss sichergestellt werden, dass die Instantiierung beim Laden des Submoduls erfolgt. Die hierfür verantwortliche \texttt{\_\_init\_\_.py} ist in Listing \ref{lst:initpy_models} zu sehen.
-
-\pythonexternal[%
-    caption={Modulinitialisierung des Submoduls der Modell-Klassen},%
+\begin{enumerate}
+ \item 
+        In der Datei \texttt{webapp.models.\_\_init\_\_.py} muss sichergestellt werden, dass die SQLAlchemy-Instanz noch vor der Initiierung der Modell-Klassen erstellt wurde.
+ \item 
+        Nun kann das \texttt{db}-Objekt in die Modellklassen übertragen werden. Dafür importieren diese \texttt{db} in ihren Scope.
+ \item 
+        Die Modell-Klassen werden in \texttt{db} registriert. Dafür erben diese von der Metaklasse \texttt{db.Model}. Siehe auch Listings \ref{lst:models_argofloat} und \ref{lst:models_measurement}.
+        
+        \pythonexternal[%
+    caption={\texttt{webapp.models.\_\_init\_\_.py}},%
     label={lst:initpy_models}]{/home/sebsch/Dokumente/Uni-Workdir/Bachelorarbeit/BA_argo_proto/webapp/models/__init__.py}
 
+    
+ \item 
+        Die Modell-Klassen dürfen erst nach der Instantiierung von \texttt{db} über den Scope des Submodules heraus bekannt gemacht werden, um sicherzustellen, das dieses bereits existiert. Die Implementierung des Ablaufes ist in Listing \ref{lst:initpy_models} ersichtlich.
+ \item  \label{enum:seqdbwebapp1}
+        Die Instanz \texttt{db} kann nun mit den in ihr registrierten Modell-Klassen in aus dem Submodul in die Datei \texttt{webapp.\_\_init\_\_.py} importiert werden.
 
-In den Listings \ref{lst:models_argofloat} und \ref{lst:models_measurement} ist zu sehen, wie das Objekt \texttt{db} aus dem Modul geladen wird und die Klasse daraufhin von dieser Instanz erbt. Somit sind die Modell-Klassen in der \texttt{db}-Instanz registriert. Dies geschieht in dem Momeent, wenn die Klassen über den Submodulkontext hinaus bekannt gemacht werden.
-
-
-Der nächste Schritt ist die Registrierung der \textit{db}-Instanz im Kontext des Controllers. Dies geschieht bei der Initialisierung der webapplikation. Die hierfür zuständige \texttt{\_\_init\_\_.py} ist in Listing  \ref{lst:init_webapp} zu sehen.
-
-\pythonexternal[%
+\item   
+        Hier wird nun das globale Objekt der Flask-Instanz (\texttt{app}) erstellt und konfiguriert. 
+        
+        \pythonexternal[%
     caption={Initialisierung des Modules der webapplikation},%
     label={lst:init_webapp}]{/home/sebsch/Dokumente/Uni-Workdir/Bachelorarbeit/BA_argo_proto/webapp/__init__.py}
-    
-Durch den Import der \texttt{db}-Instanz aus dem Submodul \texttt{.models} wird der oben beschriebene Ablauf angestoßen. 
+        
+\item   \label {enum:seqdbwebapp3}
+        Anschließend wird \texttt{app} in \texttt{db} registriert. Die Schritte \ref{enum:seqdbwebapp1} bis \ref{enum:seqdbwebapp3} können über das Listing \ref{lst:init_webapp} nachvollzogen werden.
+        
+\item   Die Instanz \texttt{db} aus dem Scope        
+        \texttt{webapp.db} ist nun fertig konfiguriert und kann für das Lesen und schreiben in die Datenbank verwendet werden.
+\end{enumerate}
 
-daraufhin wird das globale Objekt für die Webapplikation erzeugt und die Konfiguration ausgelesen. Nachdem dieser Schritt erfolgt ist, wird die Datenbank in der Webapplikation registriert. Der Befehl \texttt{db.ini\_app(app)} stellt sicher das dies geschieht. Anschließend ist \texttt{db} fertig konfiguriert. Das Objekt \texttt{db} aus dem Modulkontext \texttt{webapp} kann nun in andere Programmteile eingebunden und dort verwendet werden.
+
+
+
+
+
+
+
+
 
 
 \subsubsection{Frontend}
