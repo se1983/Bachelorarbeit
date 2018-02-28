@@ -78,30 +78,55 @@ Es ist an dieser Stelle zu erkennen, dass zwei Stellen existieren, die die intri
 
 \subsubsection{Entwurf der Webapplikation}
 
-Die Webapplikation besteht aus zwei Teilkomponenten. Die erste Komponente ist für die Darstellung der Webseite zuständig. Durch diese wird HTMl Und Javascript ausgeliefert, welches im Webbrowser der Benutzenden angezeigt werden kann.
+Die Webapplikation besteht aus zwei Teilkomponenten. Die erste Komponente ist für die Darstellung der Webseite zuständig (app). Durch diese werden Elemente in  HTML, Javascript und als Bilder ausgeliefert, welche im Webbrowser der Benutzenden angezeigt werden können. Die Darstellung erfolgt dabei dem Singlepage-Prinzip.  
 
-Die zweite Teilkomponente ist dafür zuständig, die für die Anzeige benötigten Daten bereitzustellen. Die hier bereitgestellte API ist Zustandslos und dient als Schnittstelle zur Auswahl und Anzeige von Datensätzen aus dem Backend. 
+Die zweite Teilkomponente ist dafür zuständig, benötigten Daten bereitzustellen (api). Alle Daten aus datenhaltung werden über diese Schnittstelle angefordert. Die Daten werden über JSON codiert.
 
-\subsubsection{Ausarbeitung der Webrouten}
 
-\begin{python}
-GET     /
+\subsubsection{Ausarbeitung der Webrouten} \label{sec:entwurfRoutes}
 
-GET     /argo_float/[identifier]
-GET     /argo_float/[identifier]/[data]
-GET     /last_seen
-GET     /last_seen/[force_reload]
+
+Die \textbf{api} ist dafür zuständig, die benötigten Daten der Applikation bereitzustellen. Über definierte Webrouten wird über ein GET-Request ein JSON angefordert. Die  hierfür ausgearbeitete Struktur ist in Listing \ref{lst:routesAPI} zu sehen.
+
+\begin{python}[label={lst:routesAPI}, caption={Webrouten der API}]
+(1.1) GET     /last_seen
+(1.2) GET     /last_seen/[force_reload]
+(1.3) GET     /argo_float/[identifier]
+(1.4) GET     /positions/[identifier]
 \end{python}
 
+\begin{description}
+ \item [(1.1) / (1.2)]
+    Über diese Route  werden die Daten für die letzte Position der Messstationen aufgerufen. Dieser Datensatz trägt die Daten die zur Anzeige der Positionen der Messstationen auf der Weltkarte benötigt werden und die Zusatzinformationen für das Tooltip der Zusatzinformationen der einzelnen Argo-Floats. Die Daten werden bei jedem Beusch der Webseite ausgeliefert. Da sich diese erst verändern, wenn neue Daten vorliegen, werden diese über einen Caching-Mechanismus vorgehalten, der optionale Übergabeparameter \texttt{force\_reload} ermöglicht das neu anlegen des chaches. Um Vandalismus vorzubeugen, sollte es sich dabei um einen nicht zu  erratenden Token handeln.
+    
+ \item [(1.3)]
+    Über diese Route werden die Mess-, wie auch Metadaten einer Messstation angefordert. Die Auswahl der Boje erfolgt über den Übergabeparameter \texttt{identifier}, hier wird die eindeutige Identifikationsnummer (siehe PLATTFORM\_NUMBER in Tabelle \ref{table:Datenauswahl}) der Messstation verwendet.
+    
+ \item [(1.4)]
+    Um den Positionsverlauf einer Boje anzufordern, dient diese Route. Auch hier wird zur Identifikation der Messstation deren Identifikationsnummer als Parameter übergeben. 
+\end{description}
 
-Die darstellende Schicht verfügt nur über eine einzige Webseite. Über das Root-Element der Webapplikation wird die Karte mit den Messstationen ausgeliefert. Interaktionen und Veränderte Daten werden nach dem \textit{singlepage-Prinzip} über diese Seite verfügbar gemacht.
-
-Die API der Applikation soll zwei Funktionen erfüllen können. Für die Positionsbestimmung auf der Karte wird eine Geojson benötigt. Unter der Route \texttt{/last\_seen} finden sich die letzten Positionen der Mesststationen zusammen mit den Daten die beim Mouseover angezeigt werden sollen. Das hier zurückgegebene Geojson wird über einen Cache vorgehalten. Um diesen Cache neu zu generieren ist es möglich der Route die Variable \texttt{[force\_reload]} zu übergeben. Um versehendliche oder böswillige Verwendungen dieser Route zu verhindern, handelt es sich bei der Variable um ein Geheimnis. Nur wenn dieses richtig angegeben wird, werden die Daten neu erstellt.
-
-Über die Route \texttt{argo\_float/[identifier]} wird ein Datensatz der über \texttt{identifier} ausgewählten Messstation zurückgegeben. Um nur einen spezifischen Messdatensatz zu erhalten, kann dieser über die Variable \texttt{data} ausgewählt werden. \\
 
 
-Um die beiden Teilbereiche logisch zu trennen und modular vorhalten zu können, werden diese über blueprints abgebildet.
+Die \textbf{app} liefert die Teile aus, die vom Benutzer gesehen werden. Es handelt sich dabei um HTML/Javascript und Bilddaten. Die hierfür ausgearbeitete Struktur ist in Listing \ref{lst:routesAPP} zu sehen.
+
+\begin{python}[label={lst:routesAPP}, caption={Webrouten der APP}]
+(2.1) GET     /
+(2.2) GET     /chart/[identifier]
+(2.3) GET     /info/[identifier]
+\end{python}
+
+\begin{description}
+ \item [(2.1)] 
+ Über diese Seite ist die eigentliche Applikation zu sehen. Dies umfasst die Karte sowie die angezeigten Messwerte. 
+ 
+ \item [(2.2)] 
+ Diese Route stellt den Plot der darzustellenden Messwerte als Bild zur Verfügung.
+ 
+ \item [(2.3)]
+ Über diese Route wird ein HTML für die Infoanzeige einer Messstation bereitgestellt. 
+ 
+\end{description}
 
 
 % END

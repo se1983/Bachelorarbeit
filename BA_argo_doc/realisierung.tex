@@ -69,12 +69,6 @@ Durch diese Klasse wird somit ein Generator definiert, der es erlaubt, alle im A
 % BEGIN Webapp
 \subsection{Webapplikation}
 
-\subsubsection{Controller}
-
-% 1. Vorstellung Flask -- warum gewählt; Vor- und Nachteile
-% 2. Trennung von API und APP in verscheidene Blueprints
-% 3. Zentrale Steuerungseinheit via manage.py
-
 \subsubsection{Objektrelationales Mapping}
 
 % 1. Vorstellung SQL-Alchemy -- warum gewählt; Vor- und Nachteile
@@ -99,7 +93,7 @@ Die Registrierung des Models erfolgt über die Vererbung einer Metaklasse \textt
 Um das Binding zu umzusetzen, wurden Nachfahren der Modellklassen erzeugt. Diese benötigen für die Zuordnung das Attribut \texttt{\_\_bind\_key\_\_}.
 
 
-Über das Schlüsselwort \texttt{db.relationship} werden Beziehungen beschrieben. In diesem Fall besteht eine $1 - N$ Beziehung zu \texttt{measurements} (Siehe auch Figure \ref{fig:ERM} auf Seite \pageref{fig:ERM}). Als Übergabeparameter wird ein Name für die Beziehung erwartet. Der Parameter \texttt{backref} gibt den Namen der Klasse auf dem Mapper an. Diese Einstellung erlaubt den Aufruf der Beziehung auch in die andere Richtung. Der Parameter \texttt{lazy} definiert die verwendete Strategie für das Lazyloading. In diesem Fall wurde sich für \texttt{'dynamic'} entschieden. Diese Einstellung gibt bei Lesezugriffen ein vorkonfiguriertes Query-Objekt zurück. Dies erlaub das Hinzufügen weiterer Filter, vor dem Zugriff auf die Tabellen. Die durch diese Beziehung verbundene Modellklasse Measurements ist in Listing \ref{lst:models_measurement} zu sehen.
+Über das Schlüsselwort \texttt{db.relationship} werden Beziehungen beschrieben. In diesem Fall besteht eine $1 - N$ Beziehung ($\mbox{argo\_float} \leftarrow \mbox{measurements}$) zu \texttt{measurements} (Siehe auch Figure \ref{fig:ERM} auf Seite \pageref{fig:ERM}). Als Übergabeparameter wird ein Name für die Beziehung erwartet. Der Parameter \texttt{backref} gibt den Namen der Klasse auf dem Mapper an. Diese Einstellung erlaubt den Aufruf der Beziehung auch in die andere Richtung. Der Parameter \texttt{lazy} definiert die verwendete Strategie für das Lazyloading. In diesem Fall wurde sich für \texttt{'dynamic'} entschieden. Diese Einstellung gibt bei Lesezugriffen ein vorkonfiguriertes Query-Objekt zurück. Dies erlaub das Hinzufügen weiterer Filter, vor dem Zugriff auf die Tabellen. Die durch diese Beziehung verbundene Modellklasse Measurements ist in Listing \ref{lst:models_measurement} zu sehen.
 
 \pythonexternal[%                       -> SQLALCHEMY: measurement
     caption={Modellklasse für eine Messung},%
@@ -155,6 +149,14 @@ db.engine.execute('SELECT * FROM argo\_floats WHERE argo_floats.identifier=\%s' 
 
 % 4. Einbindung von SQLALCHEMY in den Flask Kontext als Beispiel für zeitkritische import in flask
 
+
+
+Flask bietet für die Einbindung von SQLAlchemy eine Erweiterung an. 
+Durch diese Erweiterung wird eine SQLAlchemy-Instanzdurch ein zentrales und scheinbar globales Objekt (\texttt{db}) repräsentiert. Dies ermöglicht eine einfache Datenabstraktion und ist für Flask typisch. Dieser Mechanismus wird durch die zeitkritische und in ihrem Ablauf fest vorgeschriebene Erstellung von Objekten und Submodulen erkauft.
+Dieser Prozess ist bei der Einbindung von \texttt{flask-sqlalchemy} gut sichtbar. Aus diesem Grund wird die Initialisierung dieser Erweiterung hier gesondert dargestellt.
+
+In Figure \ref{fig:sequenzSQLALCHEMY} ist eine sequentielle Darstellung des Prozesses zu sehen und wird im folgenden beschrieben. 
+
 \begin{figure}[H]
  \centering
  \includegraphics[width=\textwidth]{pix/seq_db.png}
@@ -162,11 +164,6 @@ db.engine.execute('SELECT * FROM argo\_floats WHERE argo_floats.identifier=\%s' 
  \label{fig:sequenzSQLALCHEMY}
 \end{figure}
 
-Flask bietet für die Einbindung von SQLAlchemy eine Erweiterung an. 
-Durch diese Erweiterung wird eine SQLAlchemy-Instanzdurch ein zentrales und scheinbar globales Objekt (\texttt{db}) repräsentiert. Dies ermöglicht eine einfache Datenabstraktion und ist für Flask typisch. Dieser Mechanismus wird durch die zeitkritische und in ihrem Ablauf fest vorgeschriebene Erstellung von Objekten und Submodulen erkauft.
-Dieser Prozess ist bei der Einbindung von \texttt{flask-sqlalchemy} gut sichtbar. Aus diesem Grund wird die Initialisierung dieser Erweiterung hier gesondert dargestellt.
-
-In Figure \ref{fig:sequenzSQLALCHEMY} ist eine sequentielle Darstellung des Prozesses zu sehen und wird im folgenden beschrieben. 
 
 \begin{enumerate}
  \item 
@@ -190,7 +187,7 @@ In Figure \ref{fig:sequenzSQLALCHEMY} ist eine sequentielle Darstellung des Proz
         Hier wird nun das globale Objekt der Flask-Instanz (\texttt{app}) erstellt und konfiguriert. 
         
         \pythonexternal[%
-    caption={Initialisierung des Modules der webapplikation},%
+    caption={ \texttt{webapp.\_\_init\_\_.py}},%
     label={lst:init_webapp}]{/home/sebsch/Dokumente/Uni-Workdir/Bachelorarbeit/BA_argo_proto/webapp/__init__.py}
         
 \item   \label {enum:seqdbwebapp3}
@@ -202,7 +199,39 @@ In Figure \ref{fig:sequenzSQLALCHEMY} ist eine sequentielle Darstellung des Proz
 
 
 
+\subsubsection{Controller}
 
+% 1. Vorstellung Flask -- warum gewählt; Vor- und Nachteile
+
+  % Blueprints
+  
+
+% 2. Trennung von API und APP in verscheidene Blueprints
+
+Die in Kapitel \ref{sec:entwurfRoutes} ausgearbeitete logische Trennung zwischen app und api wird über Blueprints in eigenständigen Python-Modulen realisiert. 
+
+\begin{description}
+ \item [argo\_api]
+ 
+    Für die Bereitstellung der Daten benötigt dieses Modul zwei Hilfsprogramme
+    
+    \begin{description}
+     \item [query\_factory] Alle lesenden Zugriffe zur Datenbank werden über dieses Teilprogramm zentral zusammengefasst
+         
+     \item [json\_builder] Durch dieses Teilprogramm werden die Daten in ein JSON-Format überführt. 
+    \end{description}
+    
+    Der hier definierte controller greift auf diese Hilfsprogramme zu. Die Requests werden über \texttt{flask.jsonify} erstellt.
+
+ 
+ \item [argo\_app]
+\end{description}
+
+
+
+
+
+% 3. Zentrale Steuerungseinheit via manage.py
 
 
 
