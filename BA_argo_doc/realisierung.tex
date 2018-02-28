@@ -234,6 +234,20 @@ Die so erstellten Blueprints werden im zentralen Controller (\texttt{app}) über
 
 % 3. Zentrale Steuerungseinheit via manage.py
 
+Als zentrale Steuerungseinheit für den gesamten Programmablauf dient die Datei \texttt{manage.py}. Die Parameter dieser Datei werden im Folgenden kurz beschrieben
+
+\begin{description}
+
+ \item [runserver] Durch diesen Parameter wird der Server der Applikation gestartet.
+
+
+ \item [rebuild\_db] Dies stößt den Prozess der Datenaggregation an.  Streng genommen ist dies nicht Teil des Controllers. Aus Gründen der Einfachheit wurde dieser Programmablauf aber in die Steuerungseinheit integriert.
+ 
+ \item [shell] Durch diesen Parameter wird eine IPython-Shell gestartet. In diesem repl ist die Webapplikation mit all ihren Umgebungsvariablen initiiert. Diese Schell dient für das Debugging der Applikation. 
+ 
+ \item [list\_routes] Dieser Parameter listet alle Routen, die durch den Controller definiert sind auf der Kommandozeile auf.
+\end{description}
+
 
 \subsubsection{Templates}
 % jinja2
@@ -256,7 +270,7 @@ Die Datei \texttt{\_base.html} ist für die Darstellung der Webseite verantwortl
 
 
 
-% 1. Verwendete Software -- warum gewähöt; Vor- und Nachteile
+% 1. Verwendete Software -- warum gewählt; Vor- und Nachteile
 % 2. Templatestruktur
 % 3. Boostrap 
 % 4. openlayers
@@ -265,70 +279,4 @@ Die Datei \texttt{\_base.html} ist für die Darstellung der Webseite verantwortl
 
 %END
 
-% 
-% % BEGIN SQLALCHEMY
-% \subsection{Objektrelationales Mapping}
-% 
-% 
-% 
-% 
-% 
-% 
-% Die Einbindung von SQLAlchemy in den Kontext der Webapplikation muss Festgelegten Muster folgen. In Abbildung \ref{fig:sequenzSQLALCHEMY} kann dieser Ablauf über ein Sequenzdiagramm nachvollzogen werden.
-% 
-% \begin{figure}[!h]
-%  \centering
-%  \includegraphics[width=\textwidth]{pix/seq_db.png}
-%  % seq_db.png: 1310x617 px, 96dpi, 34.66x16.32 cm, bb=0 0 982 463
-%  \label{fig:sequenzSQLALCHEMY}
-% \end{figure}
-% 
-% Die Besonderheit in diesem Prozess besteht darin, das zirkuläre Imports vermieden werden müssen. Daher wird das Objekt für die Verwaltung der Datenbank Schritt für Schritt implementiert.
-% 
-% Das Objekt von SQLAlchemy wird bei der Erstellung der Models mit erzeugt.
-% In Listing \ref{lst:initpy_models} ist dargestellt, auf welche Art die Initialisierung des Moduls \textit{Models} erfolgen kann. 
-% 
-% \pythonexternal[%
-%     caption={Initialisierung der Mpodulstruktur mitsamt SQLAlchemy},%
-%     label={lst:initpy_models}]{/home/sebsch/Dokumente/Uni-Workdir/Bachelorarbeit/BA_argo_proto/webapp/models/__init__.py}
-%     
-% Die Schnittstelle zur Datenbank wird in Zeile 3 über eine Instanz der Klasse SQLAlchemy initialisiert. Diese trägt zu diesem Zeitpunkt noch keinerlei Informationen zu Datenbank oder verwendeter Models.
-% Erst nachdem dieses Objekt erzeugt wurde, dürfen die Klassen für die Models in den sichtbaren Bereich des Modules gebracht werden. 
-% 
-% In Listing \ref{lst:modelArgoFloat} ist exemplarisch die Implementierung des Models für ein ArgoFloat aufgezeigt.
-% 
-% \pythonexternal[%
-%     caption={Implementierung des Modules für eine Entität eines ArgoFloats},%
-%     label={lst:modelArgoFloat}]{/home/sebsch/Dokumente/Uni-Workdir/Bachelorarbeit/BA_argo_proto/webapp/models/_argo_float.py}
-%     
-% In Zeile 1 ist zu sehen, dass die Instanz der Datenbankschnittstelle aus dem Modulkontext geladen wird. Dies wäre nicht möglich, wäre das Objekt noch nicht initialisiert, bevor das Model über die \pythoninline{__init__.py} aufgerufen worden wäre. 
-% 
-% In Zeile 4 ist zu sehen, das das Model von der Oberklasse \pythoninline{db.Model} erbt. Dadurch wird das in den folgenden Zeilen definierte Model im Kontext der Datenbankschnittstelle registriert und kann nun angesprochen werden. Auf diese Weise werden alle Models an der Schnittstelle registriert. 
-% 
-% \pythonexternal[%
-%     caption={Initialisierung des Modules der webapplikation},%
-%     label={lst:init_webapp}]{/home/sebsch/Dokumente/Uni-Workdir/Bachelorarbeit/BA_argo_proto/webapp/__init__.py}
-% 
-% % END
-% 
-% 
-% \subsection{Controller und Webapplikation}
-% 
-% Der Controller der Webapplikation teilt sich in zwei Teilbereiche auf.
-% Diese Teilbereiche werden über flasks Blueprints realisiert.
-% 
-% Daten werden über eine API angefragt. Diese sendet bei GET-Requests auf spezifischen URLs JSON-Objekte zurück. Die hierfür benötigten Daten werden über ein Query-Objekt von SQLAlchemy angefragt.
-% 
-% Der zweite Teilbereich ist für die Darstellung der Applikation. HIer werden zum einen HTML Seiten geredert, aber auch die Bilder für die Graphen-Darstellung erzeugt. Werden hier Daten aus der API benötigt, so stellt diese einen Request an die Seite um das dazugehörige JSON anzufordern.
-% 
-% \subsection{Frontend}
-% 
-% 
-% 
-% 
-% 
-% 
-% 
-% 
-% 
 
