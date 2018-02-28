@@ -69,7 +69,7 @@ Durch diese Klasse wird somit ein Generator definiert, der es erlaubt, alle im A
 % BEGIN Webapp
 \subsection{Webapplikation}
 
-\subsubsection{Objektrelationales Mapping}
+\subsubsection{Objektrelationales Mapping}\label{sec:implementierungORM}
 
 % 1. Vorstellung SQL-Alchemy -- warum gewählt; Vor- und Nachteile
 
@@ -91,7 +91,6 @@ In SQLAlchemy werden die Tabelleneinträge in Modellklassenabgebildet. In Listin
     
 Die Registrierung des Models erfolgt über die Vererbung einer Metaklasse \texttt{db.Model}. Die Eigenschaften der jeweiligen Entitäten werden über Attribute des Objektes implementiert. Diese werden in Instanzen von \texttt{db.Column} transferiert. Dies erlaubt das Festsetzen des Datentyps. So lassen sich auch weitere Dateiattribute, wie der Festlegung des  Primärschlüssels, definieren. Die Attribute werden durch eine Parameterübergabe in den Initiator der Klasse mit Werten versehen.  
 Um das Binding zu umzusetzen, wurden Nachfahren der Modellklassen erzeugt. Diese benötigen für die Zuordnung das Attribut \texttt{\_\_bind\_key\_\_}.
-
 
 Über das Schlüsselwort \texttt{db.relationship} werden Beziehungen beschrieben. In diesem Fall besteht eine $1 - N$ Beziehung ($\mbox{argo\_float} \leftarrow \mbox{measurements}$) zu \texttt{measurements} (Siehe auch Figure \ref{fig:ERM} auf Seite \pageref{fig:ERM}). Als Übergabeparameter wird ein Name für die Beziehung erwartet. Der Parameter \texttt{backref} gibt den Namen der Klasse auf dem Mapper an. Diese Einstellung erlaubt den Aufruf der Beziehung auch in die andere Richtung. Der Parameter \texttt{lazy} definiert die verwendete Strategie für das Lazyloading. In diesem Fall wurde sich für \texttt{'dynamic'} entschieden. Diese Einstellung gibt bei Lesezugriffen ein vorkonfiguriertes Query-Objekt zurück. Dies erlaub das Hinzufügen weiterer Filter, vor dem Zugriff auf die Tabellen. Die durch diese Beziehung verbundene Modellklasse Measurements ist in Listing \ref{lst:models_measurement} zu sehen.
 
@@ -186,9 +185,6 @@ In Figure \ref{fig:sequenzSQLALCHEMY} ist eine sequentielle Darstellung des Proz
 \item   
         Hier wird nun das globale Objekt der Flask-Instanz (\texttt{app}) erstellt und konfiguriert. 
         
-        \pythonexternal[%
-    caption={ \texttt{webapp.\_\_init\_\_.py}},%
-    label={lst:init_webapp}]{/home/sebsch/Dokumente/Uni-Workdir/Bachelorarbeit/BA_argo_proto/webapp/__init__.py}
         
 \item   \label {enum:seqdbwebapp3}
         Anschließend wird \texttt{app} in \texttt{db} registriert. Die Schritte \ref{enum:seqdbwebapp1} bis \ref{enum:seqdbwebapp3} können über das Listing \ref{lst:init_webapp} nachvollzogen werden.
@@ -198,48 +194,67 @@ In Figure \ref{fig:sequenzSQLALCHEMY} ist eine sequentielle Darstellung des Proz
 \end{enumerate}
 
 
-
+\pagebreak
 \subsubsection{Controller}
+
+\pythonexternal[%
+    caption={ \texttt{webapp.\_\_init\_\_.py}},%
+    label={lst:init_webapp}]{/home/sebsch/Dokumente/Uni-Workdir/Bachelorarbeit/BA_argo_proto/webapp/__init__.py}
 
 % 1. Vorstellung Flask -- warum gewählt; Vor- und Nachteile
 
-  % Blueprints
-  
-
+Über die globale Instanz des Controllers (\texttt{app}) kann auf Daten zugegriffen und die Konfiguration vorgenommen werden. In Listing \ref{lst:init_webapp} ist die Initialisierung des Controllers zu sehen.
 % 2. Trennung von API und APP in verscheidene Blueprints
 
-Die in Kapitel \ref{sec:entwurfRoutes} ausgearbeitete logische Trennung zwischen app und api wird über Blueprints in eigenständigen Python-Modulen realisiert. 
+Über Blueprints wird die in Kapitel \ref{sec:entwurfRoutes} ausgearbeitete logische Trennung zwischen \texttt{app} und \texttt{api} realisiert. Die hier definierten Module umfassen auch die in diesem Kontext benötigten Hilfsprogramme. Die hier implementierte Modulstruktur ist im Folgenden ersichtlich.
 
 \begin{description}
- \item [argo\_api]
- 
-    Für die Bereitstellung der Daten benötigt dieses Modul zwei Hilfsprogramme
-    
+ \item [argo\_api] $ $
+     
     \begin{description}
-     \item [query\_factory] Alle lesenden Zugriffe zur Datenbank werden über dieses Teilprogramm zentral zusammengefasst
+     \item [query\_factory] 
+        Alle lesenden Zugriffe zur Datenbank werden über eine QueryFactory zentral zusammengefasst. Die hier ausgearbeitete Implementierung Ist in Kapitel \ref{sec:implementierungORM} ausführlich beschrieben.
          
-     \item [json\_builder] Durch dieses Teilprogramm werden die Daten in ein JSON-Format überführt. 
+     \item [json\_builder] 
+        Durch diese Programmabschnitte werden die Daten in Listen und Dictionaries überführt. Die Variablen und Datenstrukturen werden dabei so angelegt, dass diese direkt als JSON bzw geoJSON ausgeliefert werden können. 
     \end{description}
     
-    Der hier definierte controller greift auf diese Hilfsprogramme zu. Die Requests werden über \texttt{flask.jsonify} erstellt.
-
+    Dieses Controller-Blueprint fordert die Daten über die \texttt{query\_factory} an und bringt sie über den \texttt{json\_builder} in das vorgesehene Format.  Die Umwandlung in JSON und die Erstellung des Requests erfolgt über \texttt{flask.jsonify}.
+\pagebreak
+ \item [argo\_app] $ $
  
- \item [argo\_app]
+    \begin{description}
+     \item [generate\_graph] Dieser Programmteil erzeugt einen Plot über die Bibliothek \texttt{matplotlib}. Eine nähere Beschreibung der Erstellung findet sich in Kapitel \ref{sec:ImplementierungPLOTS}.
+    \end{description}
+    
+    In diesem Blueprint werden Templates zu HTML-Dateien zusammengesetzt. Dafür benötigt dieser Programmteil auf die Verzeichnisse für die HTML. jinja-Templates (\texttt{webapp/templates}) und dem Javascript-Code, CSS und Bilder (\texttt{webapp/static}). Diese Daten werden über \texttt{flask.render\_template} zusammengesetzt und ausgeliefert.
 \end{description}
 
-
-
-
+Die so erstellten Blueprints werden im zentralen Controller (\texttt{app}) über das Schlüsselwort \texttt{app.register\_blueprint} registriert und zusammengefasst. 
 
 % 3. Zentrale Steuerungseinheit via manage.py
 
 
+\subsubsection{Templates}
+% jinja2
+
+Für das Erstellen der HTML Dateien wurde die Template-Engine Jinja2 verwendet. Diese ist gut in Flask integriert. Jinja2 erlaubt das Modularisieren von HTML Dateien, den Zugriff auf Variablen und übergebenen Daten sowie die Abarbeitung eingcher Strukturen und Wahrheitswerte. 
+
+% Modulare Struktur  ..?
+
+Die Templatestruktur wurde in dieser Applikation stark modularisiert.  In Listing \ref{lst:templateMAP} ist der Einstieg in die Modulstruktur zu sehen.
+\pythonexternal[%
+    caption={ \texttt{webapp.templates.map.html}},%
+    label={lst:templateMAP}]{/home/sebsch/Dokumente/Uni-Workdir/Bachelorarbeit/BA_argo_proto/webapp/templates/map.html}
+
+Die Datei \texttt{\_base.html} ist für die Darstellung der Webseite verantwortlich. Diese wurde über Twitter Bootstrap realisiert. Als Vorlage diente dabei ein bereits ausgearbeitetes  \texttt{2-Column Layout} aus \cite{Ng2014}. Der Beispielcode wurde an die Anforderung der Applikation angepasst. Der Code wurde dabei in die logischen Bestandteile zerlegt und in die modulare Struktur der Webseite überführt.
+
+\subsubsection{Kartendarstellung}
+
+\subsubsection{Zeichnen der Graphen} \label{sec:ImplementierungPLOTS}
 
 
 
-
-
-\subsubsection{Frontend}
 
 % 1. Verwendete Software -- warum gewähöt; Vor- und Nachteile
 % 2. Templatestruktur
