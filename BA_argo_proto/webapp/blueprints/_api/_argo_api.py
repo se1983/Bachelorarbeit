@@ -7,7 +7,7 @@ from webapp import app
 
 from . import _queries as queries
 
-from ._geojson_builder import positions_json, argo_float_data_json, last_seen_json
+from ._json_builder import positions_json, argo_float_data_json, last_seen_json
 
 argo_api = Blueprint('argo_api', __name__)
 
