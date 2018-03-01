@@ -16,6 +16,8 @@ manager = Manager(app)
 
 @manager.command
 def rebuild_db():
+    """Rebuilds the temporarily Database from local netCDF-Data"""
+
     argo_data_dir = app.config['ARGO_DATA_DIRECTORY']
 
     print(f"Datafolder: {argo_data_dir}")
@@ -40,7 +42,7 @@ def rebuild_db():
 @manager.command
 def list_routes():
     """
-    comes frome here: http://flask.pocoo.org/snippets/117/
+    Lists all routes of the Flask Application
     """
 
     def generate_route_string(rule):
@@ -54,7 +56,7 @@ def list_routes():
         print(line)
 
 
-manager.add_command("runserver", Server(threaded=True, host="0.0.0.0", port=9000))
+manager.add_command("runserver", Server(threaded=True, host="127.0.0.1", port=9000))
 manager.add_command("shell", Shell())
 
 if __name__ == "__main__":
