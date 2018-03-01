@@ -26,6 +26,7 @@ var defaultStyle =
             width: 1
         })
     });
+
 var mapVectorLayer = new ol.layer.Vector({
     source: new ol.source.Vector({
         url: '/static/countries.geo.json',
@@ -219,7 +220,6 @@ var displayArgoData = function (pixel) {
 
         chart_div.innerHTML = '';
 
-
         img.onload = function () {
             chart_div.appendChild(img);
         };
@@ -227,7 +227,6 @@ var displayArgoData = function (pixel) {
         img.src = '/chart/' + identifier;
         img.width = width;
         img.classList.add('img-responsive');
-
 
     }
 
@@ -304,5 +303,5 @@ function displayPositions(pixel) {
 
 map.on('click', function (evt) {
     displayArgoData(map.getEventPixel(evt.originalEvent));
-    displayPositions(map.getEventPixel(evt.originalEvent))
+    displayPositions(map.getEventPixel(evt.originalEvent));
 });
