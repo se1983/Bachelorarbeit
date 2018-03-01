@@ -335,9 +335,22 @@ var argoFloatsLayer = new ol.layer.Vector({
 });
 \end{javascript}
 Als Quelle für die Anzeigedaten wird hierbei ein \texttt{ol.source.Vector}-Objekt gewählt. Das gewünschte Format und die \texttt{url} für die gewünschte Datenquelle werden als Parameter übergeben.
+\\
+Damit werden die ArgoFloats auf einer Vektoriellen Karte angezeigt. Die Karte nimmt auch bereits Steuerungsgesten entgegen. Was zu diesem Zeitpunkt noch fehlt, ist die Möglichkeit mit den ArgoFloats zu interagieren. Bei Hovern mit des Zeigers über einer ArgoFloat soll ein Tooltip mit einigen Informationen erscheinen und die Messstation optisch hervorgehoben werden.  Die Hervorhebung wird durch den Befehl \jsinline{map.addInteraction(hoverInteraction);} in der Karte registriert. \texttt{overInteraction} ist eine Instanz von \jsinline{ol.interaction.Select} und erlaubt die Auswahl von Features und des Event-Typs. In diesem Fall werden alle Features des argoFloatsLayer beim überfahren mit der Maus ausgewählt. Openlayers wählt mit dieser Konfiguration einen Vergrößerungseffekt beim überfahren eines ArgoFloatFeatures. 
 
+Um den Tooltip zur Anzeige zu bekommen, wurde eine weitere Funktion definiert. In Listing \ref{lst:pointermove} ist die Funktion für das Abfangen des \texttt{pointermove}-Events zu sehen.
+\begin{javascript}[label={lst:pointermove}, caption={Hinzufügen der Funktion für den Tooltip als Hover-Effekt}]
+map.on('pointermove', function (evt) {
+    if (evt.dragging) {
+        info.tooltip('hide');
+        return;
+    }
+    displayFeatureInfo(map.getEventPixel(evt.originalEvent));
+});
+\end{javascript}
 
-
+Die Funktion wartet auf definierte Eingaben. In diesem Fall wird der Funktionskörper durch das bewegen des Mauszeigers über der Kartendarstellung ausgelöst. Der Event wird als \texttt{evt} in die innere Funktion überführt. Dort wird überprüft ob es sich um einen dragging-event handelt und deaktiviert dann jeden Tooltip. Diese Einstellung wurde gewählt, um störende Tooltips bei der Navigation mit der Karte zu unterbinden. In jeden anderen Fall wird der Pixel an der Spitze des Mauszeigers extrahiert und den Funktion \texttt{displayFeatureInfo} übergeben.
+\\
 
 
 
