@@ -5,6 +5,8 @@ import numpy as np
 from ._data_set_context_manager import DatasetContextManager
 from ._extract_dataset import extract_variable
 
+from webapp import app
+
 
 class FloatDataset(object):
     def __init__(self, file_path):
@@ -50,11 +52,7 @@ class FloatDataset(object):
 
     def __check_data(self):
         # See argo-data documentation
-        ranges = {
-            'pressure': (0, 12000),
-            'temperature': (-2, 40),
-            'salinity': (0, 42)
-        }
+        ranges = app.config['ARGO_DATA_VALUE_RANGES']
 
         return (
                 ranges['pressure'][0] <= self.pressure <= ranges['pressure'][1] and
