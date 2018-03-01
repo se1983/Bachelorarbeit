@@ -265,7 +265,10 @@ Die Datei \texttt{\_base.html} ist für die Darstellung der Webseite verantwortl
 
 \subsubsection{Kartendarstellung}
 
-\begin{javascript}
+
+Die Elemente der Karte setzen sich wie in Listing \ref{lst:olMap} zu sehen zusammen.
+
+\begin{javascript}[label={lst:olMAP}, caption={Das ol.Map Element aus der Kartendarstellung}]
  var map = new ol.Map({
     layers: [mapVectorLayer, argoFloatsLayer],
     target: 'map',
@@ -280,6 +283,65 @@ Die Datei \texttt{\_base.html} ist für die Darstellung der Webseite verantwortl
     })
 });
 \end{javascript}
+
+Die Darstellung bassiert auf zwei Layern, einer Verktordarstellung der Kontinent- und Landesgrenzen (\texttt{mapVectorLayer}), sowie der Darstellung der ArgoFloats (\texttt{argoFloatsLayer}). Die darstellung der Steuereinheiten wurde deaktiviert und als Startposition Längen- und Breitengrad mit jeweils 0 gewählt. Die Zoomstufe ist mit 3 initialisiert und es ist eine maximale ZUoomstufe von 3.5 gewählt. Die Werte für die Zoomstufe wurden bei einer Auflösung von 1920x1080 ausgewählt.
+
+Die Karte bettet sich in das HTML-Element map ein und wird mit diesem zur Anzeige gebracht.
+\\
+Der mapVectorLayer wurde aus der GeoJSON-Datei \texttt{countries.geo.json}  erstellt. Die Datei wurde von \cite{sundstrm16} heruntergeladen. Diese steht unter der Lizenz UNLICENSE und kann damit ohne Einschränkungen verwendet werden. Die Darstellung der Argo-Floats wird auch über eine GeoJSON realisiert. Diese wird auf dem Webserver über dei API bereitgestellt und wird über der URL \texttt{/last\_seen} (siehe. Listing \ref{lst:routesAPI}) angefordert. Die angerderte Datenstruktur hat ein spezifisches Format. In Listing \ref{lst:argGeoJson} ist das Format in einer gekürzten Version der Datei ersichtlich. 
+
+\begin{javascript}[label={lst:argGeoJson}, caption={Gekürzte geoJSON zur Darstellung der Argo-Floats}]
+ {
+"crs": {
+    "properties": {
+      "name": "EPSG:4326"
+    }, 
+    "type": "name"
+  }, 
+  "features": [
+    {
+      "geometry": {
+        "coordinates": [
+          -52.02875, 
+          12.92591
+        ], 
+        "type": "Point"
+      }, 
+      "properties": {
+        "feature_type": "latest_position", 
+        "identifier": "1901673", 
+        "last_seen": "Sun, 10 Feb 2013 00:00:00 GMT"
+      }, 
+      "type": "Feature"
+    },
+    // (feature_2, ..., feature_n) 
+    ]
+}
+\end{javascript}
+
+Der Parameter \texttt{crs} (Coordinate Reference System Objects) bestimmt die Art der Kartenprojektion. Durch das property \texttt{EPSG:4326} wurde der GPS-Standard WGS84 - World Geodetic System 1984 eingesetzt. Dies deckt sich auch mit den durch die Messstationen bereitgestellten Geo-Koordinaten.
+\\
+Die Repräsentationen der Messstationen finden sich im Array \texttt{features}. Im Feld \texttt{geometry} werden Position und die zu zeichnende Form kodiert. Über \texttt{properties} werden die zusätzlichen Daten \texttt{feature\_type}, \texttt{identifier} und \texttt{last\_seen} in diesem Format gespeichert. 
+\\
+Openlayers kann ein derartig formatiertes GeoJson selbstständig zur Anzeige bringen. Wie die Datei geladen wird ist in Listing \ref{lst:argoFloatsLayer} zu sehen.
+
+\begin{javascript}[label={lst:argoFloatsLayer}, caption={Die Funktion argoFloatsLayer}]
+var argoFloatsLayer = new ol.layer.Vector({
+    style: FloatStyle,
+    source: new ol.source.Vector({
+        format: new ol.format.GeoJSON(),
+        url: "/last_seen"
+    })
+});
+\end{javascript}
+Als Quelle für die Anzeigedaten wird hierbei ein \texttt{ol.source.Vector}-Objekt gewählt. Das gewünschte Format und die \texttt{url} für die gewünschte Datenquelle werden als Parameter übergeben.
+
+
+
+
+
+
+
 
 
 \subsubsection{Zeichnen der Graphen} \label{sec:ImplementierungPLOTS}
