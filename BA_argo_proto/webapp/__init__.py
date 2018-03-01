@@ -3,8 +3,6 @@ from flask_twisted import Twisted
 
 from .models import db
 
-# http://flask.pocoo.org/docs/0.12/patterns/appfactories/
-
 app = Flask(__name__, static_url_path='/static')
 app.config.from_pyfile('./argo.cfg')
 
@@ -14,8 +12,6 @@ from .blueprints import argo_api, argo_app
 
 app.register_blueprint(argo_api)
 app.register_blueprint(argo_app)
-
-# Announce all routes of the Application
 
 from . import models
 
