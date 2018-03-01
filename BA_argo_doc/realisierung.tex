@@ -339,7 +339,7 @@ Als Quelle für die Anzeigedaten wird hierbei ein \texttt{ol.source.Vector}-Obje
 Damit werden die ArgoFloats auf einer Vektoriellen Karte angezeigt. Die Karte nimmt auch bereits Steuerungsgesten entgegen. Was zu diesem Zeitpunkt noch fehlt, ist die Möglichkeit mit den ArgoFloats zu interagieren. Bei Hovern mit des Zeigers über einer ArgoFloat soll ein Tooltip mit einigen Informationen erscheinen und die Messstation optisch hervorgehoben werden.  Die Hervorhebung wird durch den Befehl \jsinline{map.addInteraction(hoverInteraction);} in der Karte registriert. \texttt{overInteraction} ist eine Instanz von \jsinline{ol.interaction.Select} und erlaubt die Auswahl von Features und des Event-Typs. In diesem Fall werden alle Features des argoFloatsLayer beim überfahren mit der Maus ausgewählt. Openlayers wählt mit dieser Konfiguration einen Vergrößerungseffekt beim überfahren eines ArgoFloatFeatures. 
 
 Um den Tooltip zur Anzeige zu bekommen, wurde eine weitere Funktion definiert. In Listing \ref{lst:pointermove} ist die Funktion für das Abfangen des \texttt{pointermove}-Events zu sehen.
-\begin{javascript}[label={lst:pointermove}, caption={Hinzufügen der Funktion für den Tooltip als Hover-Effekt}]
+\begin{javascript}[label={lst:pointermove}, caption={Das Abfangen eines pointermove-Events}]
 map.on('pointermove', function (evt) {
     if (evt.dragging) {
         info.tooltip('hide');
@@ -349,10 +349,26 @@ map.on('pointermove', function (evt) {
 });
 \end{javascript}
 
-Die Funktion wartet auf definierte Eingaben. In diesem Fall wird der Funktionskörper durch das bewegen des Mauszeigers über der Kartendarstellung ausgelöst. Der Event wird als \texttt{evt} in die innere Funktion überführt. Dort wird überprüft ob es sich um einen dragging-event handelt und deaktiviert dann jeden Tooltip. Diese Einstellung wurde gewählt, um störende Tooltips bei der Navigation mit der Karte zu unterbinden. In jeden anderen Fall wird der Pixel an der Spitze des Mauszeigers extrahiert und den Funktion \texttt{displayFeatureInfo} übergeben.
+Die Funktion wartet auf definierte Eingaben. In diesem Fall wird der Funktionskörper durch das bewegen des Mauszeigers über der Kartendarstellung ausgelöst. Der Event wird als \texttt{evt} in die innere Funktion überführt. Dort wird überprüft ob es sich um einen dragging-event handelt. Ist dies der Fall, wird der DIV-Container mit der id \texttt{\#info} (\texttt{info}) ausgewählt und der darin liegende Tooltip über den CSS-Parameter \texttt{hide} versteckt. Diese Einstellung wurde gewählt, um störende Tooltips bei der Navigation mit der Karte zu unterbinden. In jeden anderen Fall wird der Pixel an der Spitze des Mauszeigers extrahiert und den Funktion \texttt{displayFeatureInfo} übergeben.
+\\
+\jsinline{displayFeatureInfo} positioniert das info-Element in der Nähe des Mauszeigers und extrahiert etwaige unter dem Pixel liegende Features. Anschließend werden die Attribute des Features untersucht. Über den Befehl \jsinline{feature.get("feature_type") === 'latest_position'} werden Features aus dem \texttt{last\_seen}-GeoJson identifiziert. Bei diesen werden weitere Attribute extrahiert und in den Text des Tooltips überführt. Zum Abschluss wird der Tooltip über seine CSS-Attribute zur Anzeige gebracht.
+
+Die Funktion kann auch die Features der Positionshistorie einer Boje über einen Tooltip anzeigen. Da sich die hier darzustellenden Parameter unterscheiden, werden dessen Daten gesondert abgefragt.
 \\
 
+Die Interaktion über einen Klick passiert analog. In Listing \ref{lst:clickEvent} ist die hier verwendete Implementierung der Klick-Event-Abfrage gezeigt.
+\begin{javascript}[label={lst:clickEvent}, caption={Das Abfangen eines Klick-Events}]
+map.on('click', function (evt) {
+    displayArgoData(map.getEventPixel(evt.originalEvent));
+    displayPositions(map.getEventPixel(evt.originalEvent))
+});
+\end{javascript}
 
+Auch ier wird die \texttt{map.on}-Funktion der Karte verwendet um den Event zu extrahieren. Ist der Event vom Typ \jsinline{'click'} so werden die darauf folgenden Funktionen mit dem Pixel an der Position des Mauszeigers aufgerufen.
+
+Die Funktion \jsinline{displayArgoData} ist für die Darstellung der Messdaten und Informationen über die Sidebar verantwortlich. Für die Anzeige der Messwerte wird der div-Container mit der ID \texttt{\#chart-picture} ausgewählt. 
+ 
+\jsinline{displayPositions}
 
 
 
