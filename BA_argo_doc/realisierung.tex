@@ -261,14 +261,14 @@ Die Templatestruktur wurde in dieser Applikation stark modularisiert.  In Listin
     caption={ \texttt{webapp.templates.map.html}},%
     label={lst:templateMAP}]{/home/sebsch/Dokumente/Uni-Workdir/Bachelorarbeit/BA_argo_proto/webapp/templates/map.html}
 
-Die Datei \texttt{\_base.html} ist für die Darstellung der Webseite verantwortlich. Diese wurde über Twitter Bootstrap realisiert. Als Vorlage diente dabei ein bereits ausgearbeitetes  \texttt{2-Column Layout} aus \cite{Ng2014}. Der Beispielcode wurde an die Anforderung der Applikation angepasst. Der Code wurde dabei in die logischen Bestandteile zerlegt und in die modulare Struktur der Webseite überführt.
+Die Datei \texttt{\_base.html} ist für die Darstellung der Webseite verantwortlich. Diese wurde über Twitter Bootstrap realisiert. Als Vorlage diente dabei ein bereits ausgearbeitetes  \texttt{2-Column Layout} aus \cite{Ng2014}. Der Beispielcode wurde an die Anforderung der Applikation angepasst. Der Code wurde dabei in die logischen Bestandteile zerlegt und in die modulare Struktur der Webseite überführt. Der Code ist unter einer MIT Lizenz veröffentlicht. Damit kann der Code unter Nennung der Lizenz verwendet werden. Es wurde ein \textbf{TODO} Tag in das HTML Element eingesetzt um Autor und Lizenz zu nennen.
 
 \subsubsection{Kartendarstellung}
 
 
 Die Elemente der Karte setzen sich wie in Listing \ref{lst:olMap} zu sehen zusammen.
 
-\begin{javascript}[label={lst:olMAP}, caption={Das ol.Map Element aus der Kartendarstellung}]
+\begin{javascript}[label={lst:olMap}, caption={Das ol.Map Element aus der Kartendarstellung}]
  var map = new ol.Map({
     layers: [mapVectorLayer, argoFloatsLayer],
     target: 'map',
@@ -284,11 +284,10 @@ Die Elemente der Karte setzen sich wie in Listing \ref{lst:olMap} zu sehen zusam
 });
 \end{javascript}
 
-Die Darstellung bassiert auf zwei Layern, einer Verktordarstellung der Kontinent- und Landesgrenzen (\texttt{mapVectorLayer}), sowie der Darstellung der ArgoFloats (\texttt{argoFloatsLayer}). Die darstellung der Steuereinheiten wurde deaktiviert und als Startposition Längen- und Breitengrad mit jeweils 0 gewählt. Die Zoomstufe ist mit 3 initialisiert und es ist eine maximale ZUoomstufe von 3.5 gewählt. Die Werte für die Zoomstufe wurden bei einer Auflösung von 1920x1080 ausgewählt.
-
-Die Karte bettet sich in das HTML-Element map ein und wird mit diesem zur Anzeige gebracht.
+Die Darstellung bassiert auf zwei Layern, einer Verktordarstellung der Kontinent- und Landesgrenzen (\texttt{mapVectorLayer}), sowie der Darstellung der ArgoFloats (\texttt{argoFloatsLayer}). Die Darstellung der Steuereinheiten wurde deaktiviert. Als Startposition wurden Längen- und Breitengrad mit jeweils 0 gewählt. Die Zoomstufe ist mit 3 initialisiert und es ist eine maximale Zoomstufe von 3.5 gewählt. Die Werte für die Zoomstufe wurden bei einer Auflösung von 1920x1080 ermittelt und getestet.
+Die Karte bettet sich in das HTML-Element map ein und wird mit diesem zur Anzeige gebracht. Steuergesten mit Maus und Tastatur nimmt die Karte an dieser Stelle bereits entgegen.
 \\
-Der mapVectorLayer wurde aus der GeoJSON-Datei \texttt{countries.geo.json}  erstellt. Die Datei wurde von \cite{sundstrm16} heruntergeladen. Diese steht unter der Lizenz UNLICENSE und kann damit ohne Einschränkungen verwendet werden. Die Darstellung der Argo-Floats wird auch über eine GeoJSON realisiert. Diese wird auf dem Webserver über dei API bereitgestellt und wird über der URL \texttt{/last\_seen} (siehe. Listing \ref{lst:routesAPI}) angefordert. Die angerderte Datenstruktur hat ein spezifisches Format. In Listing \ref{lst:argGeoJson} ist das Format in einer gekürzten Version der Datei ersichtlich. 
+Der mapVectorLayer wurde aus der GeoJSON-Datei \texttt{countries.geo.json}  erstellt. Die Datei wurde von \cite{sundstrm16} heruntergeladen. Diese steht unter der Lizenz UNLICENSE und kann damit ohne Einschränkungen verwendet werden. Die Darstellung der Argo-Floats wird ebenso über eine GeoJSON realisiert. Diese wird auf dem Webserver über die API bereitgestellt und wird über der URL \texttt{/last\_seen} (siehe. Listing \ref{lst:routesAPI}) angefordert. Die so angeforderte Datenstruktur hat ein spezifisches Format. In Listing \ref{lst:argGeoJson} ist das Format in einem gekürzten Format ersichtlich. 
 
 \begin{javascript}[label={lst:argGeoJson}, caption={Gekürzte geoJSON zur Darstellung der Argo-Floats}]
  {
@@ -321,7 +320,7 @@ Der mapVectorLayer wurde aus der GeoJSON-Datei \texttt{countries.geo.json}  erst
 
 Der Parameter \texttt{crs} (Coordinate Reference System Objects) bestimmt die Art der Kartenprojektion. Durch das property \texttt{EPSG:4326} wurde der GPS-Standard WGS84 - World Geodetic System 1984 eingesetzt. Dies deckt sich auch mit den durch die Messstationen bereitgestellten Geo-Koordinaten.
 \\
-Die Repräsentationen der Messstationen finden sich im Array \texttt{features}. Im Feld \texttt{geometry} werden Position und die zu zeichnende Form kodiert. Über \texttt{properties} werden die zusätzlichen Daten \texttt{feature\_type}, \texttt{identifier} und \texttt{last\_seen} in diesem Format gespeichert. 
+Die Repräsentationen der Messstationen finden sich im Array \texttt{features}. Im Feld \texttt{geometry} werden Position und die Form des Features soll eingestellt. Über \texttt{properties} werden die zusätzlichen Daten \texttt{feature\_type}, \texttt{identifier} und \texttt{last\_seen} in diesem Format gespeichert. 
 \\
 Openlayers kann ein derartig formatiertes GeoJson selbstständig zur Anzeige bringen. Wie die Datei geladen wird ist in Listing \ref{lst:argoFloatsLayer} zu sehen.
 
@@ -334,11 +333,12 @@ var argoFloatsLayer = new ol.layer.Vector({
     })
 });
 \end{javascript}
-Als Quelle für die Anzeigedaten wird hierbei ein \texttt{ol.source.Vector}-Objekt gewählt. Das gewünschte Format und die \texttt{url} für die gewünschte Datenquelle werden als Parameter übergeben.
+Als Quelle für die Anzeigedaten wird hierbei ein \texttt{ol.source.Vector}-Objekt gewählt. Das Format und die \texttt{url} für die spezifizierte Datenquelle werden als Parameter übergeben.
+Damit werden die ArgoFloats auf einer vektorbasierten Karte angezeigt.  
 \\
-Damit werden die ArgoFloats auf einer Vektoriellen Karte angezeigt. Die Karte nimmt auch bereits Steuerungsgesten entgegen. Was zu diesem Zeitpunkt noch fehlt, ist die Möglichkeit mit den ArgoFloats zu interagieren. Bei Hovern mit des Zeigers über einer ArgoFloat soll ein Tooltip mit einigen Informationen erscheinen und die Messstation optisch hervorgehoben werden.  Die Hervorhebung wird durch den Befehl \jsinline{map.addInteraction(hoverInteraction);} in der Karte registriert. \texttt{overInteraction} ist eine Instanz von \jsinline{ol.interaction.Select} und erlaubt die Auswahl von Features und des Event-Typs. In diesem Fall werden alle Features des argoFloatsLayer beim überfahren mit der Maus ausgewählt. Openlayers wählt mit dieser Konfiguration einen Vergrößerungseffekt beim überfahren eines ArgoFloatFeatures. 
+Was zu diesem Zeitpunkt noch fehlt, ist die Möglichkeit mit den ArgoFloats zu interagieren. Bei Hovern mit des Zeigers über einer ArgoFloat soll ein Tooltip mit einigen Informationen erscheinen und die Messstation optisch hervorgehoben werden.  Die Hervorhebung wird durch den Befehl \jsinline{map.addInteraction(hoverInteraction);} in der Karte registriert. \texttt{overInteraction} ist eine Instanz von \jsinline{ol.interaction.Select} und erlaubt die Auswahl von Features und des Event-Typs. In diesem Fall werden alle Features des argoFloatsLayer ausgewählt die unter dem Mauszeiger liegen. Openlayers wählt mit dieser Konfiguration einen Vergrößerungseffekt um das Feature hervorzuheben.
 
-Um den Tooltip zur Anzeige zu bekommen, wurde eine weitere Funktion definiert. In Listing \ref{lst:pointermove} ist die Funktion für das Abfangen des \texttt{pointermove}-Events zu sehen.
+Um den Tooltip zur Anzeige zu bekommen, wurde eine weitere Funktion definiert. In Listing \ref{lst:pointermove} ist die Funktion für das Fangen eines \texttt{pointermove}-Events zu sehen.
 \begin{javascript}[label={lst:pointermove}, caption={Das Abfangen eines pointermove-Events}]
 map.on('pointermove', function (evt) {
     if (evt.dragging) {
@@ -351,9 +351,9 @@ map.on('pointermove', function (evt) {
 
 Die Funktion wartet auf definierte Eingaben. In diesem Fall wird der Funktionskörper durch das bewegen des Mauszeigers über der Kartendarstellung ausgelöst. Der Event wird als \texttt{evt} in die innere Funktion überführt. Dort wird überprüft ob es sich um einen dragging-event handelt. Ist dies der Fall, wird der DIV-Container mit der id \texttt{\#info} (\texttt{info}) ausgewählt und der darin liegende Tooltip über den CSS-Parameter \texttt{hide} versteckt. Diese Einstellung wurde gewählt, um störende Tooltips bei der Navigation mit der Karte zu unterbinden. In jeden anderen Fall wird der Pixel an der Spitze des Mauszeigers extrahiert und den Funktion \texttt{displayFeatureInfo} übergeben.
 \\
-\jsinline{displayFeatureInfo} positioniert das info-Element in der Nähe des Mauszeigers und extrahiert etwaige unter dem Pixel liegende Features. Anschließend werden die Attribute des Features untersucht. Über den Befehl \jsinline{feature.get("feature_type") === 'latest_position'} werden Features aus dem \texttt{last\_seen}-GeoJson identifiziert. Bei diesen werden weitere Attribute extrahiert und in den Text des Tooltips überführt. Zum Abschluss wird der Tooltip über seine CSS-Attribute zur Anzeige gebracht.
+\jsinline{displayFeatureInfo} positioniert das info-Element in der Nähe des Mauszeigers und extrahiert etwaige unter dem Pixel liegende Features. Anschließend werden die Attribute des Features untersucht. Über den Befehl \jsinline{feature.get("feature_type") === 'latest_position'} werden Features aus dem \texttt{last\_seen}-GeoJson identifiziert. Ist die Identifikation positiv, werden weitere Attribute extrahiert und in den Text des Tooltips überführt. Zum Abschluss wird der Tooltip über seine CSS-Attribute zur Anzeige gebracht.
 
-Die Funktion kann auch die Features der Positionshistorie einer Boje über einen Tooltip anzeigen. Da sich die hier darzustellenden Parameter unterscheiden, werden dessen Daten gesondert abgefragt.
+Die Funktion kann auch die Features der Positionshistorie einer Boje über einen Tooltip anzeigen. Da sich die hier darzustellenden Parameter unterscheiden, werden dessen Daten gesondert abgefragt. 
 \\
 
 Die Interaktion über einen Klick passiert analog. In Listing \ref{lst:clickEvent} ist die hier verwendete Implementierung der Klick-Event-Abfrage gezeigt.
@@ -364,11 +364,30 @@ map.on('click', function (evt) {
 });
 \end{javascript}
 
-Auch ier wird die \texttt{map.on}-Funktion der Karte verwendet um den Event zu extrahieren. Ist der Event vom Typ \jsinline{'click'} so werden die darauf folgenden Funktionen mit dem Pixel an der Position des Mauszeigers aufgerufen.
+Auch an dieser Stelle wird die \texttt{map.on}-Funktion der Karte verwendet um den Event abzufangen. Ist dieser vom Typ \jsinline{'click'} so werden die darauf folgenden Funktionen mit dem Pixel an der Position des Mauszeigers aufgerufen.
 
-Die Funktion \jsinline{displayArgoData} ist für die Darstellung der Messdaten und Informationen über die Sidebar verantwortlich. Für die Anzeige der Messwerte wird der div-Container mit der ID \texttt{\#chart-picture} ausgewählt. 
+\begin{description}
+ \item [\texttt{displayArgoData}] 
+    Diese Funktion ist für die Darstellung der Messdaten, sowie des Informationstextes der ausgewählten ArgoFloat verantwortlich. Aus diesem Grund besteht sie aus zwei Unterfunktionen.
+    \begin{description}
+    \item [\texttt{display\_chart}] 
+        Diese Funktion Stellt den Funktionsplot der Messwerte der ausgewählten ArgoFloat dar. Dafür wird am Anfang der div-Container mit der ID \texttt{\#chart-picture} ausgewählt. In diesem Container wird später das Bild platziert. Um bereits bestehende Bilder zu löschen, werden alle HTML Elemente inerhalb des Containers erstellt. Anschließend wird das Bild der Messdaten über die Webroute /chart/[identifier] (Siehe Listing \ref{lst:routesAPI}) angefordert. Das Bild wird anschließend auf die Breite des Containers gebracht und der Bootstrap-Klasse \texttt{img-responsive} hinzugefügt. Damit wird das Bild formatiert über die Sidebar dargestellt. 
+    \item [\texttt{display\_info}]  
+        Diese Funktion stellt einen Info-Block zu den Metadaten der ArgoFloat dar. Analog zum oberen Prozess werden hier Container Aus dem DOM-Tree Selektiert und das sich darin befindliche  HTML manipuliert. Die Daten wurden hier als HTML-Objekte über einen Ajax-Befehl angeforder und direkt in den umliegenden Container injiziert.
+    \end{description}
+    
+    Die oben genannten Funktionen werden aufgerufen, wenn es sich bei dem angeklickten Element um ein Feature vom Typ \texttt{Point} handelt. Der Bereich des Graphen wird an dieser Stelle sichtbar gemacht und der Info-Bereich eingeklappt. Die Sichtbarkeit der Sidebar wird ebenso an dieser Stelle eingestellt.
+    
+ \item [\texttt{displayPositions}] 
+    Diese Funktion stellt eine Positionshistorie einer spezifischen Messstation dar. Dafür wird ein GeoJSON über die url \texttt{/positions/[identifier]} angefordert. Das sichtbar machen, der hier kodierten Daten geschieht analog zu der Darstellung aller Argo-Floats. Das GeoJson trägt zusätzlich noch ein \texttt{LineString}-Element um den zeitlichen Verlauf der Positionen zu verdeutlichen.
  
-\jsinline{displayPositions}
+    
+
+\end{description}
+
+
+
+
 
 
 
