@@ -6,9 +6,6 @@ from webapp.models import Measurement, Location, Profile, ArgoFloat
 
 class QueryFactory(object):
 
-    def __init__(self):
-        pass
-
     @staticmethod
     def __execute(query, bind=None):
 
