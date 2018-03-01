@@ -33,8 +33,7 @@ Als Hilfsmittel zur Überwindung der oben genannten Probleme werden Objekt-Realt
 % END
 
 % BEGIN -- Software
-    \subsection{Verwendete Software}
-    \subsubsection{Network Common Data Format}
+    \subsection{Network Common Data Format}
     
     Das Network Common Data Format (NetCDF) dient zum Austausch von wissenschaftlichen Daten. Es ist eine Weiterentwicklung des von der NASA entwickelten Common Data Format (CDF). Das Format zeichnet sich dadurch aus, dass es selbstbeschreibend ist. Dadurch wird die Dokumentation mit den Daten mitgeführt. Dies soll die Portabilität des Datensatzes verbessern.  \footnote{vgl. \cite{FisherNetCDF}}
    
@@ -58,93 +57,11 @@ Als Hilfsmittel zur Überwindung der oben genannten Probleme werden Objekt-Realt
     
     Zur Überführung in das Format des durch die ISO 8601 bei uns normierten Gregorianischen Kalenders wird ein Datumsobjekt des Referenzdatums benötigt. Durch die Verwendung von \texttt{timedelta} werden die Tage aus dem Feld \texttt{JULD} addiert. Da ein Messzyklus 10 Tage andauert, kann an dieser Stelle der Datensatz durch die Entferndung der Dezimalstellen vereinfacht werden. Die Casting-Operation \texttt{int()} rundet in jedem Fall ab.
     
-% BEGIN NUMPY
-    \subsubsection{numpy}
-    
-    Numpy ist eine Pythonbibliothek zur diskreten Verarbeitung von ein- oder mehrdimensionalen Arrays. 
-    
-    Nach der Extraktion der CDF-Daten, liegen diese als maskierte Arrays vor. Diese erlauben auch das fehlen einzelner Datensätze.
-% END 
+
 
 % BEGIN JULDATE
-\subsubsection{Julian Date}
 %END
         
-% BEGIN FLASK
-    \subsubsection{Flask}
-    
-    Flask wurde im Jahre (YXXX) von Armin Ronacher gegründet. 
-    
-    Die Idee startete Ursprünglich als Aprilscherz. \footnote{\cite{openingtheflask}} Der Designansatz wurde aber von vielen Menschen als positiv aufgefasst. Dieser wurde daraufhin unter dem Namen Flask released.
-    
-    \pythonexternal[%
-    caption={Minimalbeispiel für die Verwendung von Flask},%
-    label={lst:flaskHELLOWORLD}]{./scr/beispiele/flask_hello.py}
-    
-    Das Framework verfolgt den Ansatz "`\textit{Why things work the way they work}"'. Funktionalitäten werden also nicht versteckt, sondern sind dem Entwickler einfach zugänglich. Durch diese Designentscheidung ist es möglich ganze Webapplikationen mit nur wenigen Zeilen Code und in einer einzigen Sourcecode-Datei zu realisieren. Diese Transparenz wird durch ein global verfügbares "`magisches"' !sic Objekt ermöglicht. 
-    Es lassen sich auch weitere Instanzen innerhalb einer Applikation erstellen. 
-    Teile der Applikation können über Blueprints modularisiert werden.
-    
-   Durch die Templateengine \textbf{Jinja} erlaubt Flask das generalisieren von HTML-Dokumenten. Durch diese ist es möglich erweiterbare Grundtemplates anzulegen, Variablen abzufragen, zu überprüfen und über Kollektionen zu iterieren.
-   
 
-   
-  Durch sogenannte \textbf{Blueprints} ist es möglich, eine logische Trennung zwischen Teilbereichen der Applikation vorzunehmen. Diese Modularisierung erlaubt die Definierung von spezifischen Datenordnern sowie für HTML-Templates als auch spezifischer subrouten der Module innerhalb der Applikation.
-  
-  (...)
-  
-
-  In der Grundausstatung der Funktionsumfang von Flask sehr beschränkt. Der KISS-Ansatz bedingt, dass benötigte Funktionalitäten nachgerüstet werden müssen. Im Folgenden wird auf einige in dieser Applikation sinnvolle Erweiterungen eingegangen:
-  
-  \begin{description}
-   \item [flask\_sqlalchemy] erlaubt die transparente Anbindung des ORM in die Applikation. In der Grundausstatung besitzt Flask keine Funktionalität um Datenbanken aus der Webapplikation anzusprechen. Durch die Einbindung dieser Erweiterung erhält man ein Framework, das dem Entwurfmuster MVC entspricht.
-   
-   Entspürechend den in Flask gängigen Entwurfsmustern entspricht, wird die Anbdindung an den ORM durch ein globales Objekt modelliert. Dieses ist eine Instanz der Klasse \texttt{flask\_sqlalchemy.SQLAlchemy} und stellt die Operationen von SQLAlchemy zur verfügung.
-   
-   \item [flask\_script] rüstet den Funktionsumfang der Webapplikation um eine zentrale Steurungseinheit auf. Diese Erweiterung besitzt bereits vorgefertigte Steuerungsmodule. Darunter finden sich scripte  zum starten der Webapplikation oder zum starten eines Python-REPL mit den Umgebungsvariablen der Webapplikation. Unter Verwendung des Decorator Entwurfsmuster lässt sich das definierte Steuerungsmodul um beliebige Funktionalitäten erweitern.
-   
-  \end{description}
-
-    
-% END
  
-    
-    \subsubsection{JSON?}
-
-% BEGIN OL3
-    \subsubsection{openLayers}
-    
-    OpenLayers ist ein Framework zur Entwicklung webbasierter Geoapplikationen. Dieses ist in JavaScript entwickelt und erlaubt durch eine layerstruktur den Aufbau komplexer Kartenapplikationen. Dabei lassen sich die Elemente der Karten durch folgende Objekte strukturieren:
-    
-    \begin{description}
-     \item [\texttt{ol.Map}]  
-     \item [\texttt{ol.View}] 
-     \item [\texttt{ol.Overlay}]
-     \item [\texttt{ol.layer.Base}]
-     \item [\texttt{ol.interaction.Interaction}]
-     \item [\texttt{ol.control.Control}]
-    \end{description}
-
-    
-    OpenLayers ist eine Programmbibliotek um interaktive Geoapplikationen zu entwickeln. Das Framework ist in Javascript entwickelt und nimmt alle benötigten Berechnungen auf Clientseite vor.
-    
-    Die Bibliothek erlaubt es Kartenmaterial aus verschiedensten Quellen zu Rendern. Dabei können Kachel- oder auch Vektorbasierte Materialien eingebunden werden.
-    
-    \begin{description}
-     \item [Kachel-Layer]  liefern Bilddaten direkt aus. Dabei werden die Kartenmatherialien in Kacheln aufgeteilt.Dadurch das die Bilder in Teilbereiche untergliedert sind, müssen nur die Bildbereiche ausgeliefert werden, die für die Darstellung des Kartenausschnittes vonnöten sind.
-     
-     \item [Vektor-Layer] sind Beschreibungen von Linien und Polygonen. Die Darstellung wird nicht anhand von Bildmaterial generiert, sondern anhand von geometrischen Beschreibungen gezeichnet. 
-    \end{description}
-    
-    Neben der reinen Darstellung erlaubt die Bibliothek auch die Definition von  "`\texttt{controls}"'. Dabei lassen sich Zoom-, Rotations- und Mouse-Positions-Effekte umsetzen. Siehe Quelle \cite{openlayersbeginnersguide} S. 296
-    
-    Zu zeichnende Daten lassen sich über GEOJson-Objekte modellieren. Die Bibliothek folgt einem objektorientierten Entwurfsmuster und erlaubt das transparente Hinzufügen und Ändern von Layern der Karte.
-    
-    
-
-% END     
-    \subsubsection{D3}
-    
-    \subsection{...}
-
-% END
+   

@@ -14,7 +14,7 @@
 
 Bei der Aggregation der Daten aus dem Argo Programm sind Schnittstellen auszuarbeiten. Diese Implementierung ist im folgenden beschrieben. 
 
-\paragraph{Dateninput}
+\subsubsection{Aggregation der Daten}
 
 Der Datensatz besteht vor der Verarbeitung aus zahlreichen Dateien. Da die Gefahr besteht, dass geöffnete Dateien nicht wieder ordnungsgemäß geschlossen werden, muss eine Schnittstelle geschaffen werden, die unsachgemäße Verwendung der Dateien verhindert. 
 
@@ -63,6 +63,9 @@ Durch diese Klasse wird somit ein Generator definiert, der es erlaubt, alle im A
         label = {lst:dataextractor}
     ]{/home/sebsch/Dokumente/Uni-Workdir/Bachelorarbeit/BA_argo_proto/data/_extraction/_data_extractor.py}
 
+    
+\subsubsection{Schreiben der Daten}
+    
 %END
 
 
@@ -265,6 +268,9 @@ Die Datei \texttt{\_base.html} ist für die Darstellung der Webseite verantwortl
 
 \subsubsection{Kartendarstellung}
 
+ OpenLayers ist eine Programmbibliotek um interaktive Geoapplikationen zu entwickeln. Das Framework ist in Javascript entwickelt und nimmt alle benötigten Berechnungen auf Clientseite vor.
+    
+    Die Bibliothek erlaubt es Kartenmaterial aus verschiedensten Quellen zu Rendern. Dabei können Kachel- oder auch Vektorbasierte Materialien eingebunden werden.
 
 Die Elemente der Karte setzen sich wie in Listing \ref{lst:olMap} zu sehen zusammen.
 
@@ -380,9 +386,6 @@ Auch an dieser Stelle wird die \texttt{map.on}-Funktion der Karte verwendet um d
     
  \item [\texttt{displayPositions}] 
     Diese Funktion stellt eine Positionshistorie einer spezifischen Messstation dar. Dafür wird ein GeoJSON über die url \texttt{/positions/[identifier]} angefordert. Das sichtbar machen, der hier kodierten Daten geschieht analog zu der Darstellung aller Argo-Floats. Das GeoJson trägt zusätzlich noch ein \texttt{LineString}-Element um den zeitlichen Verlauf der Positionen zu verdeutlichen.
- 
-    
-
 \end{description}
 
 
