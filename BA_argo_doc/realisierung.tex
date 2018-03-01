@@ -265,6 +265,23 @@ Die Datei \texttt{\_base.html} ist für die Darstellung der Webseite verantwortl
 
 \subsubsection{Kartendarstellung}
 
+\begin{javascript}
+ var map = new ol.Map({
+    layers: [mapVectorLayer, argoFloatsLayer],
+    target: 'map',
+    controls: ol.control.defaults({
+        attributionOptions: false,
+        zoom: false,
+    }),
+    view: new ol.View({
+        center: [0, 0],
+        zoom: 3.5,
+        minZoom: 3
+    })
+});
+\end{javascript}
+
+
 \subsubsection{Zeichnen der Graphen} \label{sec:ImplementierungPLOTS}
 
 
