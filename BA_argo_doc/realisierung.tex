@@ -392,20 +392,56 @@ Auch an dieser Stelle wird die \texttt{map.on}-Funktion der Karte verwendet um d
 
 
 
-
-
-
 \subsubsection{Zeichnen der Graphen} \label{sec:ImplementierungPLOTS}
 
+% 1- verwendete Software, Vor und Nachteile, warum gewählt
+
+Für die Darstellung der Messwerte wurde sich in dieser Applikation für die Python-Bibliothek \texttt{matplotlib} entschieden.  Diese Plotting-Engine ist in der Entwicklung von wissenschaftlichen Applikationen in Python sehr verbreitet. 
+Als Renderer wurde ein AGG-Renderer eingesetzt. Dieser erlaubt das Vorhalten der Bilddaten im Arbeitsspeicher, sowie deren Überführung in ein Canvas-Element.
+
+In Listing \ref{lst:deliver_chart} ist die Funktion des Controllers zu sehen, über die das Bild bereit gestellt wird.
+
+\begin{python}[label={lst:deliver_chart}, caption={Ausliefern eines geploteten Bildes mit Flask}]
+@argo_app.route("/chart/<identifier>")
+def deliver_chart(identifier):
+    url = url_for('argo_api.get_argo_float', identifier=identifier, _external=True)
+    data = requests.get(url).json()
+
+    fig = create_plot(data)
+    canvas = FigureCanvas(fig)
+    png_output = BytesIO()
+    canvas.print_png(png_output)
+    response = make_response(png_output.getvalue())
+    response.headers['Content-Type'] = 'image/png'
+
+    return response
+\end{python}
+
+Die Funktion wird im Blueprint \texttt{argo\_app} der Flask-Applikation mit der Route registriert. Als Parameter \texttt{identifier}  wird die eindeutige Identifikationsmnummer der Messstation erwartet. Die zum Erstellen des Graphen benötigten Daten werden aus der API angefordert. Dafür wird die Url der Datenschnittstelle der Methode \texttt{get\_argo\_float} in der API ermittelt. Anschließend wird unter Zuhilfenahme der Python-Bibliothek \texttt{requests} der Datensatz über einen GET-Request angefordert. Die Methode \texttt{.json()} überführt die Daten von Json in eine Python-Datenstruktur. 
+
+\begin{description}
+ \item [\texttt{create\_plot}]
+    Diese Funktion ist für die Erstellung des Funktionsplots zuständig. Als Theme wurde sich hier für \texttt{'seaborn-whitegrid'} entschieden. Eine der damit vorgegebenen Grundeinstellungen wurden durch das Ändern der \texttt{rcParams} noch weiter angepasst.\\
+    Für die Darstellung der 3 Funktionsplots wurden 3 Achsen-Objekte erstellt. Diese Achsen werden über ein Gridspec untereinander angeordnet. 
+    
+    Die Datensätze werden über die Y-Achse aufgetragen, wärend die X-Achse die Zeitstempel aufzeigt. Enhält ein Datensatz \texttt{nan}-Werte, so wird davon ausgegangen, dass dieser Datensatz nicht vorhanden ist und diese Achse nicht gezeichnet. Überschreitet ein Datensatz den ihm zugeschriebenen Wertebereich, so wird der Wertebereich der Y-Achse fest eingestellt. Die hierfür benötigten Daten werden über die zentrale Flask-Instanz aus der Konfiguration angefordert.
+    
+    Um den Platz besser nutzen zu können, wird die Beschriftung der Y-Achse nur auf dem untersten Graphen aufgetragen. Dieser enthält die Werte für den Druck des umliegenden Wassers. Dieser Messwert sollte in jeder Boje enthalten sein, es ist also nicht davon auszugehen, dass dieser Wert nicht gezeichnet wird. 
+    
+    Die Achsen werden über das Gridspec in einer \texttt{Figure} zusammengefasst und damit aus dem Funktionskontext zurückgegeben. 
+\end{description}
+
+Der so erstellte Funktionsgraph wird als Canvas-Element in einen response eingebunden und über diesen ausgeliefert.
 
 
 
-% 1. Verwendete Software -- warum gewählt; Vor- und Nachteile
-% 2. Templatestruktur
-% 3. Boostrap 
-% 4. openlayers
-% 5. Plotting
 
+    
+
+% 2- Anfodern der Daten aus der API
+% 3- Ablauf -- halten der Figure im RAM AGG-Renderer
+% 4- Aufbau der Plotfunktion
+% 5- Bereistellung des Bildes über response
 
 %END
 
