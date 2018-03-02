@@ -29,7 +29,49 @@ Als Hilfsmittel zur Überwindung der oben genannten Probleme werden Objekt-Realt
     
 
 % BEGIN -- Geographische Informationssysteme
-    \subsection{Kartographie}
+\subsection{Geodätische und Kartografische Grundlagen}
+
+\subsubsection{Geographische Länge und Breite}
+
+Die geographsiche Länge eines Punktes $P_l$ bezeichnet den Winkel zwischen einer vom Nullmeridian durch den Erdmittelpunkt geführten Fläche und einer Meridianebene die durch den Punkt $P_l$ führt.
+Analog dazu ist die geographische Breite eines Punktes $P_b$ der Winkel zwischen der Äquatorschnittfläche und der Flächennormalen an Punkt $P_b$ (vgl.  \cite{witte2011vermessungskunde} S. 18). 
+
+\subsubsection{Geodätische Projektionen}
+
+Die Kartographie hat das zentrale Problem, dass es sich bei Karten immer um eine zweidimensionale Projektion einer Sphäre handelt. Mit einem Netzentwurf kann eine Karte nur zwischen den Polen Winkel-, Längen- oder Flächentreue zu jeweils einer Seite hin optimiert werden. Frei von Verzerrungen ist nur ein Globus.
+
+Längentreue Darstellungen können mit azimutalen Netzentwürfen realisiert werden. Dabei wird eine Tangentialebene an den Globus gelegt. Auf diese werden werden die Netzlinien um ein Zentrum herum projiziert.
+
+Winkeltreie Projektion können beispielweise mit gnomischen Abbildungen in einem polaren Koordinatensystem erreicht werden. 
+
+Konische  oder zylindrische Abbildungen projizieren das Kartennetz auf einen Kegelmantel bevor die Ebene abgewickelt wird. Durcj diese Projektionsform können Flächentreue Abbildungen erreicht werden.
+
+
+(vgl. \cite{witte2011vermessungskunde} S. 503-506)
+
+\subsubsection{Koordinationssysteme}
+
+Das "`World Geodetic System 1984 (WGS84)"' ist ein Geozentrisches, vom Erdschwerpunkt abgeleitetes Koordinatensystem. Dieses wird unter anderem von GPS zur Zoordnung von Positionen auf der Erde verwendet. Eine schematische Darstellung ist \ref{fig:wgs84} zu sehen. in  Z-Achse führt durch den Erdschwerpunkt, entlang der Rotationsachse durch den Nordpol, die X-Achse von Zentrum der Erde durch einen Nullmeridian (Greenwich) und die Y-Achse wird als Orthogonale zur X-Achse ebenso durch den Erdschwerpunkt geführt (vgl. \cite{witte2011vermessungskunde} S. 13-14).
+
+% TODO GAUSS KRÜGER / UTM
+
+
+
+
+
+\begin{figure}[h!]
+ \centering
+ \includegraphics[width=0.3\textwidth, trim={0 9cm 0 3cm},clip]{pix/WGS_84_reference_frame.png}
+ % WGS_84_reference_frame.png: 2000x1822 px, 72dpi, 70.56x64.28 cm, bb=0 0 2000 1822
+ \caption[Schematische Darstellung des Koordinatensystems WGS84 - Bildquelle: \url{https://commons.wikimedia.org/wiki/File:WGS_84_reference_frame_(vector_graphic).svg}]{Schematische Darstellung des Koordinatensystems WGS84}
+ \label{fig:wgs84}
+\end{figure}
+
+
+
+
+
+    
 % END
 
 % BEGIN -- Software

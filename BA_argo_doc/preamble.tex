@@ -93,7 +93,10 @@ breaklinks=true] {hyperref}
 \definecolor{codebrown}{rgb}{0.3,0.3,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
-\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{backcolour}{RGB}{244,244,244}
+\definecolor{codedarkgey}{RGB}{128,128,128}
+\definecolor{codewhite}{rgb}{1,1,1}
+\definecolor{codeblack}{rgb}{0,0,0}
 %
 \usepackage{listings}
 %
@@ -102,28 +105,24 @@ breaklinks=true] {hyperref}
 %
 \newcommand\pythonstyle{\lstset{
     language=Python,
-    backgroundcolor = \color{backcolour},
+    backgroundcolor = \color{codewhite},
     keepspaces=true, 
-    commentstyle=\color{codebrown},
-    keywordstyle=\color{magenta},
-    numberstyle=\tiny\color{codegray},
-    stringstyle=\color{codepurple},
-    basicstyle=\ttm,
-    otherkeywords={self, yield},             % Add keywords here
-    keywordstyle=\ttb\color{deepblue},
-    emph={ArgoFloat,__init__,__iter__, __next__,__enter__,__exit__, __repr__, Measurement, Location, Profile, Record, ExtractorFactory, DataBaseWriter, DatasetContextManager, ArgoFloatProfile, Float },          % Custom highlighting
-    emphstyle=\ttb\color{deepred},    % Custom highlighting style
-    stringstyle=\color{deepgreen},
-    frame=single,                         % Any extra options here
+    commentstyle=\color{codegray},
+    stringstyle=\color{codedarkgey},
     rulesepcolor=\color{gray},
     rulecolor=\color{lightgray},
-    showstringspaces=false,            % 
-    breaklines=true,
+    otherkeywords={self, yield},             
     postbreak=\mbox{\textcolor{lightgray}{$\hookrightarrow$}\space},
+    keywordstyle=\ttb\color{codeblack},
+    emphstyle=\ttb\color{codedarkgey},   
+    numberstyle=\small\color{lightgray},
+    emph={ArgoFloat,__init__,__iter__, __next__,__enter__,__exit__, __repr__, Measurement, Location, Profile, Record, ExtractorFactory, DataBaseWriter, DatasetContextManager, ArgoFloatProfile, Float },          
+    frame=single,                        
+    showstringspaces=false,            
+    breaklines=true,
     lineskip={-1.5pt},
     numbers=left,
     numbersep=5pt,
-    numberstyle=\small\color{lightgray},
     stepnumber=1,
     captionpos=b,
     basicstyle=\ttfamily\footnotesize,
@@ -166,28 +165,31 @@ breaklinks=true] {hyperref}
 
 \newcommand\jsstyle{\lstset{
     language=JavaScript,
-    backgroundcolor = \color{backcolour},
+    backgroundcolor = \color{codewhite},
+    keepspaces=true, 
+    commentstyle=\color{codegray},
+    stringstyle=\color{codedarkgey},
+    rulesepcolor=\color{gray},
+    rulecolor=\color{lightgray},
+    otherkeywords={self, yield},             
+    postbreak=\mbox{\textcolor{lightgray}{$\hookrightarrow$}\space},
+    keywordstyle=\ttb\color{codeblack},
+    emphstyle=\ttb\color{codedarkgey},   
+    numberstyle=\small\color{lightgray},
     keepspaces=true, 
     %commentstyle=\color{codebrown},
     %keywordstyle=\color{magenta},
-    numberstyle=\tiny\color{codegray},
     %stringstyle=\color{codepurple},
-    basicstyle=\ttm,
     otherkeywords={},             % Add keywords here
     %keywordstyle=\ttb\color{deepblue},
     emph={ArgoFloat,__init__,__iter__, __next__,__enter__,__exit__, __repr__, Measurement, Location, Profile, Record, ExtractorFactory, DataBaseWriter, DatasetContextManager, ArgoFloatProfile, Float },          % Custom highlighting
     %emphstyle=\ttb\color{deepred},    % Custom highlighting style
-    stringstyle=\color{deepgreen},
     frame=single,                         % Any extra options here
-    rulesepcolor=\color{gray},
-    rulecolor=\color{lightgray},
     showstringspaces=false,            % 
     breaklines=true,
-    postbreak=\mbox{\textcolor{lightgray}{$\hookrightarrow$}\space},
     lineskip={-1.5pt},
     numbers=left,
     numbersep=5pt,
-    numberstyle=\small\color{lightgray},
     stepnumber=1,
     captionpos=b,
     basicstyle=\ttfamily\footnotesize,
