@@ -1,26 +1,102 @@
 \section{Grundlagen}
- 
+
+    
+    
+    % ######################################################################
+    %     ARGO PROGRAMM
+    % ######################################################################
+
+    \subsection{Argo-Programm}
+
+    % TODO Welche Organisationen sind beteiligt?
+    
+    Zum Ende des vergangenen Jahrtausends verdichteten sich die Hinweise auf einen globalen und durch Menschen verursachten Klimawandel. Um dessen Auswirkungen auf die Weltmeere studieren zu können, wurde unter dem Dach des Global Ocean Observing System das Argo Programm gegründet. Dieses untersucht, unterstützt durch das Satellitensystem Iason, die Wassersäule der oberen 2000m auf deren chemischen Eigenschaften. Dabei werden in ständigen Intervallen Salzgehalt, Druck, Temperatur und Leitfähigkeit gemessen. Die ermittelten Daten werden veröffentlicht, dass diese durch Wissenschaftler ausgewertet werden können. 
+    
+    % TODO Verweis auf die Sage der Argonauten
+    
+    \begin{figure}[h]
+        \centering
+        \includegraphics{pix/operation_park_profile.jpg}
+        \caption[Argos Messzyklus]{Argos  Messzyklus}
+        \footnotesize{
+            Bildquelle: \href{https://www.csiro.au/en/Research/OandA/Areas/Marine-technologies/Argo-robotic-floats}
+                        {\url{https://www.csiro.au}}
+        }
+        \label{fig:Argo-messzyklus}
+    \end{figure}
+
+    Die Argo Treibbojen werden mit Schiffen an spezifischen Punkten ausgesetzt. Ein Messzyklus beträgt 10 Tage. Die Boje taucht am Anfang des Zyklus auf 1000 Meter Tiefe herab.  In dieser Tiefe verbringt die Sonde die nächsten 9 Tage. Anschließend sinkt sie auf die maximale Tiefe von 2000 Metern herab, um anschließend wieder zur Oberfläche aufzusteigen. An der Oberfläche sendet die Boje innerhalb von 6 bis 12 Stunden die Daten über den Sattelitenarray Iason an die Bodenstationen. Der oben genannte Messzyklus kann in Abbildung \ref{fig:Argo-messzyklus} nachvollzogen werden.
+   
+    \begin{figure}[!ht]
+        \centering
+        \includegraphics[width=0.4\textwidth]{pix/RT-Data-flow}
+        \caption[Qualitätszyklus der Argo-Daten]{Qualitätszyklus der Argo-Daten}
+        \footnotesize{
+            Bildquelle: \href{http://www.argo.ucsd.edu/Argo_data_and.html}%
+                        {\url{http://www.argo.ucsd.edu}}
+        }
+        
+        
+        \label{fig:argo_dataflow}
+    \end{figure}
+    
+    Im Anschluss an die Erhebung werden die Daten auf deren Plausibilität und Qualität überprüft (vgl. \cite{ArgoDataBeginnersGuide} S. 3). Nach diesem Prozess werden die aufbereiteten Daten über die Globalen Data Assembly Center in monatlichen Releasezyklen veröffentlicht. (vgl. \cite{Argofloa92:online}). Der Werdegang der Daten ist in Abbildung \ref{fig:argo_dataflow} zu sehen.
+
+% BEGIN -- Daten
+\subsection{Datengrundlage}
+    
+
+    Alle am Argo teilnehmenden Organisationen verpflichten sich auf eine gemeinsame Datenpolitik. So gibt es keine Herrschaft über die erhobenen Daten. Vielmehr stehen diese ab dem Zeitpunkt der Veröffentlichung transparent der Öffentlichkeit zur Verfügung.
+    
+    Nach der Übermittlung, werden die Messdaten einer Qualitätskontrolle unterzogen. Sie werden auf Plausibilität und Abweichungen überprüft. Nach dieser Qualitätskontrolle werden die Daten nun über die Global Data Assembly Centers (GDAC) in Frankreich und den USA released. Diese können über HTTP und FTP abgerufen werden. 
+    
+    Ein mal Im Monat werden die Daten als Snapshots, den sogenannten DOI (digital object identifier) zusammengefasst. 
+    Während und vor der Qualitätskontrolle liegen die Daten in den Formaten TESAC und BUFR vor. 
+    Die von den DGAC veröffentlichten Daten liegen im Format netCDF vor. Diese sind unter der Lizenz Attribution 4.0 International (CC BY 4.0) veröffentlicht und dürfen unter der Nennung der Lizenz frei verwendet und dabei auch verändert werden.
+    
+    \cite{ArgoDataDocumentation}
+% END
+    
+% BEGIN -- Datenstruktur
+
+In Listing \ref{lst:dataOrdnerstruktur} ist die Ordnerstruktur der netCDF Dateien zu erkennen. Über den Ordnernamen aoml ist die Herkunft des DOI zu erkennen. In diesem Fall wurden die Dateien von einem Server der  "`Atlantic Oceanografic \& Meterolocical Laboratory"' erstellt. Hier befindet sich für jede Messboje ein Unterordner.  Die Dateien meta, prof, Rtraj und tech sind eine Quelle für Metainformationen. Die Messprofile einer Boje finden sich im Ordner \texttt{profiles}. Hier wird für jeden Messzyklus eine Datei angelegt. Dieser startet bei 1 und inkrementiert über jeden Messzyklus um 1.
+    
+    \begin{python}[label={lst:dataOrdnerstruktur}, caption={Die Verzeichnisstruktur der vom aoml bereitgestellten Daten}]
+./aoml/1900200/
+- 1900200_meta.nc
+- 1900200_prof.nc
+- 1900200_Rtraj.nc
+- 1900200_tech.nc
+- profiles
+    - D1900200_001.nc
+    ...
+    - D1900200_215.nc
+    - D1900200_216.nc
+./aoml/1900201/
+...\end{python}
+
+% END
+
 \subsection{Objekt-Relationale Unverträglichkeit}
 
-In einem Softwareparadigma manifestiert sich ein bestimmtes Konzept in der Modellierung der Welt. Durch diese konzeptionelle Betrachtungsweise beeinflusst ein Paradigma den Erstellungsprozess sowie die Ergebnisse des Softwaredesigns und zwingt diesem seine Grenzen auf. Probleme bei der Kombination verschiedener Paradigmen werden dabei als Unverträglichkeit (impedance Missmatch) bezeichnet.
-Objektorientierte Programmierung  und eine relationale Abfrage von Datensätzen sind weit verbreitete Paradigmen in der Softwareentwicklung. Damit ist die objekt-relationale Unverträglichkeit (object-relational impedance mismatch) eine häufig auftretende Herausforderung. (vgl. \cite{ireland2009classification} S. 36-38)\\
-
-\cite{ireland2009classification} nennt dabei unter anderem folgende Betrachtungsweisen als Ursachen für die objektrelationale Unverträglichkeit.
+In einem Softwareparadigma manifestiert sich ein bestimmtes Konzept in der Modellierung der Welt. Durch diese konzeptionelle Betrachtungsweise beeinflusst ein Paradigma den Erstellungsprozess sowie die Ergebnisse des Softwaredesigns und zwingt diesem seine Grenzen auf. Probleme bei der Kombination verschiedener Paradigmen werden dabei als Unverträglichkeit (Impedance Missmatch) bezeichnet.
+Objektorientierte Programmierung  und eine relationale Abfrage von Datensätzen sind weit verbreitete Paradigmen in der Softwareentwicklung. Damit ist die objekt-relationale Unverträglichkeit (object-relational impedance mismatch) eine häufig auftretende Herausforderung, (vgl. \cite{ireland2009classification} S. 36-38).
+Hier genannt sind unter anderem folgende Betrachtungsweisen als Ursachen für die objektrelationale Unverträglichkeit:
 
 \begin{description}
  \item [Strukturelle Unterschiede]  
- Die objektorientierte Programmierung erlaubt das definieren, beliebig komplexer Strukturen aus Methoden und Klassen. Durch Vererbungsstrukturen ist es möglich, Objekte zu spezialisieren und Konzepte für die Erstellung der Klassen zu generalisieren. Spricht man von einer relationalen Algebra, diese wird durch Tupeln, Mengen und Wahrheitswerten definiert. Inhärent wiederholbare Strukturen oder Hierarchien können mit diesen Mitteln nicht umgesetzt werden.   
+ Die objektorientierte Programmierung erlaubt das Definieren, beliebig komplexer Strukturen aus Methoden und Klassen. Durch Vererbungsstrukturen ist es möglich, Objekte zu spezialisieren und Konzepte für die Erstellung der Klassen zu generalisieren. Eine relationale Algebra wird durch Tupel, Mengen und Wahrheitswerte definiert. Inhärent wiederholbare Strukturen oder Hierarchien können mit diesen Mitteln nicht umgesetzt werden.   
  
  \item [Datenkapselung] 
- In der objektorientierten Programmierung können die intrinsischen Attribute eines Objektes verborgen werden. Dieses Konzept sit als Kapselung bekannt und erlaubt es den Zugriff auf die gekapselten Strukturen einzuschränken. In einer relationalen Algebra ist eine derartige Abstraktion über die Daten nicht vorgesehen.
+ In der objektorientierten Programmierung können die intrinsischen Attribute eines Objektes verborgen werden. Dieses Konzept ist als Kapselung bekannt und erlaubt es den Zugriff auf die gekapselten Strukturen einzuschränken. In einer relationalen Algebra ist eine derartige Abstraktion über die Daten nicht vorgesehen.
  
  
  \item [Objektidentität]  
- Durch die Instanziierung eines Objektes aus einer Klasse erhält dieses eine eindeutige Identität, somit unterscheiden sich zwei Objekte auch wenn diese träger eines identischen Datensatzes sind, durch ihre Repräsentation im Arbeitsspeicher. Relationen werden durch den Primärschlüssel, und damit über ihre Daten, definiert. Zwei eigenständige Relationen mit identischem Datensatz ist damit nicht möglich.
+ Durch die Instanziierung eines Objektes aus einer Klasse erhält dieses eine eindeutige Identität. Somit unterscheiden sich zwei Objekte auch wenn diese Träger eines identischen Datensatzes sind, durch ihre Repräsentation im Arbeitsspeicher. Relationen werden durch den Primärschlüssel, und damit über ihre Daten, definiert. Zwei eigenständige Relationen mit identischem Datensatz sind damit nicht möglich.
 \end{description}
 
 
-Als Hilfsmittel zur Überwindung der oben genannten Probleme werden Objekt-Realtionale Mapper (ORM bzw. O/R-Mapper) eingesetzt. Durch dieses Mapping wird eine Schnittstelle oder Abstraktionsebene zwischen Programmteilen aus den jeweiligen Sprachparadigmen definiert, um den impedance Mismatch möglichst transparent zu überwinden.
+Als Hilfsmittel zur Überwindung der oben genannten Probleme werden objektrealtionale Mapper (ORM bzw. O/R-Mapper) eingesetzt. Durch dieses Mapping wird eine Schnittstelle oder Abstraktionsebene zwischen Programmteilen aus den jeweiligen Sprachparadigmen definiert, um den impedance Mismatch möglichst transparent zu überwinden.
 
 
 
@@ -29,16 +105,13 @@ Als Hilfsmittel zur Überwindung der oben genannten Probleme werden Objekt-Realt
     
 
 % BEGIN -- Geographische Informationssysteme
-\subsection{Geodätische und Kartografische Grundlagen}
+\subsection{Geodäsie und Kartographie}
 
-\subsubsection{Geographische Länge und Breite}
 
 Die geographsiche Länge eines Punktes $P_l$ bezeichnet den Winkel zwischen einer vom Nullmeridian durch den Erdmittelpunkt geführten Fläche und einer Meridianebene die durch den Punkt $P_l$ führt.
 Analog dazu ist die geographische Breite eines Punktes $P_b$ der Winkel zwischen der Äquatorschnittfläche und der Flächennormalen an Punkt $P_b$ (vgl.  \cite{witte2011vermessungskunde} S. 18). 
-
-\subsubsection{Geodätische Projektionen}
-
-Die Kartographie hat das zentrale Problem, dass es sich bei Karten immer um eine zweidimensionale Projektion einer Sphäre handelt. Mit einem Netzentwurf kann eine Karte nur zwischen den Polen Winkel-, Längen- oder Flächentreue zu jeweils einer Seite hin optimiert werden. Frei von Verzerrungen ist nur ein Globus.
+\\
+Die Kartographie hat das zentrale Problem, dass es 23sich bei Karten immer um eine zweidimensionale Projektion einer Sphäre handelt. Mit einem Netzentwurf kann eine Karte nur zwischen den Polen Winkel-, Längen- oder Flächentreue zu jeweils einer Seite hin optimiert werden. Frei von Verzerrungen ist nur ein Globus.
 
 Längentreue Darstellungen können mit azimutalen Netzentwürfen realisiert werden. Dabei wird eine Tangentialebene an den Globus gelegt. Auf diese werden werden die Netzlinien um ein Zentrum herum projiziert.
 
@@ -48,9 +121,7 @@ Konische  oder zylindrische Abbildungen projizieren das Kartennetz auf einen Keg
 
 
 (vgl. \cite{witte2011vermessungskunde} S. 503-506)
-
-\subsubsection{Koordinationssysteme}
-
+\\
 Das "`World Geodetic System 1984 (WGS84)"' ist ein Geozentrisches, vom Erdschwerpunkt abgeleitetes Koordinatensystem. Dieses wird unter anderem von GPS zur Zoordnung von Positionen auf der Erde verwendet. Eine schematische Darstellung ist \ref{fig:wgs84} zu sehen. in  Z-Achse führt durch den Erdschwerpunkt, entlang der Rotationsachse durch den Nordpol, die X-Achse von Zentrum der Erde durch einen Nullmeridian (Greenwich) und die Y-Achse wird als Orthogonale zur X-Achse ebenso durch den Erdschwerpunkt geführt (vgl. \cite{witte2011vermessungskunde} S. 13-14).
 
 % TODO GAUSS KRÜGER / UTM
@@ -62,12 +133,14 @@ Das "`World Geodetic System 1984 (WGS84)"' ist ein Geozentrisches, vom Erdschwer
 \begin{figure}[h!]
  \centering
  \includegraphics[width=0.3\textwidth, trim={0 9cm 0 3cm},clip]{pix/WGS_84_reference_frame.png}
- % WGS_84_reference_frame.png: 2000x1822 px, 72dpi, 70.56x64.28 cm, bb=0 0 2000 1822
- \caption[Schematische Darstellung des Koordinatensystems WGS84 - Bildquelle: \url{https://commons.wikimedia.org/wiki/File:WGS_84_reference_frame_(vector_graphic).svg}]{Schematische Darstellung des Koordinatensystems WGS84}
+ \caption[Schematische Darstellung des Koordinatensystems WGS84]
+ {Schematische Darstellung des Koordinatensystems WGS84}
+ \footnotesize{
+    Bildquelle: \href{https://commons.wikimedia.org/wiki/File:WGS_84_reference_frame_(vector_graphic).svg}
+                {\url{https://commons.wikimedia.org}}
+ }
  \label{fig:wgs84}
 \end{figure}
-
-
 
 
 
@@ -77,7 +150,7 @@ Das "`World Geodetic System 1984 (WGS84)"' ist ein Geozentrisches, vom Erdschwer
 % BEGIN -- Software
     \subsection{Network Common Data Format}
     
-    Das Network Common Data Format (NetCDF) dient zum Austausch von wissenschaftlichen Daten. Es ist eine Weiterentwicklung des von der NASA entwickelten Common Data Format (CDF). Das Format zeichnet sich dadurch aus, dass es selbstbeschreibend ist. Dadurch wird die Dokumentation mit den Daten mitgeführt. Dies soll die Portabilität des Datensatzes verbessern.  \footnote{vgl. \cite{FisherNetCDF}}
+    Das Network Common Data Format (netCDF) dient zum Austausch von wissenschaftlichen Daten. Es ist eine Weiterentwicklung des von der NASA entwickelten Common Data Format (CDF). Das Format zeichnet sich dadurch aus, dass es selbstbeschreibend ist. Dadurch wird die Dokumentation mit den Daten mitgeführt. Dies soll die Portabilität des Datensatzes verbessern.  \footnote{vgl. \cite{FisherNetCDF}}
    
     Neben einigen anderen Sprachen, wurde auch eine Bibliothek für Python entwickelt \footnote{Siehe \cite{netCDF4}} Mit dieser ist es möglich, die Binärdaten zu öffnen und zu numpy-Arrays zu extrahieren. In Listing \ref{lst:example_netcdf} ist die Verwendung exemplarisch an der Extraktion und Berechnung des Datensatzerstellungsdatum aufgezeigt und im Folgenden beschrieben.
     
@@ -97,7 +170,7 @@ Das "`World Geodetic System 1984 (WGS84)"' ist ein Geozentrisches, vom Erdschwer
     
     Um die Werte eines Datensatzes zu extrahieren, wird über die numpy-slicing Operation \texttt{arr[::]} der Datensatz in vektorieller Form extrahiert. Da in diesem Array nur ein skalarer \texttt{float64} Wert enthalten ist, kann dieser als nulltes Element extrahiert werden.
     
-    Zur Überführung in das Format des durch die ISO 8601 bei uns normierten Gregorianischen Kalenders wird ein Datumsobjekt des Referenzdatums benötigt. Durch die Verwendung von \texttt{timedelta} werden die Tage aus dem Feld \texttt{JULD} addiert. Da ein Messzyklus 10 Tage andauert, kann an dieser Stelle der Datensatz durch die Entferndung der Dezimalstellen vereinfacht werden. Die Casting-Operation \texttt{int()} rundet in jedem Fall ab.
+    Zur Überführung in das Format des durch die ISO 8601 bei uns normierten Gregorianischen Kalenders wird ein Datumsobjekt des Referenzdatums benötigt. Durch die Verwendung von \texttt{timedelta} werden die Tage aus dem Feld \texttt{JULD} addiert. Da ein Messzyklus 10 Tage andauert, kann an dieser Stelle der Datensatz, durch das Überführen zu einem Integer, vereinfacht werden. Die Casting-Operation \texttt{int()} rundet in jedem Fall ab.
     
 
 

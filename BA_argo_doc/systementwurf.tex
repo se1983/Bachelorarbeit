@@ -5,12 +5,12 @@
 Um die Daten zu modellieren ist es sinnvoll, sich diese im Kontext der Erhebung zu betrachten. In (\ref{eq:datenstruktur}) ist dieser Prozess vereinfacht dargestellt.
 
 \begin{equation}
-    \mbox{Boje} \to (\mbox{misst}_{\mbox{zu Zeitpunkt}}) \to \mbox{Messprofile} \to ( \mbox{enhält} ) \to \mbox{Aufzeichnungen} \label{eq:datenstruktur}
+    \mbox{Boje} \to (\mbox{misst}_{\mbox{an Ort}}) \to \mbox{Messprofile}\label{eq:datenstruktur}
 \end{equation}
 
 Dabei ist erkennbar, dass dieses Modell eine Verkettung von Entitäten und Ereignissen darstellt. Eine Boje misst über ihre Lebensdauer eine Anzahl von Messzyklen. Jeder dieser Messzyklen besteht aus einer gewissen Anzahl von Messwerten.
 
-Um das Modell weiter fortzuführen, wurde diese Ereigniskette in ein Entitätsschema überführt. In Abbildung \ref{fig:ERM} ist eine mögliche Modellierung des Prozesses zu sehen. 
+Um das Modell weiter fortzuführen, wurde diese Ereigniskette in ein Entitätsschema überführt. In Abbildung \ref{fig:ERM} ist die hier verwendete Modellierung des Prozesses zu sehen. 
 
 \begin{figure}[h!]
     \centering
@@ -20,15 +20,10 @@ Um das Modell weiter fortzuführen, wurde diese Ereigniskette in ein Entitätssc
 \end{figure}
 
 
-
-    
-   
 \subsection{Architektur}
     
-        % TODO Darstellung der geplanten Systemarchitektur
 
-
-Die Applikation besteht aus zwei Grundkomponenten. Ein Teil ist für die Beschaffung und Aufbereitung der Daten zuständig, während der zweite Teil für die Darstellung der Daten zuständig ist. 
+Wie in Abbildung \ref{fig:grobetwurf_architektur_datenaggregation} zu sehen ist, besteht die Applikation aus zwei Grundkomponenten. Ein Teil ist für die Beschaffung und Aufbereitung der Daten zuständig, während der zweite Teil für die Darstellung der Daten zuständig ist. 
 
 % BEGIN OOP ARCHITEKTUR   AGGREGATION
 \subsubsection{Entwurf der Datenaggregation}
@@ -40,9 +35,9 @@ Die Applikation besteht aus zwei Grundkomponenten. Ein Teil ist für die Beschaf
 \label{fig:grobetwurf_architektur_datenaggregation}
 \end{figure}
 
-Die Datenaggregation erfüllt zwei Funktionen. Zum einen muss sichergestellt sein, dass die Daten aus den vom Argo Programm bereitgestellten Strukturen gelesen und in ein logisches Format überführt werden. Des weiteren müssen diese Daten in die datenbank der Applikation überführt werden.
+Die Datenaggregation erfüllt zwei Funktionen. Zum einen muss sichergestellt sein, dass die Daten aus den vom Argo Programm bereitgestellten Strukturen gelesen und in ein logisches Format überführt werden. Des weiteren müssen diese Daten in die Datenbank der Applikation überführt werden.
 
-Auch in diesem Modell ist die Ereigniskette aus (\ref{eq:datenstruktur}) Abzubilden. Jede Messstation wird über ein Objekt abgebildet. Die hier gespeicherten Daten sind für eine Messstation eindeutig. Jeder Messzyklus der Boje wird über ein weiteres, zur Messstation gehöriges Objekt abgebildet. Dieses ist innerhalb des Kontextes eindeutig und trägt die Informationen zur jeweiligen Messung.
+Auch in diesem Modell ist die Ereigniskette aus (\ref{eq:datenstruktur}) abzubilden. Jede Messstation wird über ein Objekt abgebildet. Die hier gespeicherten Daten sind für eine Messstation eindeutig. Jeder Messzyklus der Boje wird über ein weiteres, zur Messstation gehöriges Objekt abgebildet. Dieses ist innerhalb des Kontextes eindeutig und trägt die Informationen zur jeweiligen Messung.
 
 Für die Persistierung  werden objektorientierte Strukturen für den ORM verwendet. Diese Strukturen teilt sich das Modul mit der Webapplikation. Die Behandlung der Daten sowie eine Steuerung des Prozesses sind als weitere Schnittstellen zu definieren. 
 
@@ -51,7 +46,7 @@ Die Aggregation der Daten wird über zwei Teilbereiche abgebildet. Zum einen mü
 Als zweite Ebene der Aggregation ist der Prozess des Schreibens in eine Datenbank zu sehen. Diese verwendet die zuvor ermittelten modellierten Messprofile und schreibt sie Anhand der dort enthaltenen Daten in eine Datenbank.
 
 
-Es ist an dieser Stelle zu erkennen, dass zwei Stellen existieren, die die intrinsischen Eigenschaften des Modules an dieser Stelle beeinflussen. Hier sollten Schnittstellen geschaffen werden, die eine richtige Handhabung festsetzen
+Es ist an dieser Stelle zu erkennen, dass zwei Stellen existieren, die die intrinsischen Eigenschaften des Modules an dieser Stelle beeinflussen. Im folgenden werden die Schnittstellen aufgelistet, die eine richtige Handhabung festsetzen:
 
 \paragraph{Schnittstellen}
 
@@ -59,15 +54,15 @@ Es ist an dieser Stelle zu erkennen, dass zwei Stellen existieren, die die intri
 
 \item \textbf{Daten}  
     \begin{enumerate}
-        \item Die Datenstruktur ist normiert. Es ist sicherzustellen, dass die bekannte Daten- bzw Ordnerstruktur abgearbeitet wird. Mit Änderungen in dieser Struktur muss nicht gerechnet werden.
-        \item Es muss sicher gestellt werden, dass geöffnete Dateien wieder geschlossen werden
+        \item Die Datenstruktur ist normiert. Es ist sicherzustellen, dass die bekannte Daten- bzw. Ordnerstruktur abgearbeitet wird. Mit Änderungen in dieser Struktur muss nicht gerechnet werden.
+        \item Es muss sicher gestellt werden, dass geöffnete Dateien wieder geschlossen werden.
     \end{enumerate}
 
 \item \textbf{Steuerung} 
     \begin{enumerate}
         \item Daten separiert in die Datenbank zu schreiben, könnte zu Inkonsistenzen führen und soll vermieden werden.
         \item Der Prozess sollte als Sequenz modelliert werden.
-        \item Es muss sicher gestellt werden, dass die Daten schrittweise in die Datenbank überführt werden. Würden zu Beginn alle Dateien geöffnet und gemeinsam im flüchtigen Speicher vorgehalten· könnte es zu Problemen führen.
+        \item Es muss sicher gestellt werden, dass die Daten schrittweise in die Datenbank überführt werden. Würden zu Beginn alle Dateien geöffnet und gemeinsam im flüchtigen Speicher vorgehalten,· könnte es zu Problemen führen.
     \end{enumerate}
 
 \end{enumerate}
@@ -80,13 +75,13 @@ Es ist an dieser Stelle zu erkennen, dass zwei Stellen existieren, die die intri
 
 Die Webapplikation besteht aus zwei Teilkomponenten. Die erste Komponente ist für die Darstellung der Webseite zuständig (app). Durch diese werden Elemente in  HTML, Javascript und als Bilder ausgeliefert, welche im Webbrowser der Benutzenden angezeigt werden können. Die Darstellung erfolgt dabei dem Singlepage-Prinzip.  
 
-Die zweite Teilkomponente ist dafür zuständig, benötigten Daten bereitzustellen (api). Alle Daten aus datenhaltung werden über diese Schnittstelle angefordert. Die Daten werden über JSON codiert.
+Die zweite Teilkomponente ist dafür zuständig, benötigten Daten bereitzustellen (api). Alle Daten aus Datenhaltung werden über diese Schnittstelle angefordert. Die Daten werden über JSON codiert.
 
 
 \subsubsection{Ausarbeitung der Webrouten} \label{sec:entwurfRoutes}
 
 
-Die \textbf{api} ist dafür zuständig, die benötigten Daten der Applikation bereitzustellen. Über definierte Webrouten wird über ein GET-Request ein JSON angefordert. Die  hierfür ausgearbeitete Struktur ist in Listing \ref{lst:routesAPI} zu sehen.
+Die \textbf{api} ist dafür zuständig, die benötigten Daten der Applikation bereitzustellen. Über definierte Webrouten wird über ein GET-Request ein JSON angefordert. Die  hierfür ausgearbeitete Struktur ist in Listing \ref{lst:routesAPI} zu sehen und ist im Folgenden beschrieben:
 
 \begin{python}[label={lst:routesAPI}, caption={Webrouten der API}]
 (1.1) GET     /last_seen
@@ -97,10 +92,10 @@ Die \textbf{api} ist dafür zuständig, die benötigten Daten der Applikation be
 
 \begin{description}
  \item [(1.1) / (1.2)]
-    Über diese Route  werden die Daten für die letzte Position der Messstationen aufgerufen. Dieser Datensatz trägt die Daten die zur Anzeige der Positionen der Messstationen auf der Weltkarte benötigt werden und die Zusatzinformationen für das Tooltip der Zusatzinformationen der einzelnen Argo-Floats. Die Daten werden bei jedem Beusch der Webseite ausgeliefert. Da sich diese erst verändern, wenn neue Daten vorliegen, werden diese über einen Caching-Mechanismus vorgehalten, der optionale Übergabeparameter \texttt{force\_reload} ermöglicht das neu anlegen des chaches. Um Vandalismus vorzubeugen, sollte es sich dabei um einen nicht zu  erratenden Token handeln.
+    Über diese Route  werden die Daten für die letzte Position der Messstationen aufgerufen. Dieser Datensatz trägt die Daten, die zur Anzeige der Positionen der Messstationen auf der Weltkarte benötigt werden und die Zusatzinformationen zur Darstellung eines Tooltips der einzelnen Argo-Floats. Die Daten werden bei jedem Besuch der Webseite ausgeliefert. Da sich diese erst verändern, wenn neue Daten vorliegen, werden diese über einen Caching-Mechanismus vorgehalten. Der optionale Übergabeparameter \texttt{force\_reload} ermöglicht das Neuanlegen des Caches. Um Vandalismus vorzubeugen, sollte es sich dabei um einen nicht zu  erratenden Token handeln.
     
  \item [(1.3)]
-    Über diese Route werden die Mess-, wie auch Metadaten einer Messstation angefordert. Die Auswahl der Boje erfolgt über den Übergabeparameter \texttt{identifier}, hier wird die eindeutige Identifikationsnummer (siehe PLATTFORM\_NUMBER in Tabelle \ref{table:Datenauswahl}) der Messstation verwendet.
+    Über diese Route werden die Mess-, wie auch Metadaten einer Messstation angefordert. Die Auswahl der Boje erfolgt über den Übergabeparameter \texttt{identifier}. Hier wird die eindeutige Identifikationsnummer (siehe PLATTFORM\_NUMBER in Tabelle \ref{table:Datenauswahl}) der Messstation verwendet.
     
  \item [(1.4)]
     Um den Positionsverlauf einer Boje anzufordern, dient diese Route. Auch hier wird zur Identifikation der Messstation deren Identifikationsnummer als Parameter übergeben. 
@@ -108,7 +103,7 @@ Die \textbf{api} ist dafür zuständig, die benötigten Daten der Applikation be
 
 
 
-Die \textbf{app} liefert die Teile aus, die vom Benutzer gesehen werden. Es handelt sich dabei um HTML/Javascript und Bilddaten. Die hierfür ausgearbeitete Struktur ist in Listing \ref{lst:routesAPP} zu sehen.
+Die \textbf{app} liefert die Teile aus, die vom Benutzer gesehen werden. Es handelt sich dabei um HTML/Javascript und Bilddaten. Die hierfür ausgearbeitete Struktur ist in Listing \ref{lst:routesAPP} zu sehen und im Folgenden beschrieben:
 
 \begin{python}[label={lst:routesAPP}, caption={Webrouten der APP}]
 (2.1) GET     /
@@ -137,15 +132,6 @@ Die \textbf{app} liefert die Teile aus, die vom Benutzer gesehen werden. Es hand
 %
 % - Darstellung der Daten -- ...
 
-Das Aussehen der Applikation soll dem Muster von gängigen Webapplikationen entsprechen. In Abbildung \ref{fig:entwurf_webseite} ist ein erster Grobentwurf der Applikation zu sehen.
-
-Zentrales element der Applikation ist die Darstellung einer Karte. Über diese sollen die letzten Positionen der Karte ersichtlich sein.
-
-
-Klickt man eine Messstation an, so wird auf der linken Seite ein weiteres Element ind ie Seite eingefügt. Dieses dient zur Darstellung der Messwerte des jeweiligen ArgoFloats.
-
-
-
 \begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{pix/EntwurfWebseite.png}
@@ -153,5 +139,16 @@ Klickt man eine Messstation an, so wird auf der linken Seite ein weiteres Elemen
     \caption{Grafischer Grobentwurf der Webapplikation}
     \label{fig:entwurf_webseite}
 \end{figure}
+
+Das Aussehen der Applikation soll dem Muster von gängigen Webapplikationen entsprechen. In Abbildung \ref{fig:entwurf_webseite} ist ein erster Grobentwurf der Applikation zu sehen.
+
+Zentrales element der Applikation ist die Darstellung einer Karte. Über diese sollen die letzten Positionen der Karte ersichtlich sein.
+
+
+Klickt man eine Messstation an, so wird auf der linken Seite ein weiteres Element in die Seite eingefügt. Dieses dient zur Darstellung der Messwerte des jeweiligen Argo-Floats.
+
+
+
+
 
 % END
