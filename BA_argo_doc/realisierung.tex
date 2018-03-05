@@ -20,7 +20,23 @@ Der Datensatz besteht vor der Verarbeitung aus einer Ansammlung von Verzeichniss
 \pythonexternal[%
         caption={Kontextmanager zur Sicherstellung der richtigen Dateibehandlung.}, 
         label=lst:contextmanager]{./scr/beispiele/contextmanager.py}
+    
+In Listing \ref{lst:verwendungcontextmanager} ist die Verwendung des Kontextmanagers aufgezeigt und im Folgenden beschrieben.
 
+\begin{python}[%
+caption={Die Verwendung des Kontextmanagers},%
+label={lst:verwendungcontextmanager}]
+with DatasetContextManager(file_path) as ds:
+    juld = ds.variables['JULD'][0]
+\end{python}
+
+
+Durch die Verwendung der Struktur über das Schlüsselwort \texttt{with} wird die Objektmethode \texttt{\_\_enter\_\_} aufgerufen. Diese gibt den objekteigenen netCDF-Datensatz zurück. Dieses wird in der Verwendung im gleichnamigen Objekt \texttt{ds} gespeichert. Im darauf folgenden Operationsblock kann das Objekt nun verwendet, und dessen Daten extrahiert werden. Nachdem der Operationsblock verlassen wurde, wird die Methode \texttt{\_\_exit\_\_} des Kontextmanagers aufgerufen. Innerhalb dieser methode wird die Datei nun geschlossen.  Durch dieses Entwurfsmuster ist die Richtige Verwendung der Datei also transparent sichergestellt. Ein Entwickler kann somit nicht durch Unachtsamkeit vergessen, den Datensatz zu schließen. Gleichzeitig erhöht sich die Lesbarkeit. Durch den Operationsblock ist jederzeit ersichtlich, ab welcher Stelle im Quelltext der Datensatz nicht mehr verfügbar ist. 
+
+Diese Schnittstelle wird in den Objektrepräsentationen der Argo-Floats und der Datensätzen verwendet, um auf die Daten zuzugreifen. In diesen wird wie in Kapitel \ref{sec:entwurfAggregation} gezeigt, die Datenstruktur vorgehalten. 
+
+
+\subsubsection{Schreiben der Daten}
 
 Um die Verarbeitung der Daten sowie den Prozess der Aggregation in der Datenbank richtig zu modellieren, ist es sinnvoll, den Prozess als Sequenz zu modellieren. Dies erlaubt es, die Datenstruktur über einen Generator vorzuhalten. Python sieht dafür den Iterator vor.
 Die hier verwendete Implementierung ist in Listing \ref{lst:iteratorimpl} zu sehen. Das Interface wird über die Funktion \pythoninline{def __next__(self)} realisiert. 
@@ -50,7 +66,7 @@ Die Methode \texttt{get\_data\_sets()} erzeugt aus jedem Unterordner im definier
                 label={lst:dataextractor}]{/home/sebsch/Dokumente/Uni-Workdir/Bachelorarbeit/BA_argo_proto/data/_extraction/_data_extractor.py}
 
     
-\subsubsection{Schreiben der Daten}
+
     
 %END
 
