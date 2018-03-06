@@ -31,16 +31,16 @@
 % END 
      
 % BEGIN Beschreibung  funktionale Anforderungen
-    \subsection{Funktionale Anforderungen}
+    \subsection{Funktionale Anforderungen} 
     
-    \subsubsection{Anwendende Perspektive}
+    \subsubsection{Anwendende Perspektive}\label{sec:funkAnforderungenAnwender}
     
     In der Anwendung wird die Darstellung einer Webapplikation erwartet. Angesteuert durch die zugehörige URL,  
     sollen über eine Kartenapplikation die Grenzen der Ozeane und der umliegenden Kontinente erkennbar werden.  Eine genauere Darstellung von Landmarken wie Straßen, Städte oder Gebirge ist für den Aussagewert der Applikation nicht erforderlich. Die Kartendarstellung soll über Interaktionsmöglichkeiten, wie dem Einstellen der Zoomstufe, sowie des ausgewählten Kartenbereichs, verfügen. Über den Kartendienst sind die letzte Position jeder Messboje aus dem Datensatz ersichtlich. Um Streuung und Verdichtung an spezifischen Orten sehen zu können, werden alle Bojen des angezeigten Kartenausschnittes dargestellt. Es erfolgt keine Zusammenfassung oder Ausblendung.
     Wird die Maus über die visuelle Repräsentation einer Messboje geführt, so sollen grundlegende Daten der Messstationen dargestellt werden, gleichzeitig wird diese Station optisch hervorgehoben.
     Ein Mausklick auf die schematische Darstellung soll hier gemessene, spezifische Daten anzeigen. Dazu werden in einem separierten Darstellungsfeld der Verlauf der Messdaten, sowie weiterere sinnvolle Werte angezeigt. Zusätzlich soll der zurückgelegte Weg der Messtation ersichtlich sein.  Eine Trendanalyse der Daten kann hier ein Maß für die Richtung der Messwerte ermöglichen. Können mehrere Messstationen gleichzeitig ausgewählt werden, so wäre es sinnvoll die akkumulierten Werte darzustellen.
     
-    \subsubsection{Administrative Perspektive}
+    \subsubsection{Administrative Perspektive} \label{sec:funkAnforderungenAdmin}
     
     Es notwendig, dass die Datensätze des Argo Programms ausgelesen und in ein für die Datenbank aufbereitetes Format überführt werden. Neue Daten müssen hierfür aus den Quellen des Argo Programms heruntergeladen werden. Um die Inhalte zu erstellen, wird statt einer journalistischen eine administrative Tätigkeit erwartet. Durch den Datengetriebenen Ansatz der Applikation müssen für das Erstellen der Inhalte keine Webmasken wie Texteingabefelder zur Verfügung gestellt werden. Vielmehr ist es sinnvoll, die hier benötigten Werkzeuge als Skripte zur Verfügung zu stellen, um die administrativen Aufgaben über die Kommandozeile ausführen zu können. Dies würde eine Abbildung der Prozesse bis hin zu einer Vollautomatisierung erlauben und eine örtliche Trennung von Datenaggregation und -darstellung vereinfachen.
     Für die administrativen Tätigkeiten werden Werkzeuge benötigt, um neue Daten  in die Datenbank überführen können.  
