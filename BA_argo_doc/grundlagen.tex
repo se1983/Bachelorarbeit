@@ -107,18 +107,13 @@ Als Hilfsmittel zur Überwindung der oben genannten Probleme werden objektrealti
 % BEGIN -- Geographische Informationssysteme
 \subsection{Geodäsie und Kartographie}
 
+In der vorliegenden Applikation werden geographische Daten über einen Kartendienst angezeigt. Aus diesem Grund erfolgt hier eine Zusammenfassung der wichtigsten geodätischen und kartographischen Grundlagen.
+
 
 Die geographsiche Länge eines Punktes $P_l$ bezeichnet den Winkel zwischen einer vom Nullmeridian durch den Erdmittelpunkt geführten Fläche und einer Meridianebene die durch den Punkt $P_l$ führt.
 Analog dazu ist die geographische Breite eines Punktes $P_b$ der Winkel zwischen der Äquatorschnittfläche und der Flächennormalen an Punkt $P_b$ (vgl.  \cite{witte2011vermessungskunde} S. 18). 
 \\
-Die Kartographie hat das zentrale Problem, dass es sich bei Karten immer um eine zweidimensionale Projektion einer Sphäre handelt. Mit einem Netzentwurf kann eine Karte nur zwischen den Polen Winkel-, Längen- oder Flächentreue zu jeweils einer Seite hin optimiert werden. Frei von Verzerrungen ist nur ein Globus.
-Längentreue Darstellungen können mit azimutalen Netzentwürfen realisiert werden. Dabei wird eine Tangentialebene an den Globus gelegt. Auf diese werden werden die Netzlinien um ein Zentrum herum projiziert.
-Winkeltreie Projektion können beispielweise mit gnomischen Abbildungen in einem polaren Koordinatensystem erreicht werden. 
-Konische  oder zylindrische Abbildungen projizieren das Kartennetz auf einen Kegelmantel bevor die Ebene abgewickelt wird. Durch diese Projektionsform können flächentreue Abbildungen erreicht werden.
 
-
-(vgl. \cite{witte2011vermessungskunde} S. 503-506)
-\\
 Das "`World Geodetic System 1984 (WGS84)"' ist ein geozentrisches, vom Erdschwerpunkt abgeleitetes Koordinatensystem. Dieses wird unter anderem von GPS zur Zuordnung von Positionen auf der Erde verwendet. Eine schematische Darstellung ist in Abbildung \ref{fig:wgs84} zu sehen. Die  Z-Achse führt durch den Erdschwerpunkt entlang der Rotationsachse durch den Nordpol, die X-Achse von Zentrum der Erde durch einen Nullmeridian (Greenwich) und die Y-Achse wird als Orthogonale zur X-Achse ebenso durch den Erdschwerpunkt geführt (vgl. \cite{witte2011vermessungskunde} S. 13-14). 
 
 
@@ -135,9 +130,11 @@ Das "`World Geodetic System 1984 (WGS84)"' ist ein geozentrisches, vom Erdschwer
 \end{figure}
 
 
-% TODO GAUSS-KRÜGER / UTM
 
-Die Gauß-Krüger Projektion erlaubt die Darstellung des Globus auf einer Ebene. Um die Krümmung des Globus auszugleichen wird die Erde in $3^\circ$ breite Meridianstreifen eingeteilt. Als MIttelpunkte dienen Dabei die Meridiane $[ 3^\circ, 6^\circ, 9^\circ, \dots]$. Von den Mittelmeridianen aus wird eine Projetion an anliegende Zylinder vorgenommen. Auf diese Weise entstehen zu den Rändern der meridianstreifen Längen- und Flächenverzerrungen, die Darstellung ist aber Winkeltreu. Im UTM-System wird ein analoges Verfahren angewendet. Die Meridianstreifen haben hier aber eine Breite von $6^\circ$. Anstatt dem Mittelmeridian werden hier zwei Schnittkurven mit einem Abstand von 180km als Längentreues Element für die Abbilder der Y-Achse verwendet. Der Bereich zwischen diesen Schnittkurven wird gestaucht. (vgl. \cite{witte2011vermessungskunde} S. 23-25)   
+Die Gauß-Krüger Projektion erlaubt die Darstellung des Globus auf einer Ebene. Um die Krümmung des Globus auszugleichen wird die Erde in $3^\circ$ breite Meridianstreifen eingeteilt. Als MIttelpunkte dienen Dabei die Meridiane $[ 3^\circ, 6^\circ, 9^\circ, \dots]$. Von den Mittelmeridianen aus wird eine Projetion an anliegende Zylinder vorgenommen. Auf diese Weise entstehen zu den Rändern der meridianstreifen Längen- und Flächenverzerrungen, die Darstellung ist aber Winkeltreu. 
+\\
+
+Im UTM-System wird ein analoges Verfahren angewendet. Die Meridianstreifen haben hier aber eine Breite von $6^\circ$. Anstatt dem Mittelmeridian werden hier zwei Schnittkurven mit einem Abstand von 180km als Längentreues Element für die Abbilder der Y-Achse verwendet. Der Bereich zwischen diesen Schnittkurven wird gestaucht. (vgl. \cite{witte2011vermessungskunde} S. 23-25)   
 
     
 % END
