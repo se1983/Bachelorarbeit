@@ -69,7 +69,7 @@ Die Methode \texttt{get\_data\_sets()} erzeugt aus jedem Unterordner im definier
 
 %END
 
-
+\pagebreak
 % BEGIN Webapp
 \subsection{Webapplikation}
 
@@ -325,7 +325,7 @@ Der Parameter \texttt{crs} (Coordinate Reference System Objects) bestimmt die Ar
 \\
 Die Repräsentationen der Messstationen finden sich im Array \texttt{features}. Im Feld \texttt{geometry} werden Position und die Form des Features eingestellt. Über \texttt{properties} werden die zusätzlichen Daten \texttt{feature\_type}, \texttt{identifier} und \texttt{last\_seen} in diesem Format gespeichert.
 Openlayers kann ein derartig formatiertes GeoJson selbstständig zur Anzeige bringen. Wie die Datei geladen wird, ist in Listing \ref{lst:argoFloatsLayer} zu sehen.
-
+\pagebreak
 \begin{javascript}[label={lst:argoFloatsLayer}, caption={Die Funktion argoFloatsLayer}]
 var argoFloatsLayer = new ol.layer.Vector({
     style: FloatStyle,
