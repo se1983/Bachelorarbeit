@@ -16,7 +16,7 @@ Im Rahmen dieser Arbeit entstand eine Lösung zur Aggregation und Betrachtung de
 Bei der Aggregation wurde stark auf die Modularität der Anwendung geachtet. Objektorientierte Programmierung und die saubere Ausarbeitung von Schnittstellen wurde als zentrales Entwicklungsparadigma betrachtet. Auch in der Webanwendung wurde auf eine feinteilige Modularisierung geachtet. Die bei der Entwicklung mit Flask empfohlenen Entwurfsmuster wurden umgesetzt. 
 
 
-\subsubsection{Erweiterungsmöglichkeiten}
+\subsection{Erweiterungsmöglichkeiten}
 
 Der hier ausgearbeite Prozess der Datenüberführung ist stark monolytisch und statisch ausgelegt. Es werden immer alle Daten erneuert, auch wenn dieser bereits in der Datenhaltung vorhanden sind. Dies ist als verbesserungswürdig anzusehen, da hier zum einen unnötige Schreibzugriffe stattfinden und zum anderen die Überführung der Daten in die produktive Datenhaltung Ausfallzeiten hervorrufen. Durch einen ständig laufenden Microservice, der die Daten nur auf Veränderungen hin untersucht und diese Nachträgt könnte die Anwendung somit stark verbessert werden. 
 
