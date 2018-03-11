@@ -31,7 +31,7 @@ with DatasetContextManager(file_path) as ds:
 \end{python}
 
 
-Durch die Verwendung der Struktur über das Schlüsselwort \texttt{with} wird die Objektmethode \texttt{\_\_enter\_\_} aufgerufen. Diese gibt den objekteigenen netCDF-Datensatz zurück. Dieses wird in der Verwendung im gleichnamigen Objekt \texttt{ds} gespeichert. Im darauf folgenden Operationsblock kann das Objekt nun verwendet und dessen Daten extrahiert werden. Nachdem der Operationsblock verlassen wurde, wird die Methode \texttt{\_\_exit\_\_} des Kontextmanagers aufgerufen. Innerhalb dieser Methode wird die Datei nun geschlossen.  Durch dieses Entwurfsmuster ist die richtige Verwendung der Datei also transparent sichergestellt. Ein Entwickler kann somit nicht durch Unachtsamkeit vergessen, den Datensatz zu schließen. Gleichzeitig erhöht sich die Lesbarkeit. Durch den Operationsblock ist jederzeit ersichtlich, ab welcher Stelle im Quelltext der Datensatz nicht mehr verfügbar ist.
+Durch die Verwendung der Struktur über das Schlüsselwort \texttt{with} wird die Objektmethode \texttt{\_\_enter\_\_} aufgerufen. Diese gibt den objekteigenen \gls{netCDF}-Datensatz zurück. Dieses wird in der Verwendung im gleichnamigen Objekt \texttt{ds} gespeichert. Im darauf folgenden Operationsblock kann das Objekt nun verwendet und dessen Daten extrahiert werden. Nachdem der Operationsblock verlassen wurde, wird die Methode \texttt{\_\_exit\_\_} des Kontextmanagers aufgerufen. Innerhalb dieser Methode wird die Datei nun geschlossen.  Durch dieses Entwurfsmuster ist die richtige Verwendung der Datei also transparent sichergestellt. Ein Entwickler kann somit nicht durch Unachtsamkeit vergessen, den Datensatz zu schließen. Gleichzeitig erhöht sich die Lesbarkeit. Durch den Operationsblock ist jederzeit ersichtlich, ab welcher Stelle im Quelltext der Datensatz nicht mehr verfügbar ist.
 Diese Schnittstelle wird in den Objektrepräsentationen der Argo-Floats und der Datensätzen verwendet, um auf die Daten zuzugreifen. In diesen wird die in Kapitel \ref{sec:entwurfAggregation} gezeigte Datenstruktur vorgehalten.
 
 
@@ -209,7 +209,7 @@ In Abbildung \ref{fig:sequenzSQLALCHEMY} ist eine sequentielle Darstellung des P
 
 % 1. Vorstellung Flask -- warum gewählt; Vor- und Nachteile
 
-Über die globale Instanz des Controllers (\texttt{app}) kann auf Daten zugegriffen und die Konfiguration vorgenommen werden. In Listing \ref{lst:init_webapp} ist die Initialisierung des Controllers zu sehen.
+Über die globale Instanz des \gls{Controller}s (\texttt{app}) kann auf Daten zugegriffen und die Konfiguration vorgenommen werden. In Listing \ref{lst:init_webapp} ist die Initialisierung des \gls{Controller}s zu sehen.
 % 2. Trennung von API und APP in verscheidene Blueprints
 
 Über Blueprints wird die in Kapitel \ref{sec:entwurfRoutes} ausgearbeitete logische Trennung zwischen \texttt{app} und \texttt{api} realisiert. Die hier definierten Module umfassen auch die in diesem Kontext benötigten Hilfsprogramme. Die hier implementierte Modulstruktur von \texttt{argo\_api} und \texttt{argo\_app} ist im Folgenden ersichtlich.
@@ -225,7 +225,7 @@ In Abbildung \ref{fig:sequenzSQLALCHEMY} ist eine sequentielle Darstellung des P
         Durch diese Programmabschnitte werden die Daten in Listen und Dictionaries überführt. Die Variablen und Datenstrukturen werden dabei so angelegt, dass diese direkt als JSON bzw geoJSON ausgeliefert werden können.
     \end{description}
 
-    Dieses Controller-Blueprint fordert die Daten über die \texttt{query\_factory} an und bringt sie über den \texttt{json\_builder} in das vorgesehene Format.  Die Umwandlung in JSON und die Erstellung des Requests erfolgt über \texttt{flask.jsonify}.
+    Dieses \gls{Controller}-Blueprint fordert die Daten über die \texttt{query\_factory} an und bringt sie über den \texttt{json\_builder} in das vorgesehene Format.  Die Umwandlung in JSON und die Erstellung des Requests erfolgt über \texttt{flask.jsonify}.
 \pagebreak
  \item [argo\_app] $ $
 
@@ -236,7 +236,7 @@ In Abbildung \ref{fig:sequenzSQLALCHEMY} ist eine sequentielle Darstellung des P
     In diesem Blueprint werden Templates zu HTML-Dateien zusammengesetzt. Dafür benötigt dieser Programmteil Zugriff auf die Verzeichnisse für die jeweiligen Templates und statischen Dateien. Diese Daten werden über \texttt{flask.render\_template} zusammengesetzt und ausgeliefert.
 \end{description}
 
-Die so erstellten Blueprints werden im zentralen Controller (\texttt{app}) über das Schlüsselwort \texttt{app.register\_blueprint} registriert und zusammengefasst.
+Die so erstellten Blueprints werden im zentralen \gls{Controller} (\texttt{app}) über das Schlüsselwort \texttt{app.register\_blueprint} registriert und zusammengefasst.
 Als zentrale Steuerungseinheit für den gesamten Programmablauf dient die Datei \texttt{manage.py}. Die Parameter dieser Datei werden im Folgenden kurz beschrieben:
 
 \begin{description}
@@ -244,7 +244,7 @@ Als zentrale Steuerungseinheit für den gesamten Programmablauf dient die Datei 
  \item [runserver] Durch diesen Parameter wird der Server der Applikation gestartet.
 
 
- \item [rebuild\_db] Dies stößt den Prozess der Datenaggregation an.  Streng genommen ist dies nicht Teil des Controllers. Aus Gründen der Einfachheit wurde dieser Programmablauf aber in die Steuerungseinheit integriert.
+ \item [rebuild\_db] Dies stößt den Prozess der Datenaggregation an.  Streng genommen ist dies nicht Teil des \gls{Controller}s. Aus Gründen der Einfachheit wurde dieser Programmablauf aber in die Steuerungseinheit integriert.
 
  \item [shell] Durch diesen Parameter wird eine IPython-Shell gestartet. In diesem repl ist die Webapplikation mit all ihren Umgebungsvariablen initiiert. Diese Shell dient für das Debugging der Applikation.
 
@@ -268,7 +268,7 @@ Die Datei \texttt{\_base.html} ist für die Darstellung der Webseite verantwortl
 
 \subsubsection{Kartendarstellung}
 
- OpenLayers ist eine Programmbibliothek um interaktive Geoapplikationen zu entwickeln. Das Framework ist in Javascript entwickelt und nimmt alle benötigten Berechnungen auf Clientseite vor. Die Bibliothek erlaubt es, Kartenmaterial aus verschiedensten Quellen zu rendern. Dabei können Kachel- oder auch Vektorbasierte Materialien eingebunden werden.
+ OpenLayers ist eine Programmbibliothek um interaktive Geoapplikationen zu entwickeln. Das \gls{Framework} ist in Javascript entwickelt und nimmt alle benötigten Berechnungen auf Clientseite vor. Die Bibliothek erlaubt es, Kartenmaterial aus verschiedensten Quellen zu rendern. Dabei können Kachel- oder auch Vektorbasierte Materialien eingebunden werden.
 Die Elemente der Karte setzen sich, wie in Listing \ref{lst:olMap} zu sehen, zusammen.
 
 \begin{javascript}[label={lst:olMap}, caption={Das ol.Map Element aus der Kartendarstellung}]
@@ -395,7 +395,7 @@ Auch an dieser Stelle wird die \texttt{map.on}-Funktion der Karte verwendet, um 
 Für die Darstellung der Messwerte wurde sich in dieser Applikation für die Python-Bibliothek \texttt{matplotlib} entschieden.  Diese Plotting-Engine ist in der Entwicklung von wissenschaftlichen Applikationen in Python sehr verbreitet.
 Als Renderer wurde ein AGG-Renderer eingesetzt. Dieser erlaubt das Vorhalten der Bilddaten im Arbeitsspeicher, sowie deren Überführung in ein Canvas-Element.
 
-In Listing \ref{lst:deliver_chart} ist die Funktion des Controllers zu sehen, über die das Bild bereit gestellt wird.
+In Listing \ref{lst:deliver_chart} ist die Funktion des \gls{Controller}s zu sehen, über die das Bild bereit gestellt wird.
 
 \begin{python}[label={lst:deliver_chart}, caption={Ausliefern eines Funktionsplots Flask}]
 @argo_app.route("/chart/<identifier>")

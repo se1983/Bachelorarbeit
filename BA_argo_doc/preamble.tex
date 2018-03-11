@@ -3,15 +3,15 @@
 
 
 \geometry{a4paper,
-        tmargin=3cm, 
-        bmargin=3cm, 
-        lmargin=3.6cm, 
-        rmargin=2.2cm, 
-        headheight=3em, 
-        headsep=2em, 
+        tmargin=3cm,
+        bmargin=3cm,
+        lmargin=3.6cm,
+        rmargin=2.2cm,
+        headheight=3em,
+        headsep=2em,
         footskip=1cm}
-        
-        
+
+
 \usepackage[onehalfspacing]{setspace}
 \usepackage{epigraph}
 
@@ -44,6 +44,8 @@ citecolor = black,
 breaklinks=true] {hyperref}
 
 
+
+
 \usepackage[automark,headsepline]{scrlayer-scrpage}
 
 \clearpairofpagestyles
@@ -55,7 +57,7 @@ breaklinks=true] {hyperref}
 \definecolor{codeblack}{RGB}{83,83,83}
 \definecolor{xdeepblack}{RGB}{64,64,64}
 
-\renewcommand*{\headfont}{\color{xdeepblack}\bfseries} 
+\renewcommand*{\headfont}{\color{xdeepblack}\bfseries}
 \renewcommand*{\pnumfont}{\normalfont\bfseries}
 \addtokomafont{paragraph}{\normalfont\color{xdeepblack}\bfseries}
 
@@ -119,19 +121,19 @@ breaklinks=true] {hyperref}
 \newcommand\pythonstyle{\lstset{
     language=Python,
     backgroundcolor = \color{codewhite},
-    keepspaces=true, 
+    keepspaces=true,
     commentstyle=\color{codegray},
     stringstyle=\color{codedarkgey},
     rulesepcolor=\color{gray},
     rulecolor=\color{lightgray},
-    otherkeywords={self, yield},             
+    otherkeywords={self, yield},
     postbreak=\mbox{\textcolor{lightgray}{$\hookrightarrow$}\space},
     keywordstyle=\ttb\color{codeblack},
-    emphstyle=\ttb\color{codedarkgey},   
+    emphstyle=\ttb\color{codedarkgey},
     numberstyle=\small\color{lightgray},
-    emph={ArgoFloat,__init__,__iter__, __next__,__enter__,__exit__, __repr__, Measurement, Location, Profile, Record, ExtractorFactory, DataBaseWriter, DatasetContextManager, ArgoFloatProfile, Float },          
-    frame=single,                        
-    showstringspaces=false,            
+    emph={ArgoFloat,__init__,__iter__, __next__,__enter__,__exit__, __repr__, Measurement, Location, Profile, Record, ExtractorFactory, DataBaseWriter, DatasetContextManager, ArgoFloatProfile, Float },
+    frame=single,
+    showstringspaces=false,
     breaklines=true,
     lineskip={-1.5pt},
     numbers=left,
@@ -179,17 +181,17 @@ breaklinks=true] {hyperref}
 \newcommand\jsstyle{\lstset{
     language=JavaScript,
     backgroundcolor = \color{codewhite},
-    keepspaces=true, 
+    keepspaces=true,
     commentstyle=\color{codegray},
     stringstyle=\color{codedarkgey},
     rulesepcolor=\color{gray},
     rulecolor=\color{lightgray},
-    otherkeywords={self, yield},             
+    otherkeywords={self, yield},
     postbreak=\mbox{\textcolor{lightgray}{$\hookrightarrow$}\space},
     keywordstyle=\ttb\color{codeblack},
-    emphstyle=\ttb\color{codedarkgey},   
+    emphstyle=\ttb\color{codedarkgey},
     numberstyle=\small\color{lightgray},
-    keepspaces=true, 
+    keepspaces=true,
     %commentstyle=\color{codebrown},
     %keywordstyle=\color{magenta},
     %stringstyle=\color{codepurple},
@@ -198,7 +200,7 @@ breaklinks=true] {hyperref}
     emph={ArgoFloat,__init__,__iter__, __next__,__enter__,__exit__, __repr__, Measurement, Location, Profile, Record, ExtractorFactory, DataBaseWriter, DatasetContextManager, ArgoFloatProfile, Float },          % Custom highlighting
     %emphstyle=\ttb\color{deepred},    % Custom highlighting style
     frame=single,                         % Any extra options here
-    showstringspaces=false,            % 
+    showstringspaces=false,            %
     breaklines=true,
     lineskip={-1.5pt},
     numbers=left,
@@ -231,6 +233,59 @@ breaklinks=true] {hyperref}
 \setkomafont{captionlabel}{\usekomafont{caption}}
 
 
+\usepackage{booktabs}
 
 
 
+\usepackage{glossaries}
+\makenoidxglossaries
+
+\newacronym{JCOMM}{JCOMM}{"`Joint Technical Commission for Oceanography and Marine Meteorology"'}
+
+\newacronym{GDAC}{GDAC}{"`Data Selection and Visualization Tool"'}
+
+\newacronym{GOOS}{GOOS}{Global Ocean Observing
+System}
+
+\newacronym{DOI}{DOI}{digital object identifier}
+
+\newacronym{CDF}{CDF}{Common Data Format}
+\newacronym{netCDF}{netCDF}{Network Common Data Format}
+
+
+
+\newglossaryentry{Controller}{%
+    name={Controller},
+    description={Element zur Programmsteuerung der Webanwendung}
+}
+
+\newglossaryentry{HTTP}{%
+    name={HTTP},
+    description={Hypertext Transfer Protocol. Weit verbreitetes Protokoll um beispielsweise das WWW in den Webbrowser zu laden}
+}
+
+\newglossaryentry{FTP}{%
+    name={FTP},
+    description={File Transfer Protocol. Protokoll zur Übermittlung von Daten}
+}
+
+\newglossaryentry{TESAC}{%
+  name={TESAC},
+  description={Wissenschaftliches Datenformat zur Übertragung von Sensordaten}
+}
+
+\newglossaryentry{BUFR}{%
+  name={BUFR},
+  description={Binäres Datenformat zur Übetragung meterologischer Daten}
+}
+
+
+\newglossaryentry{Framework}{%
+    name={Framework},
+    description={Erweiterbare Softwarebibliothek zur Erstellung von Systemen. Funktioniert nach dem Hollywood-Prinzip (don't call us, we call you)}
+}
+
+\newglossaryentry{Julian Day}{%
+    name={Julianischen Datum},
+    description={(julian day) In der Wissenschaft gebräuchliches Datumsformat über eine Tageszählung (meist 1. Januar 4713 v. Chr.)}
+}

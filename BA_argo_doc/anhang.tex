@@ -1,1 +1,69 @@
 \section{Anhang}
+
+
+
+\printnoidxglossaries
+\printglossary[type=\acronymtype]
+
+\subsection{Resultate}
+
+\subsubsection{Daten aus der SUS Umfrage}
+
+\input{surveydatatable.tex}
+
+
+\begin{python}
+ import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+
+
+plt.style.use('fivethirtyeight')
+
+def subplot(data):
+    bins=[1,2,3,4,5]
+    x = [data.value_counts()[x] if x in data.value_counts() else 0 for x in bins]
+
+    f, (ax_box, ax_hist) = plt.subplots(2, sharex=True, gridspec_kw={"height_ratios": (.1, .86)})
+    f.set_figwidth(20)
+    f.set_figheight(2.3)
+
+    whisker = sns.boxplot(data.values,
+                          ax=ax_box,showmeans=True,
+                          meanline=True, color="white",
+                          meanprops=dict(color='darkgrey', linestyle='-', linewidth=2.5,))
+    ax_hist.bar(bins, x, color="darkgrey")
+    ax_box.set(yticks=[])
+
+    sns.despine(ax=ax_hist)
+    sns.despine(ax=ax_box, left=False)
+
+    f.suptitle(data.name, fontsize=16)
+
+    left, width = -.07, 1.05
+    bottom, height = -0.09, .3
+    right = left + width
+    top = bottom + height
+
+    p = patches.Rectangle(
+    (left, bottom), width, height,
+    fill=False, transform=ax_hist.transAxes, clip_on=False
+    )
+
+    ax_hist.text(right, height, 'sehr',
+        horizontalalignment='center',
+        verticalalignment='top',
+        transform=ax.transAxes,
+        fontsize=18)
+
+    ax_hist.text(left, height, 'gar nicht',
+        horizontalalignment='center',
+        verticalalignment='top',
+        transform=ax.transAxes,
+        fontsize=18)
+
+
+for col in df:
+    subplot(df[col])
+\end{python}

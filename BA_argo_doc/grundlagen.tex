@@ -10,7 +10,7 @@
 
     % TODO Welche Organisationen sind beteiligt?
 
-    Zum Ende des vergangenen Jahrtausends verdichteten sich die Hinweise auf einen globalen und durch Menschen verursachten Klimawandel. Um dessen Auswirkungen auf die Weltmeere studieren zu können, wurde unter dem Dach des Global Ocean Observing System das Argo-Programm gegründet. Dieses untersucht, unterstützt durch das Satellitensystem Iason, die Wassersäule der oberen 2000m auf deren chemischen Eigenschaften. Dabei werden in ständigen Intervallen Salzgehalt, Druck, Temperatur und Leitfähigkeit gemessen. Die ermittelten Daten werden veröffentlicht, das diese durch Wissenschaftler ausgewertet werden können.
+    Zum Ende des vergangenen Jahrtausends verdichteten sich die Hinweise auf einen globalen und durch Menschen verursachten Klimawandel. Um dessen Auswirkungen auf die Weltmeere studieren zu können, wurde unter dem Dach des \gls{GOOS} das Argo-Programm gegründet. Dieses untersucht, unterstützt durch das Satellitensystem Iason, die Wassersäule der oberen 2000m auf deren chemischen Eigenschaften. Dabei werden in ständigen Intervallen Salzgehalt, Druck, Temperatur und Leitfähigkeit gemessen. Die ermittelten Daten werden veröffentlicht, das diese durch Wissenschaftler ausgewertet werden können.
 
     % TODO Verweis auf die Sage der Argonauten
 
@@ -40,24 +40,24 @@
         \label{fig:argo_dataflow}
     \end{figure}
 
-    Im Anschluss an die Erhebung werden die Daten auf deren Plausibilität und Qualität überprüft (vgl. \cite{ArgoDataBeginnersGuide} S. 3). Nach diesem Prozess werden die aufbereiteten Daten über die Globalen Data Assembly Center in monatlichen Releasezyklen veröffentlicht. (vgl. \cite{Argofloa92:online}). Der Werdegang der Daten ist in Abbildung \ref{fig:argo_dataflow} zu sehen.
+    Im Anschluss an die Erhebung werden die Daten auf deren Plausibilität und Qualität überprüft (vgl. \cite{ArgoDataBeginnersGuide} S. 3). Nach diesem Prozess werden die aufbereiteten Daten über die \gls{GDAC} in monatlichen Releasezyklen veröffentlicht. (vgl. \cite{Argofloa92:online}). Der Werdegang der Daten ist in Abbildung \ref{fig:argo_dataflow} zu sehen.
 
 % BEGIN -- Daten
 \subsection{Datengrundlage}
 
 
     Alle am Argo-Programm teilnehmenden Organisationen verpflichten sich auf eine gemeinsame Datenpolitik. So gibt es keine Herrschaft über die erhobenen Daten. Vielmehr stehen diese ab dem Zeitpunkt der Veröffentlichung transparent der Öffentlichkeit zur Verfügung.
-    Nach der Übermittlung werden die Messdaten einer Qualitätskontrolle unterzogen. Sie werden auf Plausibilität und Abweichungen überprüft. Nach dieser Qualitätskontrolle werden die Daten nun über die Global Data Assembly Centers (GDAC) in Frankreich und den USA released. Diese können über HTTP und FTP abgerufen werden.
+    Nach der Übermittlung werden die Messdaten einer Qualitätskontrolle unterzogen. Sie werden auf Plausibilität und Abweichungen überprüft. Nach dieser Qualitätskontrolle werden die Daten nun über die \gls{GDAC} in Frankreich und den USA released. Diese können über \gls{HTTP} und \gls{FTP} abgerufen werden.
 
-    Ein mal im Monat werden die Daten als Snapshots, unter DOIs (digital object identifier) zusammengefasst.
-    Während und vor der Qualitätskontrolle liegen die Daten in den Formaten TESAC und BUFR vor.
-    Die von den DGAC veröffentlichten Daten liegen im Format netCDF vor. Diese sind unter der Lizenz Attribution 4.0 International (CC BY 4.0) veröffentlicht und dürfen unter der Nennung der Lizenz frei verwendet und dabei auch verändert werden. (vgl. \cite{ArgoDataDocumentation})
+    Ein mal im Monat werden die Daten als Snapshots, unter \gls{DOI} zusammengefasst.
+    Während und vor der Qualitätskontrolle liegen die Daten in den Formaten \gls{TESAC} und \gls{BUFR} vor.
+    Die von den \gls{GDAC} veröffentlichten Daten liegen im Format \gls{netCDF} vor. Diese sind unter der Lizenz Attribution 4.0 International (CC BY 4.0) veröffentlicht und dürfen unter der Nennung der Lizenz frei verwendet und dabei auch verändert werden. (vgl. \cite{ArgoDataDocumentation})
 
 % END
 
 % BEGIN -- Datenstruktur
 
-In Listing \ref{lst:dataOrdnerstruktur} ist die Ordnerstruktur der netCDF Dateien zu erkennen. Über den Ordnernamen aoml ist die Herkunft des DOI zu erkennen. In diesem Fall wurden die Dateien von einem Server der  "`Atlantic Oceanografic \& Meterolocical Laboratory"' erstellt. Hier befindet sich für jede Messboje ein Unterordner.  Die Dateien meta, prof, Rtraj und tech sind eine Quelle für Metainformationen. Die Messprofile einer Boje finden sich im Ordner \texttt{profiles}. Hier wird für jeden Messzyklus eine Datei angelegt. Dieser startet bei 1 und inkrementiert über jeden Messzyklus um 1.
+In Listing \ref{lst:dataOrdnerstruktur} ist die Ordnerstruktur der \gls{netCDF} Dateien zu erkennen. Über den Ordnernamen aoml ist die Herkunft des \gls{DOI} zu erkennen. In diesem Fall wurden die Dateien von einem Server der  "`Atlantic Oceanografic \& Meterolocical Laboratory"' erstellt. Hier befindet sich für jede Messboje ein Unterordner.  Die Dateien meta, prof, Rtraj und tech sind eine Quelle für Metainformationen. Die Messprofile einer Boje finden sich im Ordner \texttt{profiles}. Hier wird für jeden Messzyklus eine Datei angelegt. Dieser startet bei 1 und inkrementiert über jeden Messzyklus um 1.
 
     \begin{python}[label={lst:dataOrdnerstruktur}, caption={Die Verzeichnisstruktur der vom aoml bereitgestellten Daten}]
 ./aoml/1900200/
@@ -141,21 +141,21 @@ Im UTM-System wird ein analoges Verfahren angewendet. Die Meridianstreifen haben
 \pagebreak
     \subsection{Network Common Data Format}
 
-    Das Network Common Data Format (netCDF) dient zum Austausch von wissenschaftlichen Daten. Es ist eine Weiterentwicklung des von der NASA entwickelten Common Data Formats (CDF). Das Datenformat zeichnet sich dadurch aus, dass es selbstbeschreibend ist. Die Dokumentation ist Teil des Datensatzes und wird so immer  mitgeführt. Dies soll die Portabilität des Datensatzes verbessern.  (vgl. \cite{FisherNetCDF})
+    Das \gls{netCDF} dient zum Austausch von wissenschaftlichen Daten. Es ist eine Weiterentwicklung des von der NASA entwickelten \gls{CDF}. Das Datenformat zeichnet sich dadurch aus, dass es selbstbeschreibend ist. Die Dokumentation ist Teil des Datensatzes und wird so immer  mitgeführt. Dies soll die Portabilität des Datensatzes verbessern.  (vgl. \cite{FishernetCDF})
 
-    Neben einigen anderen Sprachen, wurde auch eine Bibliothek für Python entwickelt (vgl.\cite{netCDF4}) Mit dieser ist es möglich, die Binärdaten zu öffnen und zu numpy-Arrays zu extrahieren. In Listing \ref{lst:example_netcdf} ist die Verwendung exemplarisch an der Extraktion und der Umrechnung des Erstelldatums  aufgezeigt und im Folgenden beschrieben.
+    Neben einigen anderen Sprachen, wurde auch eine Bibliothek für Python entwickelt (vgl.\cite{netCDF4}) Mit dieser ist es möglich, die Binärdaten zu öffnen und zu numpy-Arrays zu extrahieren. In Listing \ref{lst:example_netCDF} ist die Verwendung exemplarisch an der Extraktion und der Umrechnung des Erstelldatums  aufgezeigt und im Folgenden beschrieben.
 
     \pythonexternal[%
         % ---------------------------------------------
-        %   PYTHON netCDF als Beispiel JULD
-        caption = {Extraktion eines NetCDF-Datensatzes zur Berechnung des Erstellungsdatums},%
-        label = {lst:example_netcdf}]%
+        %   PYTHON \gls{netCDF} als Beispiel JULD
+        caption = {Extraktion eines netCDF-Datensatzes zur Berechnung des Erstellungsdatums},%
+        label = {lst:example_netCDF}]%
         {scr/beispiele/netCDF_juld.py}
 
     Um einen Datensatz zu öffnen, bildet man eine Instanz der Klasse \texttt{netCDF4.Dataset}. Die Auswahl des Profils gelingt durch die Pfadangabe als Parameter bei der Instanzierung.
     Über das Attribut \texttt{dataset.variables} werden die Datensätze als \texttt{OrderedDict} gehalten. Bei der Extraktion eines Parameters erhält man zunächst die Dokumentation des jeweiligen Datensatzes. In diesem Fall handelt es sich um den Zeitpunkt der Sattelitenübertragung des betreffenden Messprofils.
     Aus der Dokumentation lassen sich für die Weiterverarbeitung wichtige Parameter entnehmen.
-    So ist der Datensatz in Form des C-Datentyps \texttt{float64} codiert. Beim Datumsformat handelt es sich um \textit{Julian day} ab dem Zeitpunkt \textit{01. Januar 1950}.
+    So ist der Datensatz in Form des C-Datentyps \texttt{float64} codiert. Das Datumsformat entspricht dem \gls{Julian Day} ab dem Zeitpunkt \textit{01. Januar 1950}.
 
     Um die Werte eines Datensatzes zu extrahieren, wird über die numpy-slicing Operation \texttt{arr[::]} der Datensatz in vektorieller Form extrahiert. Da in diesem Array nur ein skalarer \texttt{float64} Wert enthalten ist, kann dieser als nulltes Element vom Array entnommen werden.
     Zur Überführung in das Format des Gregorianischen Kalenders wird ein Datumsobjekt des Referenzdatums benötigt. Durch die Verwendung von \texttt{timedelta} werden die Tage aus dem Feld \texttt{JULD} addiert. Da ein Messzyklus 10 Tage andauert, kann an dieser Stelle der Datensatz, durch das Überführen zu einem Integer, vereinfacht werden. Die Casting-Operation \texttt{int()} rundet in jedem Fall ab.

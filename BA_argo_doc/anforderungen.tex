@@ -143,9 +143,9 @@ Die verwendeten Messwerte PRES, TEMP und PSAL eines Messprofils liegen in vektor
 Die Darstellung der Webapplikation wird mit HTML und Javascript umgesetzt. Diese Sprachen gelten in der Entwicklung von Webseiten als Standard und werden von den gängigen Browsern unterstützt.
 Für die weiteren Teile der Applikation ist eine Programmiersprache zu finden, die alle benötigten Teilbereiche möglichst gut abbilden kann.
 
-Das Öffnen der netCDF Dateien und die numerische Berechnung kann mit C, Java/Scala, R und Python erfolgen. Insbesondere die zuletzt genannten sind in der Datenverarbeitung und Numerik als etablierte Werkzeuge zu sehen.
+Das Öffnen der \gls{netCDF} Dateien und die numerische Berechnung kann mit C, Java/Scala, R und Python erfolgen. Insbesondere die zuletzt genannten sind in der Datenverarbeitung und Numerik als etablierte Werkzeuge zu sehen.
 
-Die Darstellung der Seite soll durch ein Webframework unterstützt werden. Hier gibt es in beinahe allen Hochsprachen entsprechende Werkzeuge. Wählt man aus der Problemstellung der numerischen Verarbeitung R und Python heraus, so ist die Auswahl der geläufigen Webframeworks bei Python höher anzusehen. Diese Sprache besitzt eine große Anzahl von Bibliotheken für die Anbindung von Datenbanken, sowie einige etablierte Bibliotheken für die Schaffung von Webapplikationen.
+Die Darstellung der Seite soll durch ein Web-\gls{Framework} unterstützt werden. Hier gibt es in beinahe allen Hochsprachen entsprechende Werkzeuge. Wählt man aus der Problemstellung der numerischen Verarbeitung R und Python heraus, so ist die Auswahl der geläufigen Web-Frameworks bei Python höher anzusehen. Diese Sprache besitzt eine große Anzahl von Bibliotheken für die Anbindung von Datenbanken, sowie einige etablierte Bibliotheken für die Schaffung von Webapplikationen.
 
 Python besitzt in Hinsicht auf Laufzeitkosten und einer nicht strikten Typisierung einige Nachteile gegenüber Sprachen wie C und Java. In Hinsicht die auf die breite Auswahl der  Programmbibliotheken, sowie der numerischen Berechnung besitzt Python aber vorteile und wird deswegen hier eingesetzt.
 
@@ -156,20 +156,20 @@ Python besitzt in Hinsicht auf Laufzeitkosten und einer nicht strikten Typisieru
 
 Für die Laufzeitumgebung der Applikation wird ein GNU/Linux eingesetzt. Die Software wird so entwickelt, dass sie unter den gängigen Distributionen lauffähig sein wird. Für den Betrieb dieser Applikation wird sich hier für die Distribution Debian-Stable entschieden. Debian ist sehr verbreitet und stark auf Stabilität ausgelegt, sie zeichnet sich insbesondere gegenüber weiteren Distribution mit einer ähnlichen Verbreitung wie RHEL und Ubuntu durch ihre nicht kommerzielle Ausrichtung aus.  Als Nachteil ist der fehlende kommerzielle Support zu sehen. Diese Arbeit deckt aber keine Bereiche ab, welche einen kostenpflichtigen Support rechtfertigen würden.
 
-\subsubsection{Webframework}
+\subsubsection{Web-Framework}
 
 Für Python gibt es eine große Anzahl an Werkzeugen für die Entwicklung von Webseiten. Hier werden exemplarisch 3 herausgegriffen und für die hier vorliegende Aufgabe bewertet.
 
 \begin{description}
- \item [Django] wird beworben als "`The web framework for perfectionists with dead\-lines"'. Es wurde 2005 unter einer BSD Lizenz released und entwickelt, um die News-Seite des \textit{Lawrence Journal-World} umzusetzen und zu verwalten. Django ist ein etabliertes und häufig verwendetes Webframework. Es ist dynamisch einsetzbar und für eine große Anzahl von Anwendungen verwendbar. Die Bibliothek ist außerdem durch Module erweiterbar. Die Software folgt dem "`\textit{batteries included}"' Ansatz und liefert in der Grundausstattung bereits alles nötige mit, um eine Webseite inklusive Login und Eingabemasken für journalistische Tätigkeiten auszubauen.
+ \item [Django] wird beworben als "`The web \gls{Framework}  for perfectionists with dead\-lines"'. Es wurde 2005 unter einer BSD Lizenz released und entwickelt, um die News-Seite des \textit{Lawrence Journal-World} umzusetzen und zu verwalten. Django ist ein etabliertes und häufig verwendetes Web-Framework. Es ist dynamisch einsetzbar und für eine große Anzahl von Anwendungen verwendbar. Die Bibliothek ist außerdem durch Module erweiterbar. Die Software folgt dem "`\textit{batteries included}"' Ansatz und liefert in der Grundausstattung bereits alles nötige mit, um eine Webseite inklusive Login und Eingabemasken für journalistische Tätigkeiten auszubauen.
 
- \item [Flask] ist ein sogenanntes Micro-Framework. Es verwendet die Toolsammlung \textit{Werkzeug} um Webseiten über WSGI darstellbar zu machen. Das Framework folgt dem KISS Ansatz und liefert im Grundumfang nur diejenigen Werkzeuge, die man für die Verwaltung von einfachen Webseiten benötigt. Die Software lässt sich über Module erweitern. Einzelne Teilprojekte von Applikationen lassen sich in sogenannte Blueprints modularisieren.
+ \item [Flask] ist ein sogenanntes Micro-Framework. Es verwendet die Toolsammlung \textit{Werkzeug} um Webseiten über WSGI darstellbar zu machen. Das \gls{Framework} folgt dem KISS Ansatz und liefert im Grundumfang nur diejenigen Werkzeuge, die man für die Verwaltung von einfachen Webseiten benötigt. Die Software lässt sich über Module erweitern. Einzelne Teilprojekte von Applikationen lassen sich in sogenannte Blueprints modularisieren.
 
- \item [Falcon] ist ebenso als Micro-Framework zu sehen. Es wurde insbesondere in Hinblick auf Geschwindigkeit entwickelt. Das Framework erlaubt Requests asynchron zu verarbeiten und lässt die auf Geschwindigkeit spezialisierte Python-Laufzeitumgebung pypy zu. Falcon ist ein relativ neues Framework und erfährt in letzter Zeit zur Schaffung von REST-APIs immer mehr Aufmerksamkeit. Es ist aber auch möglich, mit diesem Framework Webapplikationen mit einer Anzeige über HTML-Elementen zu gestalten.
+ \item [Falcon] ist ebenso als Micro-\gls{Framework} zu sehen. Es wurde insbesondere in Hinblick auf Geschwindigkeit entwickelt. Das \gls{Framework} erlaubt Requests asynchron zu verarbeiten und lässt die auf Geschwindigkeit spezialisierte Python-Laufzeitumgebung pypy zu. Falcon ist ein relativ neues \gls{Framework} und erfährt in letzter Zeit zur Schaffung von REST-APIs immer mehr Aufmerksamkeit. Es ist aber auch möglich, mit diesem \gls{Framework} Webapplikationen mit einer Anzeige über HTML-Elementen zu gestalten.
 \end{description}
 
 In dieser Applikation wird die Schaffung von journalistischen und redaktionellen Inhalten eine sehr geringe Rolle spielen. Unter diesem Gesichtspunkt ist die Frage der Komplexität der verwendeten Software zu klären. Unter diesem Aspekt erscheint Django nicht als die ideale Wahl.
-Flask und Falcon verfolgen beide den Ansatz eines Microframeworks. Die Laufzeitgeschwindigkeit des Controllers erscheint an dieser Stelle nicht als limitierender Faktor der Applikation. Zwar wäre es wünschenswert, die Datenbeschaffung der Webapplikation bereits im Backend asynchron zu erledigen, doch überwiegt das breitere Spektrum an Modulen und Dokumentationen für die Webentwicklung von Flask.
+Flask und Falcon verfolgen beide den Ansatz eines Microframeworks. Die Laufzeitgeschwindigkeit des \gls{Controller}s erscheint an dieser Stelle nicht als limitierender Faktor der Applikation. Zwar wäre es wünschenswert, die Datenbeschaffung der Webapplikation bereits im Backend asynchron zu erledigen, doch überwiegt das breitere Spektrum an Modulen und Dokumentationen für die Webentwicklung von Flask.
 Damit erscheint Flask als das geeignetste Werkzeug für diese Aufgabe.
 
 
