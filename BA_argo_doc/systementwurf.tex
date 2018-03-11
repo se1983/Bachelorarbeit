@@ -39,7 +39,7 @@ Die Datenaggregation erfüllt zwei Funktionen. Zum einen muss sichergestellt sei
 
 Auch in diesem Modell ist die Ereigniskette aus (\ref{eq:datenstruktur}) abzubilden. Jede Messstation wird über ein Objekt abgebildet. Die hier gespeicherten Daten sind für eine Messstation eindeutig. Jeder Messzyklus der Boje wird über ein weiteres, zur Messstation gehöriges Objekt abgebildet. Dieses ist innerhalb des Kontextes eindeutig und trägt die Informationen zur jeweiligen Messung.
 
-Für die Persistierung  werden objektorientierte Strukturen für den ORM verwendet. Diese Strukturen teilt sich das Modul mit der Webapplikation. Die Behandlung der Daten sowie eine Steuerung des Prozesses sind als weitere Schnittstellen zu definieren.
+Für die Persistierung  werden objektorientierte Strukturen für den \gls{ORM} verwendet. Diese Strukturen teilt sich das Modul mit der Webapplikation. Die Behandlung der Daten sowie eine Steuerung des Prozesses sind als weitere Schnittstellen zu definieren.
 
 Die Aggregation der Daten wird über zwei Teilbereiche abgebildet. Zum einen müssen die benötigten Parameter aus den Dateien ausgelesen und modelliert werden.
 Als zweite Ebene der Aggregation ist der Prozess des Schreibens in eine Datenbank zu sehen. Diese verwendet die zuvor ermittelten modellierten Messprofile und schreibt sie Anhand der dort enthaltenen Daten in eine Datenbank.
@@ -119,7 +119,7 @@ Die \textbf{app} liefert die Teile aus, die vom Benutzer gesehen werden. Es hand
  Diese Route stellt den Plot der darzustellenden Messwerte als Bild zur Verfügung.
 
  \item [(2.3)]
- Über diese Route wird ein HTML für die Infoanzeige einer Messstation bereitgestellt.
+ Über diese Route wird ein \gls{HTML} für die Infoanzeige einer Messstation bereitgestellt.
 
 \end{description}
 

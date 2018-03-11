@@ -140,7 +140,7 @@ Die verwendeten Messwerte PRES, TEMP und PSAL eines Messprofils liegen in vektor
 
 \subsubsection{Verwendete Programmiersprachen}
 
-Die Darstellung der Webapplikation wird mit HTML und Javascript umgesetzt. Diese Sprachen gelten in der Entwicklung von Webseiten als Standard und werden von den gängigen Browsern unterstützt.
+Die Darstellung der Webapplikation wird mit \gls{HTML} und Javascript umgesetzt. Diese Sprachen gelten in der Entwicklung von Webseiten als Standard und werden von den gängigen Browsern unterstützt.
 Für die weiteren Teile der Applikation ist eine Programmiersprache zu finden, die alle benötigten Teilbereiche möglichst gut abbilden kann.
 
 Das Öffnen der \gls{netCDF} Dateien und die numerische Berechnung kann mit C, Java/Scala, R und Python erfolgen. Insbesondere die zuletzt genannten sind in der Datenverarbeitung und Numerik als etablierte Werkzeuge zu sehen.
@@ -163,7 +163,7 @@ Für Python gibt es eine große Anzahl an Werkzeugen für die Entwicklung von We
 \begin{description}
  \item [Django] wird beworben als "`The web \gls{Framework}  for perfectionists with dead\-lines"'. Es wurde 2005 unter einer BSD Lizenz released und entwickelt, um die News-Seite des \textit{Lawrence Journal-World} umzusetzen und zu verwalten. Django ist ein etabliertes und häufig verwendetes Web-Framework. Es ist dynamisch einsetzbar und für eine große Anzahl von Anwendungen verwendbar. Die Bibliothek ist außerdem durch Module erweiterbar. Die Software folgt dem "`\textit{batteries included}"' Ansatz und liefert in der Grundausstattung bereits alles nötige mit, um eine Webseite inklusive Login und Eingabemasken für journalistische Tätigkeiten auszubauen.
 
- \item [Flask] ist ein sogenanntes Micro-Framework. Es verwendet die Toolsammlung \textit{Werkzeug} um Webseiten über WSGI darstellbar zu machen. Das \gls{Framework} folgt dem KISS Ansatz und liefert im Grundumfang nur diejenigen Werkzeuge, die man für die Verwaltung von einfachen Webseiten benötigt. Die Software lässt sich über Module erweitern. Einzelne Teilprojekte von Applikationen lassen sich in sogenannte Blueprints modularisieren.
+ \item [Flask] ist ein sogenanntes Micro-\gls{Framework}. Es verwendet die Toolsammlung \textit{Werkzeug} um Webseiten über WSGI darstellbar zu machen. Das \gls{Framework} folgt dem KISS Ansatz und liefert im Grundumfang nur diejenigen Werkzeuge, die man für die Verwaltung von einfachen Webseiten benötigt. Die Software lässt sich über Module erweitern. Einzelne Teilprojekte von Applikationen lassen sich in sogenannte Blueprints modularisieren.
 
  \item [Falcon] ist ebenso als Micro-\gls{Framework} zu sehen. Es wurde insbesondere in Hinblick auf Geschwindigkeit entwickelt. Das \gls{Framework} erlaubt Requests asynchron zu verarbeiten und lässt die auf Geschwindigkeit spezialisierte Python-Laufzeitumgebung pypy zu. Falcon ist ein relativ neues \gls{Framework} und erfährt in letzter Zeit zur Schaffung von REST-APIs immer mehr Aufmerksamkeit. Es ist aber auch möglich, mit diesem \gls{Framework} Webapplikationen mit einer Anzeige über HTML-Elementen zu gestalten.
 \end{description}
@@ -175,7 +175,7 @@ Damit erscheint Flask als das geeignetste Werkzeug für diese Aufgabe.
 
 \subsubsection{Datenbank}
 
-Das DBMS soll über Schnittstellen in den Sourcecode des Programmes eingebunden werden. Die Datenbank soll einem relationalen Schema folgen. Die Verwendung sollte kostenfrei möglich sein und die benötigte Software über die Quellen des Betriebssystems verfügbar sein.
+Das \gls{DBMS} soll über Schnittstellen in den Sourcecode des Programmes eingebunden werden. Die Datenbank soll einem relationalen Schema folgen. Die Verwendung sollte kostenfrei möglich sein und die benötigte Software über die Quellen des Betriebssystems verfügbar sein.
 
 In dieser Applikation wurde sich für die Verwendung von PostgreSQL entschieden. Für die Verwendung in Flask wird SQLAlchemy als O/R-Mapper  empfohlen (vgl. \cite{openingtheflask} S.33).
 
