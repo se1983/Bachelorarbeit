@@ -51,7 +51,7 @@
 
     Ein mal im Monat werden die Daten als Snapshots, unter \gls{DOI} zusammengefasst.
     Während und vor der Qualitätskontrolle liegen die Daten in den Formaten \gls{TESAC} und \gls{BUFR} vor.
-    Die von den \gls{GDAC} veröffentlichten Daten liegen im Format \gls{netCDF} vor. Diese sind unter der Lizenz Attribution 4.0 International (CC BY 4.0) veröffentlicht und dürfen unter der Nennung der Lizenz frei verwendet und dabei auch verändert werden. (vgl. \cite{ArgoDataDocumentation})
+    Die von den \gls{GDAC} veröffentlichten Daten liegen im Format \gls{netCDF} vor. Diese sind unter der Lizenz Attribution 4.0 International (CC BY 4.0) veröffentlicht und dürfen unter der Nennung der Lizenz frei verwendet und dabei auch verändert werden (vgl. \cite{ArgoDataDocumentation}).
 
 % END
 
@@ -129,10 +129,10 @@ Das "`World Geodetic System 1984 (WGS84)"' ist ein geozentrisches, vom Erdschwer
 
 
 
-Die Gauß-Krüger Projektion erlaubt die Darstellung des Globus auf einer Ebene. Um die Krümmung des Globus auszugleichen wird die Erde in $3^\circ$ breite Meridianstreifen eingeteilt. Als Mittelpunkte dienen Dabei die Meridiane $[ 3^\circ, 6^\circ, 9^\circ, \dots]$. Von den Mittelmeridianen aus wird eine Projetion an anliegende Zylinder vorgenommen. Auf diese Weise entstehen zu den Rändern der meridianstreifen Längen- und Flächenverzerrungen, die Darstellung ist aber Winkeltreu.
+Die Gauß-Krüger Projektion erlaubt die Darstellung des Globus auf einer Ebene. Um die Krümmung des Globus auszugleichen wird die Erde in $3^\circ$ breite Meridianstreifen eingeteilt. Als Mittelpunkte dienen dabei die Meridiane $[ 3^\circ, 6^\circ, 9^\circ, \dots]$. Von den Mittelmeridianen aus wird eine Projektion an anliegende Zylinder vorgenommen. Auf diese Weise entstehen zu den Rändern der Meridianstreifen Längen- und Flächenverzerrungen, die Darstellung ist aber winkeltreu.
 \\
 
-Im UTM-System wird ein analoges Verfahren angewendet. Die Meridianstreifen haben hier aber eine Breite von $6^\circ$. Anstatt dem Mittelmeridian werden hier zwei Schnittkurven mit einem Abstand von 180km als längentreues Element für die Abbildung der Y-Achse verwendet. Der Bereich zwischen diesen Schnittkurven wird gestaucht (vgl. \cite{witte2011vermessungskunde} S. 23-25).
+Im UTM-System wird ein analoges Verfahren angewendet. Die Meridianstreifen haben hier aber eine Breite von $6^\circ$. Anstatt des Mittelmeridianes werden hier zwei Schnittkurven mit einem Abstand von 180km als längentreues Element für die Abbildung der Y-Achse verwendet. Der Bereich zwischen diesen Schnittkurven wird gestaucht (vgl. \cite{witte2011vermessungskunde} S. 23-25).
 
 
 % END
@@ -141,9 +141,9 @@ Im UTM-System wird ein analoges Verfahren angewendet. Die Meridianstreifen haben
 \pagebreak
     \subsection{Network Common Data Format}
 
-    Das \gls{netCDF} dient zum Austausch von wissenschaftlichen Daten. Es ist eine Weiterentwicklung des von der NASA entwickelten \gls{CDF}. Das Datenformat zeichnet sich dadurch aus, dass es selbstbeschreibend ist. Die Dokumentation ist Teil des Datensatzes und wird so immer  mitgeführt. Dies soll die Portabilität des Datensatzes verbessern.  (vgl. \cite{FishernetCDF})
+    Das \gls{netCDF} dient zum Austausch von wissenschaftlichen Daten. Es ist eine Weiterentwicklung des von der NASA entwickelten \gls{CDF}. Das Datenformat zeichnet sich dadurch aus, dass es selbstbeschreibend ist. Die Dokumentation ist Teil des Datensatzes und wird so immer  mitgeführt. Dies soll die Portabilität des Datensatzes verbessern  (vgl. \cite{FishernetCDF}).
 
-    Neben einigen anderen Sprachen, wurde auch eine Bibliothek für Python entwickelt (vgl.\cite{netCDF4}) Mit dieser ist es möglich, die Binärdaten zu öffnen und zu numpy-Arrays zu extrahieren. In Listing \ref{lst:example_netCDF} ist die Verwendung exemplarisch an der Extraktion und der Umrechnung des Erstelldatums  aufgezeigt und im Folgenden beschrieben.
+    Es wurde auch eine Bibliothek für Python entwickelt  (vgl.\cite{netCDF4}). Mit dieser ist es möglich, die Binärdaten zu öffnen und zu numpy-Arrays zu extrahieren. In Listing \ref{lst:example_netCDF} ist die Verwendung exemplarisch an der Extraktion und der Umrechnung des Erstelldatums  aufgezeigt und im Folgenden beschrieben.
 
     \pythonexternal[%
         % ---------------------------------------------

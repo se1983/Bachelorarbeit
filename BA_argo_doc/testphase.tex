@@ -134,7 +134,7 @@ So long and thanks for all the fish. Bye.
     Um die Daten in die Produktionsdatenbank zu überführen, werden die Tabellen der temporären Datenbank gedumpt. Es ist ersichtlich, dass der Dump eine Größe von  ca. 20 Megabyte umfasst.
 
  \item [Einspielen des Datenbankdumps]
-    Über die Funktionalitäten des Postgresql-Clients \texttt{psql} werden die Daten in die Produktionsdatenbank überführt. Dieser Prozess erfordert eine Ausfallzeit der Webapplikation von 11 Sekunden.
+    Über die Funktionalitäten des Postgresql-Clients \newline\texttt{psql} werden die Daten in die Produktionsdatenbank überführt. Dieser Prozess erfordert eine Ausfallzeit der Webapplikation von 11 Sekunden.
 
  \item [Erneuern des Caches zur Anzeige der Argo-Floats]
     Um die Daten in der Anzeige zu erneuern, wird der Cache neu geschrieben. Für diesen Zweck wird ein GET-Request an die hierfür festgelegte URL gesendet. Die Webapplikation erneuert daraufhin den Cache. Damit stehen der Webapplikation die erneuerten  Daten zur Verfügung.
@@ -159,7 +159,7 @@ ist eine grafische Zusammenfassung der Ergebnisse zu sehen. In dieser findet sic
  \item [Box]
     Dies markiert den Bereich in welchem sich 50\% der Daten finden. Der Median wird durch eine vertikale Linie gezeigt. Die hier vorliegende Darstellung ist um den Mittelwert (mean) erweitert. Die schmale Linie stellt das arithmetische Mittel und die fett gedruckte den Median dar.
  \item [Whisker (Antennen)]
-    Dieser Bereich stellt die äußeren Quantile dar. In der Grundeinstellung 1.5 wird die von John W. Turkey verwendete Einstellung von maximal dem 1.5-fachen des Interquartilabstandes für den Whiskerbereich verwendet.
+    Dieser Bereich stellt die äußeren Quantile dar. In der hier verwendeten Grundeinstellung 1.5 wird die von John W. Turkey verwendete Einstellung von maximal dem 1.5-fachen des Interquartilabstandes für den Whiskerbereich verwendet.
 \end{description}
 
 
@@ -169,12 +169,7 @@ Im Folgenden findet sich eine detaillierte Auswertung der hier erhobenen Daten:
 
 
 \paragraph{\texttt{Statement 1:} "`Ich kann mir gut vorstellen, ArgoData regelmäßig zu nutzen."'}
-    Diese Frage zielt auf die Wiederbesuchsbereitschaft ab. 
-    
-    Die Antworten weisen eine breite Streuung auf. 
-    In insgesamt 4 von 5 Antwortmöglichkeiten wurden Antworten gegeben. 
-    4 von 12 Personen bewertenden das Statement mit einem Wert von 4.
-    Der Median liegt bei 3, der Durchschnitt zwischen 2.5 und 3. Die Box umfasst die Antworten 2 bis 4. Der Whisker schließt Antwort 1 mit ein.
+    Diese Frage zielt auf die Wiederbesuchsbereitschaft ab. Die Antworten weisen eine breite Streuung auf. Die am häufigsten gegebene Antwort liegt bei 4 (4 von 12 Personen). Der Median liegt bei 3, das arithmetische Mittel befindet sich bei 2.67. Die Box umfasst die Antworten 2 bis 4. Der Whisker schließt Antwort 1 mit ein.
 
  \paragraph{\texttt{Statement 2:} "`Ich empfinde ArgoData als unnötig komplex."'}
     In dieser Frage, bildet sich die Reduktion der Komplexität ab. Dire Antworten finden sich hier im bereich 1 bis 3. Das Maximum liegt mit einem Wert von 7 in der Antwort 1. Der Median liegt bei 1, das arithmetische Mittel bei knapp über 1.5. Die Box umfasst die Antworten 1 bis 2. Der Whisker schließt Antwort 3 mit ein.

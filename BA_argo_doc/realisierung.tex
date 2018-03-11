@@ -374,8 +374,9 @@ Auch an dieser Stelle wird die \texttt{map.on}-Funktion der Karte verwendet, um 
     \begin{description}
     \item [\texttt{display\_chart}]
         Diese Funktion stellt den Funktionsplot der Messwerte der ausgewählten ArgoFloat dar. Dafür wird am Anfang der div-Container mit der ID \texttt{\#chart-picture} ausgewählt. In diesem Container wird später das Bild platziert. Um bereits bestehende Bilder zu löschen, werden alle HTML-Elemente innerhalb des Containers erstellt. Anschließend wird das Bild der Messdaten über die Webroute /chart/[identifier]  (siehe Listing \ref{lst:routesAPI}) angefordert. Das Bild wird anschließend auf die Breite des Containers gebracht und der Bootstrap-Klasse \texttt{img-responsive} hinzugefügt. Damit wird das Bild formatiert über die Sidebar dargestellt.
+    \pagebreak
     \item [\texttt{display\_info}]
-        Diese Funktion stellt einen Info-Block zu den Metadaten der ArgoFloat dar. Analog zum oberen Prozess werden hier Container aus dem DOM-Tree selektiert und das sich darin befindliche  \gls{HTML} manipuliert. Die Daten wurden hier als HTML-Objekte über einen Ajax-Befehl angefordert und direkt in den umliegenden Container injiziert.
+        Diese Funktion stellt einen Info-Block zu den Metadaten der Argo-Float dar. Analog zum oberen Prozess werden hier Container aus dem DOM-Tree selektiert und das sich darin befindliche  \gls{HTML} manipuliert. Die Daten wurden hier als HTML-Objekte über einen Ajax-Befehl angefordert und direkt in den umliegenden Container injiziert.
     \end{description}
 
     Die oben genannten Funktionen werden aufgerufen, wenn es sich bei dem angeklickten Element um ein Feature vom Typ \texttt{Point} handelt. Der Bereich des Graphen wird an dieser Stelle sichtbar gemacht und der Info-Bereich eingeklappt. Die Sichtbarkeit der Sidebar wird ebenso an dieser Stelle eingestellt.
@@ -412,13 +413,13 @@ def deliver_chart(identifier):
 
     return response
 \end{python}
-
+\pagebreak
 Die Funktion wird im Blueprint \texttt{argo\_app} der Flask-Applikation mit der Route registriert. Als Parameter \texttt{identifier}  wird die eindeutige Identifikationsnummer der Messstation erwartet. Die zum Erstellen des Graphen benötigten Daten werden aus der \gls{API} angefordert. Dafür wird die URL der Datenschnittstelle der Methode \texttt{get\_argo\_float} in der \gls{API} ermittelt. Anschließend wird unter Zuhilfenahme der Python-Bibliothek \texttt{requests} der Datensatz über einen GET-Request angefordert. Die Methode \texttt{.json()} überführt die Daten von Json in eine Python-Datenstruktur.
 
 \begin{description}
  \item [\texttt{create\_plot}]
     Diese Funktion ist für die Erstellung des Funktionsplots zuständig. Als Theme wurde sich hier für \texttt{'seaborn-whitegrid'} entschieden. Eine der damit vorgegebenen Grundeinstellungen wurden durch das Ändern der \texttt{rcParams} noch weiter angepasst.\\
-    Für die Darstellung jeder der drei Funktionsplots wurden ein Achsen-Objekt erstellt. Diese Achsen werden über ein Gridspec untereinander angeordnet.
+    Für die Darstellung der drei Funktionsplots wurden jeweils ein Achsen-Objekt erstellt. Diese Achsen werden über ein Gridspec untereinander angeordnet.
 
     Die Datensätze werden über die Y-Achse aufgetragen, wärend die X-Achse die Zeitstempel aufzeigt. Enthält ein Datensatz Werte keiner numerischen Zuordnung (\texttt{nan}), so wird davon ausgegangen, dass dieser Datensatz nicht vorhanden ist und diese Achse nicht gezeichnet. Überschreitet ein Datensatz den ihm zugeschriebenen Wertebereich, so wird der Wertebereich der Y-Achse fest eingestellt. Die hierfür benötigten Daten werden über die zentrale Flask-Instanz aus der Konfiguration angefordert.
 
