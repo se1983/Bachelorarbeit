@@ -52,7 +52,7 @@ Wird der Mauszeiger über die Repräsentation einer Messstation geführt, so ers
  \label{fig:ftest003}
 \end{wrapfigure}
 
-Durch einen Mausklick auf die Kartendarstellung der Argo-Boje werden weiterführende Daten angefordert. Wie in Abbildung \ref{fig:ftest003} zu sehen ist, werden  Messwerte  über Funktionsplots an der linken Seite der Webseite dargestellt. Dabei sind über die X-Achse der zeitliche Verlauf und über die Y-Achse der jeweilige Messwert kodiert. Die gemessenen Werte umfassen dabei Temperatur, Salzgehalt sowie Druck.  Der Ort der Messwerterhebung wird durch einen Punkt auf der Karte repräsentiert. Wird der Mauszeiger über diese Repräsentation geführt, werden neben dem Datum der Messung auch die gemessenen Werte dargestellt.
+Durch einen Mausklick auf die Kartendarstellung der Argo-Boje werden weiterführende Daten angefordert. Wie in Abbildung \ref{fig:ftest003} zu sehen ist, werden  Messwerte  über Funktionsplots an der linken Seite der Webseite dargestellt. Dabei sind über die X-Achse der zeitliche Verlauf und über die Y-Achse der jeweilige Messwert kodiert. Die gemessenen Werte umfassen dabei Temperatur, Salzgehalt sowie Druck.  Der Ort der Messwerterhebung wird durch einen Punkt auf der Karte repräsentiert. Wird der Mauszeiger über diese Repräsentation geführt, werden neben dem Datum der Messung auch die dort erfassten Werte dargestellt.
 
 \newpage
 
@@ -64,7 +64,7 @@ Durch einen Mausklick auf die Kartendarstellung der Argo-Boje werden weiterführ
  \label{fig:ftest003b}
 \end{wrapfigure}
 
-Wird der Reiter "`Info"' angeklickt, so werden weitere Informationen zur Messstation sichtbar. Wie in Abbildung \ref{fig:ftest003b} zu sehen ist,  Umfassen diese den Identifier der Messstation, das verantwortliche Forschungsprojekt, den Besitzer der Boje sowie das Startdatum und das Datum der letzten Messung.
+Wird der Reiter "`Info"' angeklickt, so werden weitere Informationen zur Messstation sichtbar. Wie in Abbildung \ref{fig:ftest003b} zu sehen ist,  umfassen diese den Identifier der Messstation, das verantwortliche Forschungsprojekt, den Besitzer der Boje sowie das Startdatum und das Datum der letzten Messung.
 \newline\newline\newline\newline
 \newline\newline\newline
 
@@ -98,7 +98,7 @@ In Abbildung \ref{fig:ftest00fail} ist ersichtlich, dass fehlerhafte Daten durch
 
 \subsubsection{Aggregation der Daten}
 
-In Listing \ref{lst:renewdatash} ist der Prozess der Datenerneuerung zu sehen. Dieser Umfasst die in Kapitel \ref{sec:funkAnforderungenAdmin} festgelegten Anforderungen. Der Ablauf ist im Folgenden beschrieben.
+In Listing \ref{lst:renewdatash} ist ein Proof of Concept des Prozesses der Datenerneuerung zu sehen. Dieser umfasst die in Kapitel \ref{sec:funkAnforderungenAdmin} festgelegten Anforderungen. Der Ablauf ist im Folgenden beschrieben.
 
 \begin{python}[%
         label={lst:renewdatash},%
@@ -133,7 +133,7 @@ So long and thanks for all the fish.
     Der Aggregationsteil der hier entwickelten Software wird verwendet, die soeben erneuerten Daten in die Datenbank zu überführen. Um Ausfallzeiten der Webapplikation möglichst gering zu halten, werden die Daten zunächst in eine temporäre Datenbank geschrieben. Über einen Ladebalken wird der derzeitige Stand dieses Prozesses sichtbar. Es ist außerdem ersichtlich, dass die Daten von 6711 Messstationen in 2 Stunden, 2 Minuten und 30 Sekunden in die Datenbank überführt wurden.
 
  \item [Erstellen eines Datenbankdumps]
-    Um die Daten in die Produktionsdatenbank zu überführen, werden die Tabellen der temporären Datenbank gedumpt. Es ist ersichtlich, dass der Dump eine Größe von  ca. 20 Megabyte umfasst.
+    Um die Daten in die Produktionsdatenbank zu überführen, werden die Tabellen der temporären Datenbank gedumpt. Es ist ersichtlich, dass der Dump eine Größe von  ca. 160 Megabyte umfasst.
 
  \item [Einspielen des Datenbankdumps]
     Über die Funktionalitäten des Postgresql-Clients \newline\texttt{psql} werden die Daten in die Produktionsdatenbank überführt. Dieser Prozess erfordert eine Ausfallzeit der Webapplikation von 11 Sekunden.
@@ -150,7 +150,7 @@ So long and thanks for all the fish.
 \subsubsection{Testaufbau}
 
 Um die Usability der Webapplikation zu testen, wurde eine Umfrage durchgeführt. Als Grundlage diente der System Usability Scale (SUS).
-Für diese Umfrage waren insgesamt 10 Fragen innerhalb einer Scala von 0 (gar nicht) bis 5 (sehr)  zu bewerten. (vgl. \cite{Quantita52:online})
+Für diese Umfrage waren insgesamt 10 Fragen innerhalb einer Scala von 1 (gar nicht) bis 5 (sehr)  zu bewerten. (vgl. \cite{Quantita52:online})
 
 An der Umfrage nahmen insgesamt 12 Personen teil. Diese setzen sich aus Bekannten- und Kollegenkreis zusammen. Die Daten wurden anonym erhoben, ein Rückschluss auf die Personen ist damit nicht mehr möglich.
 
@@ -159,9 +159,9 @@ ist eine grafische Zusammenfassung der Ergebnisse zu sehen. In dieser findet sic
 
 \begin{description}
  \item [Box]
-    Dies markiert den Bereich in welchem sich 50\% der Daten finden. Der Median wird durch eine vertikale Linie gezeigt. Die hier vorliegende Darstellung ist um den Mittelwert (mean) erweitert. Die schmale Linie stellt das arithmetische Mittel und die fett gedruckte den Median dar.
+    Dies markiert den Bereich in welchem sich 50\% der Daten finden. Der Median wird durch eine vertikale Linie gezeigt. Die hier vorliegende Darstellung ist um den Durchschnitt (mean) erweitert. Die schmale Linie stellt das arithmetische Mittel und die fett gedruckte den Median dar.
  \item [Whisker (Antennen)]
-    Dieser Bereich stellt die äußeren Quantile dar. In der hier verwendeten Grundeinstellung 1.5 wird die von John W. Turkey verwendete Einstellung von maximal dem 1.5-fachen des Interquartilabstandes für den Whiskerbereich verwendet.
+    Dieser Bereich stellt die äußeren Quantile dar. Hier wird die Grundeinstellung von maximal dem 1.5-fachen des Interquartilabstandes für den Whiskerbereich verwendet.
 \end{description}
 
 
@@ -181,7 +181,7 @@ Im Folgenden findet sich eine detaillierte Auswertung der hier erhobenen Daten:
     Durch diese Frage wird die Einfachheit der Darstellung und die Reduktion der Benutzungskomplexität abgebildet. Die am häufigsten gegebene Antwort liegt bei 5 (6 von 12 Personen). Der Median liegt bei $4.5$, das arithmetische Mittel bei $4.25$   Die Box umfasst Antworten 4 und 5. Der Whisker schließt Antwort 3 mit ein.
 
 \paragraph{\texttt{Statement 4:} "`Ich denke, dass ich Hilfestellung bei der Benutzung brauchen würde um ArgoData zu benutzen."'}
-    Diese Frage ermittelt ob genügend Hilfestellung zur Verfügung gestellt wurde.  Die am häufigsten gegebene Antworten liegen bei 1 und 3 (4 von 12 Personen).  Der Median liegt bei 2.5, das arithmetische Mittel liegt bei $2.33$. Die Box umfasst Antworten 1 bis 3, der Whisker schließt Antwort 4 mit ein.
+    Diese Frage ermittelt ob genügend Hilfestellung zur Verfügung gestellt wurde.  Die am häufigsten gegebene Antworten liegen bei 1 und 3 (jeweils 4 von 12 Personen).  Der Median liegt bei 2.5, das arithmetische Mittel liegt bei $2.33$. Die Box umfasst Antworten 1 bis 3, der Whisker schließt Antwort 4 mit ein.
 
 \paragraph{\texttt{Statement 5:} "`Ich finde, dass die Funktionen (Karte, Steuerung, Anzeige von Daten) gut integriert sind."'}
     Diese Frage ermittelt die Integration der Steuerungselemente.
@@ -191,7 +191,7 @@ Im Folgenden findet sich eine detaillierte Auswertung der hier erhobenen Daten:
     Diese Frage zielt auf die Integration der Komponenten als Gesamtkonzept ab. Die am häufigsten gegebene Antwort liegt bei Antwort 2 (5 von 12 Personen). Der Median liegt bei 2, das arithmetische Mittel bei $2.08$. Die Box umfasst Antworten 2 und 3. Der Whisker schließt Antwort 1 mit ein.
 
 \paragraph{\texttt{Statement 7:} "`Ich kann mir vorstellen, dass die meisten Leute ArgoData schnell zu beherrschen lernen."'}
-    Diese Frage versucht über eine extrene Perspektive die Lernkurve bei der Benutzung abzufragen.Die am häufigsten gegebene Antwort liegt bei 5 (6 von 12 Personen). Der Median liegt bei 4.5, das arithmetische Mittel bei $4.42$. Die Box umfasst die Antworten 4 und 5. Der Whisker schließt Antwort 3 mit ein.
+    Diese Frage versucht über eine externe Perspektive die Lernkurve bei der Benutzung abzufragen.Die am häufigsten gegebene Antwort liegt bei 5 (6 von 12 Personen). Der Median liegt bei 4.5, das arithmetische Mittel bei $4.42$. Die Box umfasst die Antworten 4 und 5. Der Whisker schließt Antwort 3 mit ein.
 
 \paragraph{\texttt{Statement 8:} "`Ich empfinde die Bedienung als sehr umständlich."'}
     Diese Frage versucht das Erleben des Bedienungskonzeptes zu erfragen. Die am häufigsten gegebene Antwort liegt bei 2 (7 von 12 Personen). Der Median liegt bei 2, das arithmetische Mittel bei $1.75$ Die Box umfasst die Antworten 1 und 2. Der Whisker schließt Antwort 3 mit ein.

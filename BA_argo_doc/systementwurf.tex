@@ -23,7 +23,7 @@ Um das Modell weiter fortzuführen, wurde diese Ereigniskette in ein Entitätssc
 \subsection{Architektur}
 
 
-Wie in Abbildung \ref{fig:grobetwurf_architektur_datenaggregation} zu sehen ist, besteht die Applikation aus zwei Grundkomponenten. Der erste Teilbereich ist für die Beschaffung und Aufbereitung der Daten zuständig, während der zweite Teilbereich für die Darstellung der Daten zuständig ist.
+Die Applikation  besteht aus zwei Grundkomponenten. Der erste Teilbereich ist für die Beschaffung und Aufbereitung der Daten zuständig, während der zweite Teilbereich für die Darstellung der Daten zuständig ist.
 
 % BEGIN OOP ARCHITEKTUR   AGGREGATION
 \subsubsection{Entwurf der Datenaggregation}\label{sec:entwurfAggregation}
@@ -41,8 +41,8 @@ Auch in diesem Modell ist die Ereigniskette aus (\ref{eq:datenstruktur}) abzubil
 
 Für die Persistierung  werden objektorientierte Strukturen für den \gls{ORM} verwendet. Diese Strukturen teilt sich das Modul mit der Webapplikation. Die Behandlung der Daten sowie eine Steuerung des Prozesses sind als weitere Schnittstellen zu definieren.
 
-Die Aggregation der Daten wird über zwei Teilbereiche abgebildet. Zum einen müssen die benötigten Parameter aus den Dateien ausgelesen und modelliert werden.
-Als zweite Ebene der Aggregation ist der Prozess des Schreibens in eine Datenbank zu sehen. Diese verwendet die zuvor ermittelten modellierten Messprofile und schreibt sie Anhand der dort enthaltenen Daten in eine Datenbank.
+Wie in Abbildung \ref{fig:grobetwurf_architektur_datenaggregation} ersichtlich ist, wird die Aggregation der Daten über zwei Teilbereiche abgebildet. Zum einen müssen die benötigten Parameter aus den Dateien ausgelesen und modelliert werden.
+Als zweite Ebene der Aggregation ist der Prozess des Schreibens in eine Datenbank zu sehen. Diese verwendet die zuvor ermittelten modellierten Messprofile und schreibt sie anhand der dort enthaltenen Daten in eine Datenbank.
 
 
 Es ist an dieser Stelle zu erkennen, dass zwei Stellen existieren, die die intrinsischen Eigenschaften des Modules an dieser Stelle beeinflussen. Im folgenden werden die Schnittstellen aufgelistet, die eine richtige Handhabung festsetzen:
