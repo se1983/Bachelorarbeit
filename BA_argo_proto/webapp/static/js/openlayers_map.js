@@ -175,7 +175,7 @@ var displayFeatureInfo = function (pixel) {
                 '</strong>' + '</br>'
                 + transfer_date + '</br>'
                 + "<b>Temperatur: </b>" + temperature + "°C" + '</br>'
-                + "<b>Salzhehalt: </b>" + salinity + " g / l" + '</br>'
+                + "<b>Salzgehalt: </b>" + salinity + " g / l" + '</br>'
         }
         info.tooltip('hide')
             .attr('data-original-title', tooltip_text)
