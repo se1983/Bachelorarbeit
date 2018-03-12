@@ -225,7 +225,11 @@ breaklinks=true] {hyperref}
 \renewcaptionname{ngerman}{\contentsname}{Inhalt}
 \renewcaptionname{ngerman}{\listfigurename}{Abbildungsverzeichnis}
 \renewcaptionname{ngerman}{\listtablename}{Tabellenverzeichnis}
-\renewcommand\lstlistlistingname{Quellcodeverzeichnis}
+
+
+\renewcommand*\lstlistlistingname{Quellcodeverzeichnis}
+
+
 \renewcaptionname{ngerman}{\refname}{Quellenverzeichnis}
 \renewcaptionname{ngerman}{\figurename}{Abbildung}
 \renewcaptionname{ngerman}{\tablename}{Tabelle}
@@ -236,8 +240,7 @@ breaklinks=true] {hyperref}
 
 \usepackage{booktabs}
 
-\usepackage[acronym,style=altlist,automake]{glossaries}
+\usepackage[acronym,style=altlist,automake,toc]{glossaries-extra}
 \addto\captionsngerman{\renewcommand*\acronymname{Abkürzungsverzeichnis}}
-\setacronymstyle{long-short}
-\makeglossaries
+\setabbreviationstyle[acronym]{long-short}\makeglossaries
 \input{glossar}

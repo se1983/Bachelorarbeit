@@ -3,13 +3,13 @@
 
 \subsection{Geschaffene Lösung}
 
-Im Rahmen dieser Arbeit entstand eine Lösung zur Aggregation und Betrachtung der Daten des Argo-Programms. Unter dem Argo-Programm werden Messwerte über den Klimazustand unserer Weltmeere gemessen und öffentlich gemacht. Diese Daten wurden heruntergeladen, angepasst und in ein Format überführt, dass durch eine Webapplikation zur Anzeige gebracht werden konnte. Die Webdarstellung bediente sich moderner Frameworks wie Flask, SQLAlchemy und OpenLayers um die Daten über eine Weltkarte zur Darstellung zu bringen. Durch die Kartenrepräsentation der Messstation ist es den Anwendern möglich mit den Datensätzen zu interagieren. Durch einen Mausklick werden die Messwerte über Funktionsplots angezeigt.  Fehlerhafte Daten werden markiert, so das es den Anwendenden möglich ist, diese zu erkennen. Durch eine Umfrage konnte ermittelt werden, dass die hier implementierten Schnittstellen gut Integriert sind und die Bedienung als intuitiv und leicht zu erlenen empfunden wurde.
+Im Rahmen dieser Arbeit entstand eine Lösung zur Aggregation und Betrachtung der Daten des Argo-Programms. Unter dem Argo-Programm werden Messwerte über den Klimazustand unserer Weltmeere gemessen und öffentlich gemacht. Diese Daten wurden heruntergeladen, angepasst und in ein Format überführt, dass durch eine Webapplikation zur Anzeige gebracht werden konnte. Die Webdarstellung bediente sich moderner Frameworks wie Flask, SQLAlchemy und OpenLayers um die Daten über eine Weltkarte zur Darstellung zu bringen. Durch die Kartenrepräsentation der Messstation ist es den Anwendern möglich, mit den Datensätzen zu interagieren. Durch einen Mausklick werden die Messwerte über Funktionsplots angezeigt.  Fehlerhafte Daten werden markiert, so dass es den Anwendenden möglich ist, diese zu erkennen. Durch eine Umfrage konnte ermittelt werden, dass die hier implementierten Schnittstellen gut integriert sind und die Bedienung als intuitiv und leicht zu erlernen empfunden wurde.
 
 \begin{figure}[H]
  \centering
  \includegraphics[width=\textwidth]{pix/argodata_complete.png}
  % argodata_complete.png: 1872x1026 px, 96dpi, 49.52x27.14 cm, bb=0 0 1404 769
- \caption{Die Webpräsenz von Argo-Data}
+ \caption{Die Webpräsenz von ArgoData}
  \label{fig:argodataWeb}
 \end{figure}
 
@@ -23,10 +23,10 @@ Dies ist aus zwei Gesichtspunkten als verbesserungswürdig anzusehen. Zum einen 
 Ein Microservice, der die Daten auf Veränderungen überwacht und nur alternierende Daten erneuert, wäre deswegen eine sinnvolle Weiterentwicklung der Plattform.
 \\
 
-Durch die Usability Umfrage wurde ermittelt, dass sich die Benutzer durch den stark minimalistischen Designansatz verloren fühlten, bzw. eine Hilfestellung erwartet hätten. Hier könnte man durch ein Interface-Overlay oder der initialen Anzeige eines Hilfsmodals eine bessere Hilfestellung leisten.
+Durch die Usability Umfrage wurde ermittelt, dass sich die Benutzenden durch den stark minimalistischen Designansatz verloren fühlten, bzw. eine Hilfestellung erwartet hätten. Hier könnte man durch ein Interface-Overlay oder der initialen Anzeige eines Hilfsmodals eine bessere Hilfestellung leisten.
 \\
 
-Die Anforderung der Messdaten und das Erstellen des Funktionsplots erfordert nach jedem Klick einige Sekunden, bis die Daten zur Anzeige gebracht werden. Dadurch wirkt die Darstellung schwerfällig und träge. Diesem könnte man durch einen Caching-Prozess entgegenwirken. Ein weiterer spannender Ansatz wäre das proaktive Laden von Datensätzen durch Ermittlung der Mauszeigerposition noch bevor der Datensatz angeklickt wurde. Dies könnte durch Maschinelles Lernen sogar noch weiter Verfeinert werden. Besonders die Kombination von Caches und dem proaktiven Laden der Daten könnte hier starke Verbesserung in der Seitengeschwindigkeit bringen.
+Die Anforderung der Messdaten und das Erstellen des Funktionsplots erfordert nach jedem Klick einige Sekunden, bis die Daten zur Anzeige gebracht werden. Dadurch wirkt die Darstellung schwerfällig und träge. Diesem könnte man durch einen Caching-Prozess entgegenwirken. Ein weiterer spannender Ansatz wäre das proaktive Laden von Datensätzen durch Ermittlung der Mauszeigerposition noch bevor der Datensatz angeklickt wurde. Dies könnte durch maschinelles Lernen sogar noch weiter verfeinert werden. Besonders die Kombination von Caches und dem proaktiven Laden der Daten könnte hier starke Verbesserung in der Seitengeschwindigkeit bringen.
 \\
 
 Es hat sich gezeigt, dass es schwierig ist, zwischen den Messpunkten auf der Karte und den Positionen der Funktionsplots eine geistige Verbindung herzustellen. Aus diesem Gesichtspunkt wäre es eine sinnvolle Erweiterung der Applikation, die Graphen über eine auf JavaScript aufbauende Lösung auszutauschen. Damit wäre es möglich, die Position des Mauszeigers in Karte und Graph zu ermitteln und die Position im Messverlauf im jeweils anderen Element hervorzuheben.

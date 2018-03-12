@@ -21,7 +21,7 @@
 \tableofcontents
 \newpage
 \listoffigures
-\lstlistoflistings
+\lstlistoflistings\addcontentsline{toc}{section}{Quellcodeverzeichnis}
 \listoftables
 
 
@@ -38,8 +38,11 @@
 \include{testphase}
 \include{auswertung}
 \pagebreak
-\pagestyle{plain}
+\pagestyle{plain}\pagenumbering{roman}\setcounter{page}{8}
+\input{literatur}
+\pagebreak
+
+
 \input{anhang}
-\include{literatur}
 
 \end{document}

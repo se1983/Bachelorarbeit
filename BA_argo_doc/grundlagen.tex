@@ -10,7 +10,7 @@
 
     % TODO Welche Organisationen sind beteiligt?
 
-    Zum Ende des vergangenen Jahrtausends verdichteten sich die Hinweise auf einen globalen und durch Menschen verursachten Klimawandel. Um dessen Auswirkungen auf die Weltmeere studieren zu können, wurde unter dem Dach des \gls{GOOS} das Argo-Programm gegründet. Dieses untersucht, unterstützt durch das Satellitensystem Iason, die Wassersäule der oberen 2000m auf deren chemischen Eigenschaften. Dabei werden in ständigen Intervallen Salzgehalt, Druck, Temperatur und Leitfähigkeit gemessen. Die ermittelten Daten werden veröffentlicht, das diese durch Wissenschaftler ausgewertet werden können.
+    Zum Ende des vergangenen Jahrtausends verdichteten sich die Hinweise auf einen globalen und durch Menschen verursachten Klimawandel. Um dessen Auswirkungen auf die Weltmeere studieren zu können, wurde unter dem Dach des \gls{GOOS} das Argo-Programm gegründet. Dieses untersucht, unterstützt durch das Satellitensystem Iason, die Wassersäule der oberen 2000m auf deren chemischen Eigenschaften. Dabei werden in ständigen Intervallen Salzgehalt, Druck, Temperatur und Leitfähigkeit gemessen. Die ermittelten Daten werden veröffentlicht, so dass diese durch Wissenschaftler ausgewertet werden können.
 
     % TODO Verweis auf die Sage der Argonauten
 
@@ -25,7 +25,7 @@
         \label{fig:Argo-messzyklus}
     \end{figure}
 
-    Die Argo Treibbojen werden mit Schiffen an spezifischen Punkten ausgesetzt. Ein Messzyklus beträgt 10 Tage. Die Boje taucht am Anfang des Zyklus auf 1000 Meter Tiefe herab.  In dieser Tiefe verbringt die Sonde die nächsten 9 Tage. Anschließend sinkt sie auf die maximale Tiefe von 2000 Metern herab, um daraufhin wieder zur Oberfläche aufzusteigen. An der Oberfläche sendet die Boje innerhalb von 6 bis 12 Stunden die Daten über den Sattelitenarray Iason an die Bodenstationen. Der oben genannte Messzyklus kann in Abbildung \ref{fig:Argo-messzyklus} nachvollzogen werden.
+    Die Argo Treibbojen werden mit Schiffen an spezifischen Punkten ausgesetzt. Ein Messzyklus beträgt 10 Tage. Die Boje taucht am Anfang des Zyklus auf 1000 Meter Tiefe herab.  In dieser Tiefe verbringt die Sonde die nächsten 9 Tage. Anschließend sinkt sie auf die maximale Tiefe von 2000 Metern herab, um daraufhin wieder zur Oberfläche aufzusteigen. An der Oberfläche sendet die Boje innerhalb von 6 bis 12 Stunden die Daten über den Satellitenarray Iason an die Bodenstationen. Der oben genannte Messzyklus kann in Abbildung \ref{fig:Argo-messzyklus} nachvollzogen werden.
 
     \begin{figure}[!ht]
         \centering
@@ -49,7 +49,7 @@
     Alle am Argo-Programm teilnehmenden Organisationen verpflichten sich auf eine gemeinsame Datenpolitik. So gibt es keine Herrschaft über die erhobenen Daten. Vielmehr stehen diese ab dem Zeitpunkt der Veröffentlichung transparent der Öffentlichkeit zur Verfügung.
     Nach der Übermittlung werden die Messdaten einer Qualitätskontrolle unterzogen. Sie werden auf Plausibilität und Abweichungen überprüft. Nach dieser Qualitätskontrolle werden die Daten nun über die \gls{GDAC} in Frankreich und den USA veröffentlicht. Diese können über \gls{HTTP} und \gls{FTP} abgerufen werden.
 
-    Ein mal im Monat werden die Daten als Snapshots, unter \gls{DOI} zusammengefasst.
+    Einmal im Monat werden die Daten als Snapshots, unter \gls{DOI} zusammengefasst.
     Während und vor der Qualitätskontrolle liegen die Daten in den Formaten \gls{TESAC} und \gls{BUFR} vor.
     Die von den \gls{GDAC} veröffentlichten Daten liegen im Format \gls{netCDF} vor. Diese sind unter der Lizenz Attribution 4.0 International (CC BY 4.0) veröffentlicht und dürfen unter der Nennung der Lizenz frei verwendet und dabei auch verändert werden (vgl. \cite{ArgoDataDocumentation}).
 
@@ -106,11 +106,11 @@ Als Hilfsmittel zur Überwindung der oben genannten Probleme werden objektrealti
 \subsection{Geodäsie und Kartographie}
 
 In der vorliegenden Applikation werden geographische Daten über einen Kartendienst angezeigt. Aus diesem Grund erfolgt hier eine Zusammenfassung der wichtigsten geodätischen und kartographischen Grundlagen.
-
+\\
 
 Die geographsiche Länge eines Punktes $P_l$ bezeichnet den Winkel zwischen einer vom Nullmeridian durch den Erdmittelpunkt geführten Fläche und einer Meridianebene, die durch den Punkt $P_l$ führt.
 Analog dazu ist die geographische Breite eines Punktes $P_b$ der Winkel zwischen der Äquatorschnittfläche und der Flächennormalen an Punkt $P_b$ (vgl.  \cite{witte2011vermessungskunde} S. 18).
-\\
+
 
 Das "`World Geodetic System 1984 (WGS84)"' ist ein geozentrisches, vom Erdschwerpunkt abgeleitetes Koordinatensystem. Dieses wird unter anderem von GPS zur Zuordnung von Positionen auf der Erde verwendet. Eine schematische Darstellung ist in Abbildung \ref{fig:wgs84} zu sehen. Die  Z-Achse führt durch den Erdschwerpunkt entlang der Rotationsachse durch den Nordpol, die X-Achse vom Zentrum der Erde durch einen Nullmeridian (Greenwich) und die Y-Achse wird als Orthogonale zur X-Achse ebenso durch den Erdschwerpunkt geführt (vgl. \cite{witte2011vermessungskunde} S. 13-14).
 
@@ -153,7 +153,7 @@ Im UTM-System wird ein analoges Verfahren angewendet. Die Meridianstreifen haben
         {scr/beispiele/netCDF_juld.py}
 
     Um einen Datensatz zu öffnen, bildet man eine Instanz der Klasse \texttt{netCDF4.Dataset}. Die Auswahl des Profils gelingt durch die Pfadangabe als Parameter bei der Instanzierung.
-    Über das Attribut \texttt{dataset.variables} werden die Datensätze als \texttt{OrderedDict} gehalten. Bei der Extraktion eines Parameters erhält man zunächst die Dokumentation des jeweiligen Datensatzes. In diesem Fall handelt es sich um den Zeitpunkt der Sattelitenübertragung des betreffenden Messprofils.
+    Über das Attribut \texttt{dataset.variables} werden die Datensätze als \texttt{OrderedDict} gehalten. Bei der Extraktion eines Parameters erhält man zunächst die Dokumentation des jeweiligen Datensatzes. In diesem Fall handelt es sich um den Zeitpunkt der Satellitenübertragung des betreffenden Messprofils.
     Aus der Dokumentation lassen sich für die Weiterverarbeitung wichtige Parameter entnehmen.
     So ist der Datensatz in Form des C-Datentyps \texttt{float64} codiert. Das Datumsformat entspricht dem \gls{Julian Day} ab dem Zeitpunkt \textit{01. Januar 1950}.
 

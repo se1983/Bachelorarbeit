@@ -77,7 +77,7 @@ Die Methode \texttt{get\_data\_sets()} erzeugt aus jedem Unterordner im definier
 
 % 1. Vorstellung SQL-Alchemy -- warum gewählt; Vor- und Nachteile
 
-Als Objektrelationalen Mapper wird SQLAlchemy eingesetzt. Diese Software gilt als erprobt und wird bereits in einer Vielzahl von Softwaresystemen eingesetzt. So verwendet unter anderem reddit oder die Mozilla (vgl. \cite{Organiza62:online}) Foundation SQLAlchemy als Schnittstelle zur Datenhaltung. SQLAlchemy wird für die Verwendung in Flask empfohlen und es existiert eine Erweiterung, um die Verwendung des Mappers in Flask zu vereinfachen (vgl. \cite{openingtheflask} S. 33). \\
+Als objektrelationaler Mapper wird SQLAlchemy eingesetzt. Diese Software gilt als erprobt und wird bereits in einer Vielzahl von Softwaresystemen eingesetzt. So verwendet unter anderem reddit oder die Mozilla Foundation  (vgl. \cite{Organiza62:online}) SQLAlchemy als Schnittstelle zur Datenhaltung. SQLAlchemy wird für die Verwendung in Flask empfohlen und es existiert eine Erweiterung, um die Verwendung des Mappers in Flask zu vereinfachen (vgl. \cite{openingtheflask} S. 33). \\
 %% TODO Konzepte, Pattern und Nachteile von SQLAlchemy -- Pattern in Grundlagen zu ORM
 %           1. LazyLoading
 %           2. databinding
@@ -86,17 +86,17 @@ Als Objektrelationalen Mapper wird SQLAlchemy eingesetzt. Diese Software gilt al
 
 
 % 2. Implementierung von Entitäten, und Relationen
-In SQLAlchemy werden die Tabelleneinträge in Modellklassen abgebildet. In Listing \ref{lst:models_argofloat} ist die Implementierung des Models für eine ArgoFloat-Messstation zu sehen.
+In SQLAlchemy werden die Tabelleneinträge in Modellklassen abgebildet. In Listing \ref{lst:models_argofloat} ist die Implementierung der Modell-Klasse für eine ArgoFloat-Messstation zu sehen.
 
 \pythonexternal[%                       -> SQLALCHEMY: ArgoFloat
     caption={Modellklasse für ein Argo-Float},%
     label={lst:models_argofloat}]%
     {/home/sebsch/Dokumente/Uni-Workdir/Bachelorarbeit/BA_argo_proto/webapp/models/_argo_float.py}
 
-Die Registrierung des Models erfolgt über die Vererbung der Metaklasse \texttt{db.Model}. Die Eigenschaften der jeweiligen Entitäten werden über Attribute des Objektes implementiert. Diese werden in Instanzen von \texttt{db.Column} transferiert. Dies erlaubt das Festsetzen des Datentyps. So lassen sich auch weitere Datenspezifikionen definieren.  Die Attribute werden durch eine Parameterübergabe in den Initiator der Klasse mit Werten versehen.
-Um das Binding umzusetzen, wurden Nachfahren der Modellklassen erzeugt. Diese benötigen für die Zuordnung das Attribut \texttt{\_\_bind\_key\_\_}.
+Die Registrierung der Modell-Klasse erfolgt über die Vererbung der Metaklasse \texttt{db.Model}. Die Eigenschaften der jeweiligen Entitäten werden über Attribute des Objektes implementiert. Diese werden in Instanzen von \texttt{db.Column} transferiert. Dies erlaubt das Festsetzen des Datentyps. So lassen sich auch weitere Datenspezifikionen definieren.  Die Attribute werden durch eine Parameterübergabe in den Initiator der Klasse mit Werten versehen.
+Um das Binding umzusetzen, wurden Nachfahren der Modell-Klassen erzeugt. Diese benötigen für die Zuordnung das Attribut \texttt{\_\_bind\_key\_\_}.
 
-Über das Schlüsselwort \texttt{db.relationship} werden Beziehungen beschrieben. In diesem Fall besteht eine $1 - N$ Beziehung  zu \texttt{measurements}($\mbox{argo\_float} \leftarrow \mbox{measurements}$)   (siehe auch Abbildung \ref{fig:ERM}). Als Übergabeparameter wird ein Name für die Beziehung erwartet. Der Parameter \texttt{backref} gibt den Namen der Klasse auf dem Mapper an. Diese Einstellung erlaubt den Aufruf der Beziehung auch in die entgegengesetzte Richtung. Der Parameter \texttt{lazy} definiert die verwendete Strategie für das Lazyloading. In diesem Fall wurde sich für \texttt{'dynamic'} entschieden. Diese Einstellung gibt bei Lesezugriffen ein vorkonfiguriertes Query-Objekt zurück. Dies erlaubt das Hinzufügen weiterer Filter vor dem Zugriff auf die Tabellen. Die durch diese Beziehung verbundene Modellklasse Measurements ist in Listing \ref{lst:models_measurement} zu sehen.
+Über das Schlüsselwort \texttt{db.relationship} werden Beziehungen beschrieben. In diesem Fall besteht eine $1 - N$ Beziehung  zu \texttt{measurements}($\mbox{argo\_float} \leftarrow \mbox{measurements}$)   (siehe auch Abbildung \ref{fig:ERM}). Als Übergabeparameter wird ein Name für die Beziehung erwartet. Der Parameter \texttt{backref} gibt den Namen der Klasse auf dem Mapper an. Diese Einstellung erlaubt den Aufruf der Beziehung auch in die entgegengesetzte Richtung. Der Parameter \texttt{lazy} definiert die verwendete Strategie für das Lazyloading. In diesem Fall wurde sich für \texttt{'dynamic'} entschieden. Diese Einstellung gibt bei Lesezugriffen ein vorkonfiguriertes Query-Objekt zurück. Dies erlaubt das Hinzufügen weiterer Filter vor dem Zugriff auf die Tabellen. Die durch diese Beziehung verbundene Modell-Klasse Measurements ist in Listing \ref{lst:models_measurement} zu sehen.
 
 \pythonexternal[%                       -> SQLALCHEMY: measurement
     caption={Modellklasse für eine Messung},%
@@ -107,7 +107,6 @@ Auf dieser Seite der Beziehung   $\left( \mbox{measurement} \to \mbox{argo\_floa
 
 
 % 3. Lesen und schreiben von Daten aus der Datenbank -- Rollbacks
-
 
 Das Schreiben von Daten über den Mapper SQLAlchemy ist Teil der Datenaggregation. Der dort implementierte Programmcode ist in Listing \ref{lst:sqlalchemy_write} zu sehen.
 
@@ -222,7 +221,7 @@ In Abbildung \ref{fig:sequenzSQLALCHEMY} ist eine sequentielle Darstellung des P
         Alle lesenden Zugriffe zur Datenbank werden über eine QueryFactory zentral zusammengefasst. Die hier ausgearbeitete Implementierung ist in Kapitel \ref{sec:implementierungORM} ausführlich beschrieben.
 
      \item [json\_builder]
-        Durch diese Programmabschnitte werden die Daten in Listen und Dictionaries überführt. Die Variablen und Datenstrukturen werden dabei so angelegt, dass diese direkt als JSON bzw geoJSON ausgeliefert werden können.
+        Durch diese Programmabschnitte werden die Daten in Listen und Dictionaries überführt. Die Variablen und Datenstrukturen werden dabei so angelegt, dass diese direkt als JSON bzw. geoJSON ausgeliefert werden können.
     \end{description}
 
     Dieses \gls{Controller}-Blueprint fordert die Daten über die \texttt{query\_factory} an und bringt sie über den \texttt{json\_builder} in das vorgesehene Format.  Die Umwandlung in JSON und die Erstellung des Requests erfolgt über \texttt{flask.jsonify}.
@@ -230,7 +229,7 @@ In Abbildung \ref{fig:sequenzSQLALCHEMY} ist eine sequentielle Darstellung des P
  \item [argo\_app] $ $
 
     \begin{description}
-     \item [generate\_graph] Dieser Programmteil erzeugt einen Plot über die Bibliothek \texttt{matplotlib}. Eine nähere Beschreibung der Erstellung findet sich in Kapitel \ref{sec:ImplementierungPLOTS}.
+     \item [generate\_graph] Dieser Programmteil erzeugt einen Funktionsplot über die Bibliothek \texttt{matplotlib}. Eine nähere Beschreibung der Erstellung findet sich in Kapitel \ref{sec:ImplementierungPLOTS}.
     \end{description}
 
     In diesem Blueprint werden Templates zu HTML-Dateien zusammengesetzt. Dafür benötigt dieser Programmteil Zugriff auf die Verzeichnisse für die jeweiligen Templates und statischen Dateien. Diese Daten werden über \texttt{flask.render\_template} zusammengesetzt und ausgeliefert.
@@ -287,7 +286,7 @@ Die Elemente der Karte setzen sich, wie in Listing \ref{lst:olMap} zu sehen, zus
 });
 \end{javascript}
 
-Die Darstellung bassiert auf zwei Layern, einer Verktordarstellung der Kontinent- und Landesgrenzen (\texttt{mapVectorLayer}), sowie der Darstellung der ArgoFloats (\texttt{argoFloatsLayer}). Die Darstellung der Steuereinheiten wurde deaktiviert. Als Startposition wurden Längen- und Breitengrad mit jeweils 0 gewählt. Die Zoomstufe ist mit 3 initialisiert und es ist eine maximale Zoomstufe von 3.5 gewählt. Die Werte für die Zoomstufe wurden bei einer Auflösung von 1920x1080 ermittelt und getestet.
+Die Darstellung basiert auf zwei Layern, einer Verktordarstellung der Kontinent- und Landesgrenzen (\texttt{mapVectorLayer}), sowie der Darstellung der ArgoFloats\newline (\texttt{argoFloatsLayer}). Die Darstellung der Steuereinheiten wurde deaktiviert. Als Startposition wurden Längen- und Breitengrad mit jeweils 0 gewählt. Die Zoomstufe ist mit 3 initialisiert und es ist eine maximale Zoomstufe von 3.5 gewählt. Die Werte für die Zoomstufe wurden bei einer Auflösung von 1920x1080 ermittelt und getestet.
 Die Karte bettet sich in das HTML-Element map ein und wird mit diesem zur Anzeige gebracht. Steuergesten mit Maus und Tastatur nimmt die Karte an dieser Stelle bereits entgegen.
 \\
 Der mapVectorLayer wurde aus der GeoJSON-Datei \texttt{countries.geo.json}  erstellt. Die Datei wurde von \cite{sundstrm16} heruntergeladen. Diese steht unter der Lizenz UNLICENSE und kann damit ohne Einschränkungen verwendet werden. Die Darstellung der Argo-Floats wird ebenso über eine GeoJSON realisiert. Diese wird auf dem Webserver über die \gls{api} bereitgestellt und wird über der URL \texttt{/last\_seen}  (siehe Listing \ref{lst:routesAPI}) angefordert. Die so angeforderte Datenstruktur hat ein spezifisches Format. In Listing \ref{lst:argGeoJson} ist das Format abgekürzt ersichtlich.

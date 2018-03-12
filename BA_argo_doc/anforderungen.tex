@@ -2,14 +2,14 @@
 
 \subsection{Systembeschreibung}
 
-    Die zu entwickelnde Anwendung verfolgt einen Datengetriebenen Ansatz. Daten aus dem Argo-Programm werden erhoben und eine Auswahl davon in ein Datenformat überführt. Zur Darstellung wird eine Webapplikation verwendet. Über diese werden   über Postionsmarker auf einer Weltkarte, die letzten Positionen der Messstationen angezeigt.  Über einen Klick auf die Repräsentation einer Messboje werden weitere Daten der Messstation präsentiert.
+    Die zu entwickelnde Anwendung verfolgt einen Datengetriebenen Ansatz. Daten aus dem Argo-Programm werden erhoben und eine Auswahl davon in ein Datenformat überführt. Zur Darstellung wird eine Webapplikation verwendet. Über diese werden  unter Zuhilfename von  Postionsmarkern auf einer Weltkarte, die letzten Positionen der Messstationen angezeigt.  Über einen Klick auf die Repräsentation einer Messboje werden weitere Daten der Messstation präsentiert.
 
 
 
 % BEGIN ermittlung  Anforderungen
     \subsection{Ermittlung der Anforderungen}
 
-    Ausgehend von einem ersten Prototypen wurden Anwendungsfälle entwickelt. Eine schematische Darstellung ist in Abbildung  \ref{fig:use_case} zu sehen. Dabei wurden zwei Klassen von Akteuren herausgearbeitet. Darunter finden sich die Benutzenden der Applikation. Diese erwarten einen reibungslosen Betrieb der Applikation und die Darstellung der Messstationen in der gegebenen Form. Zum anderen existiert die Klasse der Administrierenden. Diese benötigen Werkzeuge, um die Daten zu erneuern und in die Datenhaltung einzuspielen. Beide Klassen haben verschiedene Sichten auf die Datenhaltung. Daraus entsteht ein Spannungsverhältnis, welches minimiert werden muss.
+    Ausgehend von einem ersten Prototypen wurden Anwendungsfälle entwickelt. Eine schematische Darstellung ist in Abbildung  \ref{fig:use_case} zu sehen. Dabei wurden zwei Klassen von Akteuren herausgearbeitet. Darunter finden sich die Benutzenden der Applikation. Diese erwarten einen reibungslosen Betrieb der Applikation und die Darstellung der Messstationen in der gegebenen Form. Zum anderen existiert die Klasse der Administrierenden. Diese benötigen Werkzeuge, um die Daten zu erneuern und in die Datenhaltung einzuspielen. Beide Klassen haben verschiedene Sichten auf die Datenhaltung. Daraus entsteht ein Spannungsverhältnis, welches minimiert werden muss. Unter anderem ist zu erwarten, dass durch die Erneuerung der Datenhaltung eine Ausfallzeit in der Darstellung der Messwerte verursacht wird. Hier sind geeignete Mittel zu wählen, die die Funktionalität so wenig wie möglich einschränken.
 
     \begin{figure}[h!]
         \centering
@@ -36,7 +36,7 @@
     \subsubsection{Anwendende Perspektive}\label{sec:funkAnforderungenAnwender}
 
     In der Anwendung wird die Darstellung einer Webapplikation erwartet. Angesteuert durch die zugehörige URL,
-    sollen über eine Kartenapplikation die Grenzen der Ozeane und der umliegenden Kontinente erkennbar werden.  Eine genauere Darstellung von Landmarken wie Straßen, Städte oder Gebirge ist für den Aussagewert der Applikation nicht erforderlich. Die Kartendarstellung soll über Interaktionsmöglichkeiten, wie dem Einstellen der Zoomstufe, sowie des ausgewählten Kartenbereichs, verfügen. Über den Kartendienst ist die letzte Position jeder Messboje aus dem Datensatz ersichtlich. Um Streuung und Verdichtung an spezifischen Orten sehen zu können, werden alle Bojen des angezeigten Kartenausschnittes dargestellt. Es erfolgt keine Zusammenfassung oder Ausblendung.
+    sollen über eine Kartenapplikation die Grenzen der Ozeane und der umliegenden Kontinente erkennbar werden.  Eine genauere Darstellung von Landmarken wie Straßen, Städten oder Gebirgen ist für den Aussagewert der Applikation nicht erforderlich. Die Kartendarstellung soll über Interaktionsmöglichkeiten, wie dem Einstellen der Zoomstufe, sowie des ausgewählten Kartenbereichs, verfügen. Über den Kartendienst ist die letzte Position jeder Messboje aus dem Datensatz ersichtlich. Um Streuung und Verdichtung an spezifischen Orten sehen zu können, werden alle Bojen des angezeigten Kartenausschnittes dargestellt. Es erfolgt keine Zusammenfassung oder Ausblendung.
     Wird die Maus über die visuelle Repräsentation einer Messboje geführt, so sollen grundlegende Daten der Messstationen dargestellt werden, gleichzeitig wird diese Station optisch hervorgehoben.
     Ein Mausklick auf die schematische Darstellung soll spezifische Messdaten anzeigen. Dazu werden in einem separierten Darstellungsfeld der Verlauf der Messdaten, sowie Werte, die eine Identifikation der Messboje ermöglichen, angezeigt. Zusätzlich soll der zurückgelegte Weg der Messstation ersichtlich sein.  Eine Trendanalyse der Daten kann hier ein Maß für die Richtung der Messwerte ermöglichen. Können mehrere Messstationen gleichzeitig ausgewählt werden, so wäre es sinnvoll die akkumulierten Werte darzustellen.
 
@@ -53,7 +53,7 @@
 \subsection{Nicht-Funktionale Anforderungen}
 
     \subsubsection{Anwendende Perspektive}
-        Für die Benutzenden ist der Grad der Benutzbarkeit ein zentraler Aspekt der Applikation. Die Bedienungsmuster müssen klar ersichtlich und intuitiv erfahrbar sein. Die Darstellung der Applikation soll einfach und schlicht gehalten werden und dem gewohnten Erscheinen modernen Web Applikationen entsprechen.
+        Für die Benutzenden ist der Grad der Benutzbarkeit ein zentraler Aspekt der Applikation. Die Bedienungsmuster müssen klar ersichtlich und intuitiv erfahrbar sein. Die Darstellung der Applikation soll einfach und schlicht gehalten werden und dem gewohnten Erscheinen modernen Webapplikationen entsprechen.
         Es soll auf die wichtigsten Aspekte des Datenschutzes Wert gelegt werden. Insbesondere im Hinblick auf Datensparsamkeit sind das Einbinden von Trackern, Loginfunktionen und das Speichern von Logfiles zu bewerten.
         Sicherheitsaspekten muss aus der Anwendersicht nur eine normale Rolle zugewiesen werden. Dabei sollen die aktuell als Standard angesehenen Sicherheitsvorkehrungen getroffen werden.
 
@@ -126,10 +126,9 @@ Um die Darstellung zu vereinfachen und die Kommunikation mit der Datenbank zu be
       \label{table:Datenauswahl}
 \end{table}
 
-Das Feld PLATFORM\_NUMBER wird benötigt um Messprofile eindeutig der Plattform zuordnen zu können, während die CYCLE\_NUMBER eine Messung innerhalb ihrer Plattform eindeutig macht. Das Datum der Messdatenübertragung kann aus dem Feld JULD ermittelt werden. Dieses erlaubt es, die Messreihe in ihren zeitlichen Kontext zu sehen. Die Anzahl der Sensoren lässt sich aus dem Feld N\_PARAM herleiten. Dies wird benötigt, da einige Messstationen nicht alle Sensoren eingebaut haben. Über die Geokoordinaten wird die lokale Zuordnung der Datenübertragung erreicht. Dies wird benötigt um in der Kartendarstellung der Messung einen Ort zuzuweisen.
-Aus den Messwerten werden die Felder PRES, TEMP und PSAL ausgewählt. Neue Modelle der Messbojen besitzen noch das Feld COND über den sich die Leitfähigkeit des umliegenden Wassers herleiten lässt. Dieser ist aber noch nicht bei vielen Messstationen implementiert und wird deswegen hier nicht verwendet.
+Das Feld PLATFORM\_NUMBER wird benötigt um Messprofile eindeutig der Plattform zuordnen zu können, während die CYCLE\_NUMBER eine Messung innerhalb ihrer Plattform eindeutig macht. Das Datum der Messdatenübertragung kann aus dem Feld JULD ermittelt werden. Dieses erlaubt es, die Messreihe in ihrem zeitlichen Kontext zu sehen. Die Anzahl der Sensoren lässt sich aus dem Feld N\_PARAM herleiten. Dies wird benötigt, da einige Messstationen nicht alle Sensoren eingebaut haben. Über die Geokoordinaten wird die lokale Zuordnung der Datenübertragung erreicht. Dies wird benötigt um in der Kartendarstellung der Messung einen Ort zuzuweisen.
+Aus den Messwerten werden die Felder PRES, TEMP und PSAL ausgewählt. Neue Modelle der Messbojen besitzen noch das Feld COND, über das sich die Leitfähigkeit des umliegenden Wassers herleiten lässt. Dieses ist aber noch nicht bei vielen Messstationen implementiert und wird hier deswegen nicht verwendet.
 
-%TODO Der kleine Satz möchte aus den Untiefen der Schachtelsätze abgeholt und verbessert werden
 Die verwendeten Messwerte PRES, TEMP und PSAL eines Messprofils liegen in vektorieller Form vor. Für die Darstellung über einen univariaten Graphen wird nur ein skalarer Wert pro Messprofil benötigt. Die Daten sollen zusammengefasst werden, bevor diese in die Datenstruktur überführt werden, um die Größe der Daten zu verringern.
 %TODO Implementierung welcher Algorithmus zurzusammenfassung
 
@@ -161,16 +160,16 @@ Für die Laufzeitumgebung der Applikation wird ein GNU/Linux eingesetzt. Die Sof
 Für Python gibt es eine große Anzahl an Werkzeugen für die Entwicklung von Webseiten. Hier werden exemplarisch 3 herausgegriffen und für die hier vorliegende Aufgabe bewertet.
 
 \begin{description}
- \item [Django] wird beworben als "`The web \gls{Framework}  for perfectionists with dead\-lines"'. Es wurde 2005 unter einer BSD Lizenz released und entwickelt, um die News-Seite des \textit{Lawrence Journal-World} umzusetzen und zu verwalten. Django ist ein etabliertes und häufig verwendetes Web-Framework. Es ist dynamisch einsetzbar und für eine große Anzahl von Anwendungen verwendbar. Die Bibliothek ist außerdem durch Module erweiterbar. Die Software folgt dem "`\textit{batteries included}"' Ansatz und liefert in der Grundausstattung bereits alles nötige mit, um eine Webseite inklusive Login und Eingabemasken für journalistische Tätigkeiten auszubauen.
+ \item [Django] wird beworben als "`The web framework for perfectionists with dead\-lines"'. Es wurde 2005 unter einer BSD Lizenz released und entwickelt, um die News-Seite des \textit{Lawrence Journal-World} umzusetzen und zu verwalten. Django ist ein etabliertes und häufig verwendetes Web-Framework. Es ist dynamisch einsetzbar und für eine große Anzahl von Anwendungen verwendbar. Die Bibliothek ist außerdem durch Module erweiterbar. Die Software folgt dem "`\textit{batteries included}"' Ansatz und liefert in der Grundausstattung bereits alles Nötige mit, um eine Webseite inklusive Login und Eingabemasken für journalistische Tätigkeiten auszubauen.
 
  \item [Flask] ist ein sogenanntes Micro-\gls{Framework}. Es verwendet die Toolsammlung \textit{Werkzeug} um Webseiten über \gls{WSGI} darstellbar zu machen. Das \gls{Framework} folgt dem \gls{KISS} Ansatz und liefert im Grundumfang nur diejenigen Werkzeuge, die man für die Verwaltung von einfachen Webseiten benötigt. Die Software lässt sich über Module erweitern. Einzelne Teilprojekte von Applikationen lassen sich in sogenannte Blueprints modularisieren.
 
- \item [Falcon] ist ebenso als Micro-\gls{Framework} zu sehen. Es wurde insbesondere in Hinblick auf Geschwindigkeit entwickelt. Das \gls{Framework} erlaubt Requests asynchron zu verarbeiten und lässt die auf Geschwindigkeit spezialisierte Python-Laufzeitumgebung pypy zu. Falcon ist ein relativ neues \gls{Framework} und erfährt in letzter Zeit zur Schaffung von REST-APIs immer mehr Aufmerksamkeit. Es ist aber auch möglich, mit diesem \gls{Framework} Webapplikationen mit einer Anzeige über HTML-Elementen zu gestalten.
+ \item [Falcon] ist ebenso als Micro-\gls{Framework} zu sehen. Es wurde insbesondere in Hinblick auf Geschwindigkeit entwickelt. Das \gls{Framework} erlaubt es Requests asynchron zu verarbeiten und lässt die auf Geschwindigkeit spezialisierte Python-Laufzeitumgebung pypy zu. Falcon ist ein relativ neues \gls{Framework} und erfährt in letzter Zeit zur Schaffung von REST-APIs immer mehr Aufmerksamkeit. Es ist aber auch möglich, mit diesem \gls{Framework} Webapplikationen mit einer Anzeige über HTML-Elementen zu gestalten.
 \end{description}
 
 In dieser Applikation wird die Schaffung von journalistischen und redaktionellen Inhalten eine sehr geringe Rolle spielen. Unter diesem Gesichtspunkt ist die Frage der Komplexität der verwendeten Software zu klären. Unter diesem Aspekt erscheint Django nicht als die ideale Wahl.
-Flask und Falcon verfolgen beide den Ansatz eines Microframeworks. Die Laufzeitgeschwindigkeit des \gls{Controller}s erscheint an dieser Stelle nicht als limitierender Faktor der Applikation. Zwar wäre es wünschenswert, die Datenbeschaffung der Webapplikation bereits im Backend asynchron zu erledigen, doch überwiegt das breitere Spektrum an Modulen und Dokumentationen für die Webentwicklung von Flask.
-Damit erscheint Flask als das geeignetste Werkzeug für diese Aufgabe.
+Flask und Falcon verfolgen beide den Ansatz eines Micro-Frameworks. Die Laufzeitgeschwindigkeit des \gls{Controller}s erscheint an dieser Stelle nicht als limitierender Faktor der Applikation. Zwar wäre es wünschenswert, die Datenbeschaffung der Webapplikation bereits im Backend asynchron zu erledigen, doch überwiegt das breitere Spektrum an Modulen und Dokumentationen für die Webentwicklung von Flask.
+Damit erscheint Flask in diesem Kontext als das geeignetste Werkzeug für diese Aufgabe und wird deswegen für die hier ausgearbeitete Lösung verwendet.
 
 
 \subsubsection{Datenbank}
