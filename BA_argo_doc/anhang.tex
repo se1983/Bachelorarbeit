@@ -26,9 +26,9 @@ def subplot(data):
     f.set_figwidth(20)
     f.set_figheight(2.3)
 
-    whisker = sns.boxplot(data.values, 
-                          ax=ax_box,showmeans=True, 
-                          meanline=True, color="white", 
+    whisker = sns.boxplot(data.values,
+                          ax=ax_box,showmeans=True,
+                          meanline=True, color="white",
                           meanprops=dict(color='darkgrey', linestyle='-', linewidth=2.5,))
     ax_hist.bar(bins, y, color="darkgrey")
     ax_box.set(yticks=[])
@@ -36,8 +36,8 @@ def subplot(data):
     sns.despine(ax=ax_hist)
     sns.despine(ax=ax_box, left=False)
 
-    f.suptitle(data.name, fontsize=16)   
-    
+    f.suptitle(data.name, fontsize=16)
+
     left, width = -.06, 1
     bottom, height = -0.09, .33
     right = left + width
@@ -46,10 +46,10 @@ def subplot(data):
         (left, bottom), width, height,
         fill=False, transform=ax_hist.transAxes, clip_on=False
     )
-      
+
     font = FontProperties()
     font.set_weight('bold')
-    font.set_size(18)  
+    font.set_size(18)
     bbox = dict(facecolor='whitesmoke', edgecolor='grey', pad=0.2, boxstyle='round')
     ax_hist.text(right, height, 'sehr',
         horizontalalignment='center',
@@ -57,7 +57,7 @@ def subplot(data):
         transform=ax.transAxes,
         fontproperties=font,
         color = 'dimgray',
-        backgroundcolor='whitesmoke', 
+        backgroundcolor='whitesmoke',
         bbox=bbox)
     ax_hist.text(left, height, 'gar nicht',
         horizontalalignment='center',
@@ -65,9 +65,9 @@ def subplot(data):
         transform=ax.transAxes,
         fontproperties=font,
         color = 'dimgray',
-        backgroundcolor='whitesmoke', 
+        backgroundcolor='whitesmoke',
         bbox=bbox)
-    
+
     plt.yticks(np.arange(0, 9+1, 3.0))
     ax_hist.set_ylim([0,9])
     ax_hist.minorticks_on()
@@ -75,7 +75,7 @@ def subplot(data):
     ax_hist.yaxis.grid(b=False, which='minor', color='lightgray', linestyle='-')
     ax_hist.yaxis.set_minor_locator(AutoMinorLocator(3))
     ax_hist.yaxis.grid(b=True, which='major', color='darkgray', linestyle='-', markersize=1)
-    ax_box.xaxis.grid(True)    
+    ax_box.xaxis.grid(True)
 
 for col in df:
     subplot(df[col])
@@ -183,4 +183,4 @@ plt.show()
 
 
 \pagebreak
-\printnoidxglossaries
+\printglossaries
