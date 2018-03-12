@@ -238,7 +238,7 @@ var displayArgoData = function (pixel) {
         info_text_div.innerHTML = "";
 
         $.ajax({
-            url: 'https://' + window.location.host + '/info/' + identifier,
+            url: window.location.href + 'info/' + identifier,
             success: function (data) {
                 info_text_div.innerHTML = data;
             }
