@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # renew_data.sh
 # sebsch 2018-03-06
