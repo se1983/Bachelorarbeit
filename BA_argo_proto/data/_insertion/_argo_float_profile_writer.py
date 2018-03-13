@@ -3,12 +3,24 @@ from webapp.models import ArgoFloat, Location, Measurement, Profile
 
 class ArgoFloatProfile:
     def __init__(self, argo_float, db, app):
+        """
+        Writes the Profile of one ArgoFloat into the database.
+
+
+        :param argo_float: Representation of the extracted Data of one ArgoFloat.
+        :param db: ORM - Flask-SQLAlchemy
+        :param app: Flask-app
+        """
 
         self.argo_float = argo_float
         self.db = db
         self.app = app
 
     def write_data(self, bind=None):
+        """
+        Triggers the data-transfer.
+        :param bind: str - Define a binding.
+        """
         session = self.db.create_scoped_session(
             options={
                 'bind': self.db.get_engine(self.app, bind),

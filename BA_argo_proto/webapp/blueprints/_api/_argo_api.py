@@ -15,6 +15,10 @@ argo_api = Blueprint('argo_api', __name__)
 @argo_api.route("/last_seen")
 @argo_api.route("/last_seen/<force_reload>")
 def last_seen(force_reload=""):
+    """Route for the latest position of the argofloats.
+
+    :returns {json-request}
+    """
     __token = app.config['FORCE_RELOAD_TOKEN']
     __cache_file_path = f'{app.root_path}/last_seen.pickle'
 
@@ -29,6 +33,10 @@ def last_seen(force_reload=""):
 
 @argo_api.route("/argo_float/<identifier>")
 def get_argo_float(identifier):
+    """Route for the data of one argofloat.
+
+    :returns {json-request}
+    """
     rows = queries.argo_data(identifier)
 
     return jsonify(argo_float_data_json(rows))
@@ -36,6 +44,10 @@ def get_argo_float(identifier):
 
 @argo_api.route("/positions/<identifier>")
 def get_argo_float_position_history(identifier):
+    """Route for the position history of one argofloat.
+
+    :returns {json-request}
+    """
     rows = queries.argo_positions(identifier)
 
     geo_json = {

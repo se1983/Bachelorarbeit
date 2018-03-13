@@ -1,20 +1,9 @@
-// http://plnkr.co/edit/zbqKeJ4lXQ8C60TC4fza?p=preview
-// http://jsfiddle.net/expedio/mz19nzug/
-// https://openlayers.org/en/latest/examples/select-features.html
-
 var sidebar = document.getElementsByClassName("sidebar-body")[0];
 
 
 var mapLayer = new ol.layer.Tile({
     source: new ol.source.OSM()
 });
-
-var stamen_layer = new ol.layer.Tile({
-    source: new ol.source.Stamen({
-        layer: 'watercolor'
-    })
-});
-
 
 var defaultStyle =
     new ol.style.Style({
@@ -43,7 +32,6 @@ function FloatStyle(feature) {
     blue = [0, 153, 255, 1],
         width = 1;
 
-    // TODO different styles for different floatstates
     style['latest_position'] = [
         new ol.style.Style({
             image: new ol.style.Circle({
@@ -115,7 +103,7 @@ var map = new ol.Map({
 });
 
 
-/* Hover Stylechange */
+/* Hover stylechange */
 // change the style of a float if the pointer is hovering.
 // This will give the user a feedback which float is waiting for interaction.
 var hoverInteraction = new ol.interaction.Select({
@@ -195,9 +183,6 @@ map.on('pointermove', function (evt) {
     }
     displayFeatureInfo(map.getEventPixel(evt.originalEvent));
 });
-
-
-/////////////////
 
 
 /* Clicking at Float */

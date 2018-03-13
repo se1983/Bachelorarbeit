@@ -1,7 +1,14 @@
 from numpy import nan
-import datetime
+
 
 def positions_json(rows, identifier):
+    """
+    GeoJSON for the position-history of one argofloat.
+
+    :param rows: dict - representation of database request
+    :param identifier: str - identifier of the argofloat
+    :return: [{k,v}] - nested structure for the geoJSON
+    """
     # Nan is not part of parsable JSON so wer will convert this value to None(Null)
     __extract = lambda f: f"{f:.2f}" if not f is nan else ''
 
@@ -50,6 +57,12 @@ def positions_json(rows, identifier):
 
 
 def argo_float_data_json(rows):
+    """
+    JSON for the measurement-data.
+
+    :param rows: dict - representation of database request
+    :return: [{k,v}] - nested structure for the JSON
+    """
     time_string = '%d. %B %Y'
 
     data = {
@@ -69,6 +82,12 @@ def argo_float_data_json(rows):
 
 
 def last_seen_json(rows):
+    """
+    GeoJSON for the featurecollection of last seen.
+
+    :param rows: dict - representation of database request
+    :return: [{k,v}] - nested structure for the geoJSON
+    """
     return {'type': "FeatureCollection",
             'crs': {
                 'type': 'name',

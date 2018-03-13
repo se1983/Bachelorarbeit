@@ -2,18 +2,16 @@ from datetime import datetime
 from time import mktime, strptime
 
 import matplotlib
+import matplotlib.dates as mdates
+import matplotlib.patches as mpatches
+import numpy as np
 from matplotlib import gridspec
 from matplotlib.figure import Figure
 from matplotlib.pyplot import style
-import matplotlib.patches as mpatches
-import matplotlib.dates as mdates
-import numpy as np
 
 from webapp import app
 
 ranges = app.config['ARGO_DATA_VALUE_RANGES']
-
-
 
 style.use('seaborn-whitegrid')
 matplotlib.rcParams['xtick.labelsize'] = 20
@@ -24,6 +22,11 @@ matplotlib.rcParams['legend.facecolor'] = "b"
 
 
 def create_plot(data):
+    """
+    Create a data graph
+    :param data: array - Data to plot.
+    :return: Figure - (plt.agg-renderer)
+    """
     temperature = np.array(data['temperature'])
     salinity = np.array(data['salinity'])
     pressure = np.array(data['pressure'])
@@ -70,7 +73,6 @@ def create_plot(data):
         ax3.format_xdata = mdates.DateFormatter("%m")
         ax3.plot(dates, pressure, '-', color='dodgerblue')
         ax3.grid(True)
-
 
     fig.autofmt_xdate()
     fig.tight_layout()

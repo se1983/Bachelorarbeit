@@ -10,24 +10,38 @@ argo_app = Blueprint('argo_app', __name__, template_folder='templates')
 
 @argo_app.route("/")
 def index():
+    """
+    Route to represent the Map.
+
+        This is the single page of the application.
+
+    :return: request
+    """
     return render_template('map.html')
 
 
 @argo_app.route("/info/<identifier>")
 def info_text(identifier):
+    """
+    Route to get the ArgoFloat info-block.
+
+    :param identifier: str - Identifier of the ArgoFloat
+    :return: request
+    """
     url = url_for('argo_api.get_argo_float', identifier=identifier, _external=True)
     data = requests.get(url).json()
 
     return render_template('_info_text.html', data=data)
 
 
-@argo_app.route("/test")
-def test_pattern():
-    return render_template('test_pattern.html')
-
-
 @argo_app.route("/chart/<identifier>")
 def deliver_chart(identifier=None):
+    """
+    Route to get the chart-picture of the measurement data.
+
+    :param identifier: str - Identifier of the ArgoFloat
+    :return: request  - contains the canvas object of the graph.
+    """
     if identifier is None:
         return
 

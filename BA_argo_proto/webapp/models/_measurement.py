@@ -2,6 +2,8 @@ from . import db
 
 
 class Measurement(db.Model):
+    """Representation of one Measurement."""
+
     __tablename__ = 'measurements'
 
     id = db.Column(db.Integer, primary_key=True)

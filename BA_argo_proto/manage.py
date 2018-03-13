@@ -9,8 +9,6 @@ from data import ExtractorFactory, DataBaseWriter
 
 assert db is not None
 
-# https://flask-script.readthedocs.io/en/latest/
-
 manager = Manager(app)
 
 

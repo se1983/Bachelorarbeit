@@ -2,6 +2,7 @@ from . import db
 
 
 class ArgoFloat(db.Model):
+    """Representation of one ArgoFloat."""
     __tablename__ = 'argo_floats'
 
     measurements = db.relationship('Measurement', backref='argo_floats', lazy='dynamic')

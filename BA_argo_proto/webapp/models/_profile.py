@@ -2,6 +2,8 @@ from . import db
 
 
 class Profile(db.Model):
+    """Representation of one Profile"""
+
     __tablename__ = "profiles"
 
     id = db.Column(db.Integer, primary_key=True)

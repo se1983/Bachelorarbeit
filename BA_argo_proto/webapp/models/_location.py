@@ -2,6 +2,8 @@ from . import db
 
 
 class Location(db.Model):
+    """Representation of one Location."""
+
     __tablename__ = 'locations'
 
     id = db.Column(db.Integer, primary_key=True)

@@ -10,21 +10,16 @@ from webapp import app
 
 class FloatDataset(object):
     def __init__(self, file_path):
+        """
+        Representation of one MeasurementProfile of a ArgoFloat.
+
+        :param file_path: Path to the profile-file
+        """
         with DatasetContextManager(file_path) as ds:
-            #: HELPER FUNCTIONS
-
-            #: Ease the extraction of parameter Data
-            #: In some cases, some attribues are not in every dataset.
-
-            #: Average if a is np.array else do nothing
             def average_(a):
                 if type(a) is not np.ndarray:
                     return a
                 return np.average(a)
-
-            #: IDENTIFIER
-            # Some floats holding the scalar values in arrays with duplicates.
-            # Therefor we have to check the type of the value ( - - > SCALAR?)
 
             self.cycle_number = ds.variables['CYCLE_NUMBER'][0]
 
@@ -51,7 +46,11 @@ class FloatDataset(object):
             """
 
     def __check_data(self):
-        # See argo-data documentation
+        """
+        Check if the Data is in defined range.
+
+        :return: bool - All data in range
+        """
         ranges = app.config['ARGO_DATA_VALUE_RANGES']
 
         return (

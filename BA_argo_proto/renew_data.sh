@@ -2,7 +2,7 @@
 
 # renew_data.sh
 # sebsch 2018-03-06
-# Script for automatically renew the Argo-Database
+# Script to automatically renew the Argo-Database
 
 
 venv="/root/argo_venv"
