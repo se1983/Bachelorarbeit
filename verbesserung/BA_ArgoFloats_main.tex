@@ -1,0 +1,44 @@
+\include{preamble}
+
+
+% opening ---------------------------------------------------------------------------------------------------------    
+% 
+%       __...--~~~~~-._   _.-~~~~~--...__
+%     //               `V'               \\ 
+%    //                 |                 \\ 
+%   //__...--~~~~~~-._  |  _.-~~~~~~--...__\\ 
+%  //__.....----~~~~._\ | /_.~~~~----.....__\\
+% ====================\\|//====================
+%                     `---`  
+\begin{document} 
+\pagestyle{plain}
+\setcounter{page}{-1}
+\pagenumbering{Roman} 
+\bibliographystyle{alpha}
+\include{titlepage}
+\newpage
+\tableofcontents
+\newpage
+\listoffigures
+\lstlistoflistings
+\listoftables
+
+
+% Content ---------------------------------------------------------------------------------------------------------
+
+\pagebreak
+\pagestyle{scrheadings}
+\pagenumbering{arabic} 
+\setcounter{page}{1}
+\input{einleitung}
+%\include{datengrundlage}
+\include{grundlagen}
+\include{anforderungen}
+\include{systementwurf}
+\include{realisierung}
+\include{testphase}
+\include{auswertung}
+\include{anhang}
+\include{literatur}
+
+\end{document} 

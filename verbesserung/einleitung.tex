@@ -1,0 +1,48 @@
+
+\section{Einleitung}
+
+
+Die im Jahre 1965 von Gordon Moore vorhergesagte Gesätzmäßigkeit, die Komplexität, und damit die Speicherdichte integrierter Schaltkreise, würde sich regelmäßig verdoppeln (vgl. \cite{moore1998cramming}),  hat sich seitdem bis zum heutigen Tag bewahrheitet. Damit sieht sich die Menschheit über 50 Jahre später in einer einmaligen Lage.
+Zum einen verfügen wir über eine noch nie dagewesene Ansammlung an Informationen, zum anderen wurden die Speichermedien durch die wachsende Komplexität immer flüchtiger und schwieriger in der technischen Handhabung. Werden kommende Zivilisationen in der Lage sein, diesen Pool an Informationen für sich zu nutzen oder sollten wir vielmehr annehmen, dass wir eine einmalige Chance haben, die wir nicht vergeuden sollten? \\
+
+In diesem Kontext scheint es folgerichtig, dass Bewegungen wie Freie Software, Creative-Commons und Open-Access die Hürden für den Zugang zu den Informationen weiter verringern.  Viele der Informationen stehen heute frei zur Verfügung und können genutzt werden und doch werden, von einem gefühlt immer größeren Anteil unseres Kulturkreises, Prinzipien zur Bewertung von Quellen abgelehnt.
+In einer Zeit, in der es einfacher denn je ist, Fakten zu überprüfen, werden wissenschaftlich bewiesenen Aussagen wie dem Klimawandel  nicht geglaubt.
+Es scheint, als wären viele Menschen der Flut an Informationen überdrüssig, als wende sich ein großer Teil überfordert davon ab.
+Die Frage ist, was kann dazu beitragen dieses Potential mehr zu nutzen?
+Über welche Mittel verfügt die Informatik, Daten in einen Kontext einzubetten? Wie muss der Kontext gestaltet sein, über den Menschen an  wissenschaftliche Arbeit herangeführt werden können? Welche Daten sind geeignet, um die Brisanz und das Potential unserer Zeit einem breiteren Publikum zuzuführen?
+Mit diesen Fragestellungen motiviert sich die hier vorliegende Arbeit.
+\\
+Im Rahmen dieser Abschlussarbeit wurde, über die Aggregation wissenschaftlicher Daten, ein exploratives Werkzeug geschaffen, um diese intuitiv erfahrbar zu gestalten. Dies geschieht mit dem Ziel, dass hier eine Identifikation mit den Messwerten und des wissenschaftlichen Prozesses zu erreicht werden kann. Als Datengrundlage wurden Daten des Argo-Programms verwendet. Unter dem Dach dieses Forschungsprojektes werden seit dem Beginn dieses Jahrtausends das Wasser der Weltmeere nach den Parametern Temperatur, Salzgehalt und Leitfähigkeit untersucht. Diese Daten stehen unter einer freien Lizenz zur Verfügung und können in eigene Projekte eingebunden werden.  Die Messdaten dienen Wissenschaftlern, die Auswirkungen des globalen Klimawandels zu untersuchen. Die Herausforderung besteht darin, die  hochkomplexen Messdaten in einer Form aufzubereiten, so dass diese einfach verstanden werden können.
+
+
+Ein solches Werkzeug könnte zum Beispiel in Schulklassen eingesetzt werden.
+Die Lernenden könnten, innerhalb einer Kontextvorgabe durch den Lehrenden, die Auswirkungen des Klimawandels auf die Weltmeere untersuchen.
+Hier könnte auch das Interesse und ein eventueller Berufswunsch im Wissenschaftssektor geweckt werden.
+Die Applikation richtet sich aber nicht explizit an Heranwachsende. Erwachsene Personen könnten sich hier, eigenes Interesse vorausgesetzt, weiterbilden. Die Applikation kann hier Relevanz der Forschung und die in diesem Programm erhobenen Messwerte erfahrbar machen. \\
+
+
+Diese Arbeit handelt von der Konzeption und Entwicklung eines Prototypen mit der oben genannten Problemstellung. Zu Beginn wird das Argo-Programm näher vorgestellt. Es wird auf den Prozess der Datenerhebung und Aufbereitung eingegangen. Im Anschluss daran werden die Anforderungen der Software ausgearbeitet, um im Folgenden darauf gangbare Lösungsansätze und die geeignetsten Werkzeuge ausgearbeitet.
+Anschließend wird das Softwaresystem entworfen. Es werden die geplante Architektur und die wichtigsten Geschäftsprozesse ausgearbeitet und beschrieben. Über das
+Aufzeigen von gangbaren Alternativen werden die passendsten Werkzeuge und Entwicklungsmuster für diese Problemstellung ermittelt.
+Nach der Planung folgt eine Beschreibung der vorgenommenen Implementierung. Auch hier werden Implementierungen iterativ verfeinert, so dass die passendste Lösung gefunden werden kann.
+Um die Qualität der Software beschreiben zu können, folgt im darauf folgenden Kapitel eine Beschreibung der verwendeten Testverfahren. Hier werden Metriken ausgearbeitet, welche erlauben, funktionale als auch nicht-funktionale Anforderungen überprüfbar messen zu können.
+Im Abschluss findet eine Präsentation des entwickelten Prototypen statt. Dabei wird ein möglichst kritischer Blick auf Problemstellung und Lösungen geworfen. Abschließend wird ein Ausblick auf Alternativen und mögliche Weiterentwicklungen der Prototypen gegeben.
+
+
+
+\subsection{Existierende Lösungen}
+
+
+Das Joint Technical Commission for Oceanography and Marine Meteorology (JCOMM) bietet mit
+\url{jcommops.org} eine Grundlage für die wissenschaftliche Arbeit unter anderem mit den von Argo gesammelten Daten. Neben der Darstellung von Karten erfährt der Nutzer hier, von Sensordaten über den Bautyp der jeweiligen Boje alles, was die Bojen zu erzählen haben. Daneben werden über diese Plattform auch redaktionelle Reports veröffentlicht, um der Leserschaft ein Bild der aktuellen Lage unserer Weltmeere zu vermitteln.
+
+Zwar bietet die Plattform durch ihre kartenbasierte explorative Darstellung ein ähnliches Angebot, wie es in der hier zu erstellenden Applikation geben soll. Die Fülle der Parameter erfordert vom Benutzer aber die Bereitschaft, sich vertieft in die Materie einzuarbeiten. Damit richtet sich das Angebot des Global Ocean Observing Systems an Wissenschaftler und Journalisten. Diesen dient sie als eine hervorragende Datengrundlage für deren Veröffentlichungen. Ein Benutzer aus der für diese Arbeit definierten Zielgruppe wird von einem derartigen Angebot wohl eher abgeschreckt sein, bevor er dessen Vorteile für sich erarbeitet.
+\\
+
+Das "`Data Selection and Visualization Tool"' der Coriolis GDAC  (siehe \cite{ArgoDataSelection}) ermöglicht den Download von, nach verschiedenen Filterkriterien ausgewählten, Datensätzen. Über einen Betrachter können Werte einer spezifischen Treibboje angesehen werden.
+Die primäre Aufgabenstellung dieser Plattform ist das Extrahieren der Daten, um diese in einer wissenschaftlichen Publikation verwenden zu können. Neben der akademischen Verwendung müsste ein Benutzer aber auch hier viel Neugierde und Zeit für die Einarbeitung in das Thema mitbringen, um aus den angebotenen Daten einen Mehrwert für sich zu generieren.
+
+
+\subsection{Alleinstellungsmerkmal \& Abgrenzung}
+
+Das Ziel dieser Arbeit ist die Darstellung von wissenschaftlichen Daten aus dem Argo-Programm. Im Gegensatz zu den bereits vorhandenen Lösungen sollen die Daten aber nicht zur wissenschaftlichen Verwendung aufbereitet werden. Vielmehr sollen die hochkomplexen Daten auf ein einfach erfahrbares Maß herunter gebrochen werden. Zum Zeitpunkt dieser Arbeit existiert noch kein exploratives Tool für Daten des Argo-Programms für die hier definierte Zielgruppe.

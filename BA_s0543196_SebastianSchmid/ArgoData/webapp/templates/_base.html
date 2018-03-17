@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+
+    <link rel="stylesheet" href="https://openlayers.org/en/v4.3.2/css/ol.css" type="text/css"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/samples.css') }}" type="text/css"/>
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"/>
+    <title>ArgoData</title>
+
+    <script src="https://openlayers.org/en/v4.3.2/build/ol.js"></script>
+
+    <script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <script src="{{ url_for('static', filename='js/layout_submenu.js') }}"></script>
+
+    <!--
+    The Structure of this web page is based of Jackie Ngs 2-Column Layout.
+        - https://github.com/jumpinjackie/bootstrap-viewer-template
+    jumpinjackie/bootstrap-viewer-template is licensed under the MIT License
+        - See: https://raw.githubusercontent.com/jumpinjackie/bootstrap-viewer-template/master/LICENSE
+    -->
+
+
+
+
+</head>
+<body>
+
+{% include '_argo_info.html' %}
+
+{% include '_navbar.html' %}
+
+{% include '_sidebar.html' %}
+
+{% block map %}
+{% endblock %}
+
+</body>
+</html>
